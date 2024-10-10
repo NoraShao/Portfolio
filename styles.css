@@ -300,6 +300,13 @@ main {
   transition: transform 0.2s linear;
 }
 
+.project__peripheral {
+  padding: 2em;
+  margin: 0 auto;
+  text-align: none;
+  box-shadow: var(--shadow);
+}
+
 .project:hover {
   transform: translateY(-7px);
 }
