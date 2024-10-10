@@ -311,7 +311,7 @@ main {
 
 /* analog to project */
 .project__peripheral {
-  margin-bottom: 20px;
+  margin-bottom: 50px;
   transform: none;  /* Ensure no transformation */
   box-shadow: none; 
 }
@@ -329,6 +329,12 @@ main {
   flex-wrap: wrap;
   justify-content: center;
   margin: 1.2em 0;
+}
+
+.project__stack__peripheral {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .project__stack-item {
