@@ -295,7 +295,7 @@ main {
 
 .projects_block {
   max-width: 1100px;
-  margin: 0 auto;
+  margin: 10 auto;
   display: block;
   grid-template-columns: repeat(auto-fit, minmax(30em, 1fr));
   grid-gap: 10em;
