@@ -320,6 +320,15 @@ main {
   transform: translateY(-7px);
 }
 
+.project__subheading {
+  font-family: 'Poppins', sans-serif; /* Ensure you're using the defined font */
+  font-weight: 500; /* Medium weight for subheading */
+  font-size: 0.9rem; /* Smaller font size */
+  color: #666666; /* Gray color for the subheading */
+  margin-top: -10px; /* Adjust positioning relative to the project title */
+  margin-bottom: 10px; /* Space before the project description */
+}
+
 .project__description {
   margin-top: 1em;
 }
@@ -335,7 +344,6 @@ main {
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
-  margin: 1.2em 0;
 }
 
 .project__stack-item {
