@@ -298,7 +298,7 @@ main {
   margin: 10 auto;
   display: block;
   grid-template-columns: repeat(auto-fit, minmax(30em, 1fr));
-  gap: 10em;
+  gap: 40em;
 }
 
 .project {
