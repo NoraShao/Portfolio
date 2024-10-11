@@ -351,6 +351,7 @@ main {
 .project__stack-item {
   /* margin: 0.5em; */
   margin: 0.5em;
+  margin-top: 1em;
   font-weight: 500;
   font-size: 0.8rem;
   color: var(--clr-fg-alt);
