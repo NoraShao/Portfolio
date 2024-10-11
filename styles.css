@@ -327,6 +327,7 @@ main {
   color: #666666; /* Gray color for the subheading */
   padding-top: -60px; /* Adjust positioning relative to the project title */
   margin-bottom: 10px; /* Space before the project description */
+  line-height: 1.2;
 }
 
 .project__description {
