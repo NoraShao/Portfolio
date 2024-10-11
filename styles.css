@@ -335,6 +335,7 @@ main {
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
+  margin: 1.2em 0;
 }
 
 .project__stack-item {
