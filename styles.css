@@ -328,7 +328,7 @@ main {
   margin-top: 1em;
   padding-top: -20px; /* Adjust positioning relative to the project title */
   margin-bottom: 10px; /* Space before the project description */
-  line-height: 1.6;
+  line-height: 1.3;
 }
 
 .project__description {
