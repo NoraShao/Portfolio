@@ -350,6 +350,7 @@ main {
 
 .project__stack-item {
   /* margin: 0.5em; */
+  margin-left: 0em;
   margin-right: 0.5em;
   margin-top: 1em;
   font-weight: 500;
