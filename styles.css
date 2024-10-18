@@ -323,12 +323,12 @@ main {
 .project__subheading {
   font-family: 'Poppins', sans-serif; /* Ensure you're using the defined font */
   font-weight: 500; /* Medium weight for subheading */
-  font-size: 1.1rem; /* Smaller font size */
+  font-size: 1.5rem; /* Smaller font size */
   color: #666666; /* Gray color for the subheading */
   margin-top: 0.6em;
   padding-top: -20px; /* Adjust positioning relative to the project title */
   margin-bottom: 10px; /* Space before the project description */
-  line-height: 1.2;
+  line-height: 1.5;
 }
 
 .project__description {
