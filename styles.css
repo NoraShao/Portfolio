@@ -232,6 +232,10 @@ main {
   margin-top: 5em;
 }
 
+.section__peripheral {
+  margin-top: 1em;
+}
+
 .section__title {
   text-align: center;
   margin-bottom: 1em;
@@ -282,6 +286,13 @@ main {
 
 .about .btn--outline {
   margin-right: 1em;
+}
+
+.img-format {
+  float: left; /* Or 'right' if you want the image on the right */
+  margin: 0 15px 15px 0; /* Adds space around the image */
+  width: 300px; /* Adjust the width of the image */
+  height: auto; /* Automatically adjusts height based on the width */
 }
 
 .projects__grid {
