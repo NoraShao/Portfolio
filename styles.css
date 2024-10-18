@@ -323,7 +323,7 @@ main {
 .project__subheading {
   font-family: 'Poppins', sans-serif; /* Ensure you're using the defined font */
   font-weight: 500; /* Medium weight for subheading */
-  font-size: 1.2em; /* Smaller font size */
+  font-size: 0.9em; /* Smaller font size */
   color: #666666; /* Gray color for the subheading */
   margin-top: 0.6em;
   padding-top: -20px; /* Adjust positioning relative to the project title */
@@ -359,7 +359,7 @@ main {
   font-weight: 500;
   font-size: 0.8rem;
   color: var(--clr-fg-alt);
-  list-style: 1.2;
+  line-height: 1;
 }
 
 .project .link--icon {
