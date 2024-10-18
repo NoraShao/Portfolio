@@ -297,11 +297,12 @@ main {
 
 .blue-line {
   background-color: #2978b5;
-  height: 10px;
+  height: 3px;
   width: 100%;
   max-width: 100%;
   margin: 1em 0; /* Spacing above and below the line */
-  border-color: 1px solid red;
+  margin-bottom: 2.5em;
+  border-color: 1px solid;
 }
 
 .projects__grid {
