@@ -296,13 +296,12 @@ main {
 }
 
 .blue-line {
-  background-color: #2978b5;
+  background-color: var(--clr-primary);
   height: 3px;
   width: 100%;
   max-width: 100%;
   margin: 1em 0; /* Spacing above and below the line */
   margin-bottom: 2.5em;
-  border-color: 1px solid;
 }
 
 .projects__grid {
