@@ -297,7 +297,7 @@ main {
 
 .blue-line {
   background-color: #2978b5;
-  height: 3px;
+  height: 10px;
   width: 100%;
   max-width: 100%;
   margin: 1em 0; /* Spacing above and below the line */
