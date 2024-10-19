@@ -288,12 +288,6 @@ main {
   margin-right: 1em;
 }
 
-.img-format {
-  float: left; /* Or 'right' if you want the image on the right */
-  margin: 0 15px 15px 0; /* Adds space around the image */
-  width: 300px; /* Adjust the width of the image */
-  height: auto; /* Automatically adjusts height based on the width */
-}
 
 .blue-line {
   background-color: var(--clr-primary);
@@ -398,6 +392,26 @@ main {
 .skills__list-item {
   margin: 0.5em;
 }
+
+
+.project-container {
+  display: flex;
+  align-items: flex-start; /* Align items at the top */
+  flex-wrap: wrap; /* Ensures text wraps below image if space runs out */
+}
+
+
+.project-text {
+  flex: 1; /* Allows text to take up remaining space */
+  margin-right: 20px; /* Adds space between text and image */
+}
+
+
+.project-image__img {
+  max-width: 300px; /* Adjust the image size as per requirement */
+  height: auto;
+}
+
 
 .contact {
   flex-direction: column;
