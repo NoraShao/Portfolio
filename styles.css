@@ -394,12 +394,12 @@ main {
 }
 
 
-ul.custom-list {
+/* ul.custom-list {
   list-style-type: disc;
   font-family: 'Poppins', sans-serif;
   padding-left: 0;
   margin: 1rem 0;
-}
+} */
 
 
 ul.custom-list li {
@@ -410,7 +410,8 @@ ul.custom-list li {
 
 
 ul.custom-list li::before {
-  /* content: '\2022'; Unicode for bullet */
+  /* Unicode for bullet */
+  content: '\2022'; 
   color: var(--clr-primary); 
   font-size: 1.5rem; /* Bigger bullet size */
   position: absolute;
