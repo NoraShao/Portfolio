@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Portfolio" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/fa62c117c7.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="styles.css" />
+    <title>Nora Shao</title>
+  </head>
+
+
+  <body class = "light" id = "top">
+    <header class="header center">
+      <h2>Tire Temperature Sensor Configuration</h2>
+      <h3>
+        <a href="https://www.formulaubc.com/" class="link"
+          >Formula UBC Racing Design Team</a
+        >
+      </h3>
+  
+      <nav class="nav center">
+        <ul class="nav__list center">
+          <li class="nav__list-item">
+            <a class="link link--nav" href="index.html">Home</a>
+          </li>
+        </ul>
+  
+        <button type="button" aria-label="toggle theme" class="btn btn--icon">
+          <i aria-hidden="true" id="btn-theme" class="fas fa-moon"></i>
+        </button>
+      </nav>
+
+
+    </header>
+  
+    <main>
+      <section class="section__peripheral">
+        
+  
+        <div class="projects__block">
+          <div class="project__peripheral">
+            <h2>Tire Temperature Sensor Configuration13</h2>
+            <p class="project__subheading">Mini-Project: June 2023 - September 2023</p>
+            <p class="project__description"><b>Project Description:</b> A <a href="https://www.izzeracing.com/products/ewExternalFiles/IZZE_IRTS_V3_Datasheet.pdf" class="link">tire 
+              temperature sensor</a> the suspension subteam wanted to use required configuring because
+              its 16 output channels would flood the CAN data channels on the car.</p>
+            <p class = "project__description"><b> What I did:</b> I set up CAN communication with a 
+              bluepill as the CAN controller and an MCP255 IC as the CAN transceiver.
+              Following the details on the datasheet,
+              I  </p>
+            <div class="project__stack__peripheral">
+              <span class="project__stack-item">C/C++</span>
+              <span class="project__stack-item">STMCubeIDE</span>
+            </div>
+            <a href="#" class="link">View on GitHub</a>
+          </div>
+
+          <div class = "blue-line"></div>
+  
+          <div class="project__peripheral">
+            <h3>Project 2</h3>
+            <p class="project__description">This is a brief description of my second project.</p>
+            <div class="project__stack__peripheral">
+              <span class="project__stack-item">C++</span>
+              <span class="project__stack-item">ROS</span>
+            </div>
+            <a href="#" class="link">View on GitHub</a>
+          </div>
+  
+          <div class="project__peripheral">
+            <h2>FSAE Car Brake Light</h2>
+            <p class="project__subheading">September 2022 - April 2023</p>
+            <!-- <p class="project__description">In my first project on the Formula team, I was responsible for designing
+              and manufacturing a brake light for the car.</p>
+
+            <p class = "project__description"> I designed the PCB schematic and layout in Altium Designer.
+            </p> -->
+            <section class="project-container">
+                <div class="project-text">
+                  <p>In my first project on the Formula team, I was responsible for designing and manufacturing a brake light for the car.</p>
+                  <p>I designed the PCB schematic and layout in Altium Designer.</p>
+                </div>
+                <div class="project-image__img">
+                  <img src="Projects Media/BrakeLight_PCBAltium.png" alt="PCB Layout" />
+                </div>
+              </section>
+            
+            <div class="project__stack__peripheral">
+
+              
+              <span class="project__stack-item">Altium Designer</span>
+              <span class="project__stack-item">PCB Manufacturing</span>
+              <span class="project__stack-item">Solidworks</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  
+    <footer class="footer">
+      <p>&copy; 2024 My Portfolio</p>
+    </footer>
+
+    <div class="scroll-container">
+      <div class="scroll-top">
+        <a aria-label="Scroll up" href="#top">
+          <i aria-hidden="true" class="fas fa-arrow-up"></i>
+        </a>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+
+
+  </body>
+</html>
