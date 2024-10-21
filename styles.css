@@ -411,7 +411,7 @@ ul.custom-list li {
 
 ul.custom-list li::before {
   content: '\2022'; 
-  color: solid red; 
+  color: var(--clr-primary); 
   font-size: 1.5rem; 
   position: absolute;
   left: 0;
