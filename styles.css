@@ -394,12 +394,12 @@ main {
 }
 
 
-/* ul.custom-list {
-  list-style-type: disc;
+ul.custom-list {
+  list-style-type: circle;
   font-family: 'Poppins', sans-serif;
   padding-left: 0;
   margin: 1rem 0;
-} */
+}
 
 
 ul.custom-list li {
