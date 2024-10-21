@@ -409,16 +409,15 @@ ul.custom-list li {
 }
 
 
-/* ul.custom-list li::before {
+ul.custom-list li::before {
   content: '\2022'; 
   color: solid red; 
   font-size: 1.5rem; 
   position: absolute;
   left: 0;
   top: 0.25rem;
-  border: 1px solid red;
 } 
-*/
+
 
 
 .project-container {
