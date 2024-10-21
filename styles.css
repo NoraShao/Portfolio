@@ -410,8 +410,8 @@ ul.custom-list li {
 
 
 ul.custom-list li::before {
-  content: '\2022'; /* Unicode for bullet */
-  color: var(--clr-primary); /* Your website's blue color */
+  /* content: '\2022'; Unicode for bullet */
+  color: var(--clr-primary); 
   font-size: 1.5rem; /* Bigger bullet size */
   position: absolute;
   left: 0;
