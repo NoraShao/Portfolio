@@ -394,22 +394,29 @@ main {
 }
 
 
-.simple__list {
-  list-style-type: disc; /* Default bullet points */
-  padding-left: 20px;
-  margin: 10px 0;
+ul.custom-list {
+  list-style-type: none;
+  font-family: 'Poppins', sans-serif;
+  padding-left: 0;
+  margin: 1rem 0;
 }
 
-.simple__list li {
-  margin-bottom: 5px;
-  font-size: 16px;
-  color: #333; /* Dark gray text */
+
+ul.custom-list li {
+  padding: 0.5rem 0;
+  position: relative;
+  padding-left: 1.5rem;
 }
 
-.simple__list li::marker {
-  color: var(--clr-primary); /* Blue bullet points */
-}
 
+ul.custom-list li::before {
+  content: '\2022'; /* Unicode for bullet */
+  color: #007BFF; /* Your website's blue color */
+  font-size: 1.5rem; /* Bigger bullet size */
+  position: absolute;
+  left: 0;
+  top: 0;
+}
 
 
 .project-container {
