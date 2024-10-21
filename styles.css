@@ -395,7 +395,7 @@ main {
 
 
 ul.custom-list {
-  list-style-type: circle;
+  list-style-type: none;
   font-family: 'Poppins', sans-serif;
   padding-left: 0;
   margin: 1rem 0;
@@ -416,7 +416,8 @@ ul.custom-list li::before {
   font-size: 1.5rem; /* Bigger bullet size */
   position: absolute;
   left: 0;
-  top: 0;
+  top: 0.25rem;
+  border: 1px solid red;
 }
 
 
