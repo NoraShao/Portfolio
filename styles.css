@@ -395,7 +395,7 @@ main {
 
 
 ul.custom-list {
-  list-style-type: none;
+  list-style-type: disc;
   font-family: 'Poppins', sans-serif;
   padding-left: 0;
   margin: 1rem 0;
@@ -411,7 +411,7 @@ ul.custom-list li {
 
 ul.custom-list li::before {
   content: '\2022'; /* Unicode for bullet */
-  color: #007BFF; /* Your website's blue color */
+  color: var(--clr-primary); /* Your website's blue color */
   font-size: 1.5rem; /* Bigger bullet size */
   position: absolute;
   left: 0;
