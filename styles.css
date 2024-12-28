@@ -434,8 +434,8 @@ ul.custom-list li::before {
 
 
 .project-image__img {
-  max-width: 150px; /* Adjust the image size as per requirement */
-  float: inline-end;
+  width: 100px; /* Adjust the image size as per requirement */
+  float: right;
   height: auto;
 }
 
