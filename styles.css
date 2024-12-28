@@ -424,6 +424,7 @@ ul.custom-list li::before {
   display: flex;
   align-items: flex-start; /* Align items at the top */
   flex-wrap: wrap; /* Ensures text wraps below image if space runs out */
+  width: 100%;
 }
 
 
@@ -435,6 +436,7 @@ ul.custom-list li::before {
 
 .project-image__img {
   width: 100px; /* Adjust the image size as per requirement */
+  height: auto;
   float: right;
   height: auto;
 }
