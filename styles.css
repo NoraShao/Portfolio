@@ -438,7 +438,7 @@ ul.custom-list li::before {
 
 
 .project-image__img {
-  width: 100px; /* Adjust the image size as per requirement */
+  width: 200px; /* Adjust the image size as per requirement */
   height: auto;
   float: left;
   height: auto;
