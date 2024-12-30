@@ -424,8 +424,10 @@ ul.custom-list li::before {
   display: flex;
   align-items: flex-start; /* Align items at the top */
   flex-wrap: wrap; /* Ensures text wraps below image if space runs out */
-  width: 100%;
+  width: 95%;
   margin-right: 0 20px;
+  padding: 1em;
+  box-sizing: border-box;
 }
 
 
@@ -440,6 +442,8 @@ ul.custom-list li::before {
   height: auto;
   float: left;
   height: auto;
+  display: block;
+  padding: 1em 0;
 }
 
 
