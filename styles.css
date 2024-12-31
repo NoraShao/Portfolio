@@ -440,7 +440,7 @@ ul.custom-list li::before {
 .project-image__img {
   width: 200px; /* Adjust the image size as per requirement */
   height: auto;
-  float: left;
+  /* float: left; */
   height: auto;
   display: block;
   /* padding: 1em 0; */
