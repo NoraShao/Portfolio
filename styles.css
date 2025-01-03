@@ -421,7 +421,7 @@ ul.custom-list li::before {
 
 
 .project-container {
-  display: flex;
+  /* display: flex; */
   align-items: flex-start; /* Align items at the top */
   flex-wrap: wrap; /* Ensures text wraps below image if space runs out */
   width: 95%;
@@ -444,6 +444,19 @@ ul.custom-list li::before {
   height: auto;
   display: block;
   /* padding: 1em 0; */
+}
+
+
+figure {
+  margin: 20px 0; /* Add space around the figure */
+  text-align: center; /* Center the image and caption */
+}
+
+
+figcaption {
+  font-size: 0.9em; /* Smaller font size for captions */
+  color: var(--clr-fg-alt); /* Use your theme's secondary text color */
+  margin-top: 10px; /* Space between the image and caption */
 }
 
 
