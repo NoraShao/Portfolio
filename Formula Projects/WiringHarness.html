@@ -158,26 +158,45 @@
                     weather condition.
                   </li>
                   <li>
-                    22 AWG wires for signals (red for 5V power, blue for signals, purple for signal gnd, and): these wires
-                    are not expected to carry excessive current
+                    22 AWG wires for power wires not expected to carry excessive current and signals
                     <ul class="custom-list">
                       <li>5V (sensor) power: red</li>
-                      <li>Signal: blue</li>
-                      <li>Signal gnd: purple</li>
+                      <li>General signals: blue</li>
+                      <li>Sensor GND: purple</li>
                       <li>CAN HI, CAN LO: yellow, green</li>
                       <li></li>
                     </ul>
                   </li>
                   <li>
-                    18 AWG wires for power (orange for 12V, black for GND): the higher wire gauge is to minimize the risk of
-                    wires overheating.
+                    18 AWG wires for power lines expected to carry more current. The higher wire gauge is to minimize the
+                    risk of overheating.
+                    <ul class="custom-list">
+                      <li>12V power: orange</li>
+                      <li>Power GND: black</li>
+                    </ul>
                   </li>
               </ul>
               </p>
               <p>
-                As well, to ensure clean routing, instead of adding routes from the ground input signal, I made a ground
-                plane that the LEDs could connect to with vias.
+                As well, to main the robustness of the harness, we used the following practices
               </p>
+              <ul>
+                <li>
+                  Used Tefzel wires
+                </li>
+                <li>
+                  Enclosed all wire bundles with Raychem DR-25 heatshrink
+                </li>
+                <li>
+                  Concentric-twisted all wire bundles
+                </li>
+                <li>
+                  Created relief loops at the base of all wires protruding from connectors
+                </li>
+                <li>
+                  Secured relief loops with Kapton tape.
+                </li>
+              </ul>
             </div>
             <div style="display: flex; align-items: flex-start; gap: 20px;">
               <figure>
