@@ -96,7 +96,12 @@
               Harness Design
               </h3>
               <p>
-                I started by mapping out the necessary signals between. 
+                I started designing the main trunk and sensor harnesses by mapping out the necessary signals between all
+                the modules in Google Sheets. The primary goal of doing this was to have an accessible and easily updatable
+                record of what signals each wire from each connector socket carried. Most of the connectors and connections
+                were of key electrical modules that didn't change from year to year, but I also had to figure out how to
+                incorporate changes for the new year such as new electrical modules and different signals that subteams
+                needed.  
               </p>
               <p>
                 With this information in mind, I started sourcing for appropriate LEDs on Digikey. Some of the considerations
@@ -138,9 +143,28 @@
           </div> -->
           
           <section class="project-container">
+            <h3>
+              Harness Manufacturing
+            </h3>
             <div class="project-text">
-              <p>Once I selected my LEDs, I worked on the actual brake light PCB. Some of the considerations I had to make
-                included heat dissipation. 
+              <p>
+              We manufactured the main trunk harness following several specifications for safety and organization.
+              We ensured both harnesses followed these specifications: <br>
+              </p>
+              <p>
+                <ul class="custom-list">
+                  <li>
+                    IP-65 rating or higher for all connectors: The harness needs to safely operate on the car in any
+                    weather condition.
+                  </li>
+                  <li>
+                    22 AWG wires for signals (red for 5V power, blue for signals, purple for signal gnd, and): these wires are not expected to carry excessive current
+                  </li>
+                  <li>
+                    18 AWG wires for power (orange for 12V, black for GND): the higher wire gauge is to minimize the risk of
+                    wires overheating.
+                  </li>
+              </ul>
               </p>
               <p>
                 As well, to ensure clean routing, instead of adding routes from the ground input signal, I made a ground
