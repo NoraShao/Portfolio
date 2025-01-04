@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Portfolio" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/fa62c117c7.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="../styles.css" />
+    <title>Nora Shao</title>
+  </head>
+
+  <body class="light" id="top">
+    <header class="header center">
+      <h3>
+        <a href="https://www.formulaubc.com/" class="link"
+          >Formula UBC Racing Design Team</a
+        >
+      </h3>
+
+      <nav class="nav center">
+        <ul class="nav__list center">
+          <li class="nav__list-item">
+            <a class="link link--nav" href="../index.html">Home</a>
+          </li>
+        </ul>
+
+        <button type="button" aria-label="toggle theme" class="btn btn--icon">
+          <i aria-hidden="true" id="btn-theme" class="fas fa-moon"></i>
+        </button>
+
+        <button
+          type="button"
+          aria-label="toggle navigation"
+          class="btn btn--icon nav__hamburger"
+        >
+        <i aria-hidden="true" class="fas fa-bars"></i>
+      </button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section__peripheral">
+        <h2 class="section__title">FSAE Steering Wheel</h2>
+
+        <div class="project__peripheral">
+          <p class="project__subheading">September 2024 - present</p>
+
+          <section class="project-container" style="display: flex;">
+            <div class="project-text">
+              <p>In my first project on the Formula UBC design team, I was responsible for designing and manufacturing
+                a brake light for the race car.</p>
+            </div>
+          </section>
+
+          <section class="project-container" style="display: flex; align-items: flex-start;">
+            <div class="project-text">
+              <p>I started by reviewing my project goals. The FSAE rules (to the right) contained guidelines for the LED
+                colour and sizing, so I had an approximate idea of the necessary size for the brake light PCB and how
+                many LEDs I would need. As well, I had to facilitate the brake light's integration with the rest of the 
+                racecar. For example, like the other electrical modules on the car, the brake light also had to be IP-67 
+                rated, and actuated by a preset 12V brake signal. 
+              </p>
+              
+            </div>
+            <figure>
+              <img src="Formula Media/BrakeLight_Rules.png" alt="Brake Light Rules" class="project-image__img" 
+              style="width: 500px; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+              <figcaption>Relevant FSAE Rules for a Brake Light</figcaption>
+            </figure>
+          </section>
+          <section class="project-container" style="display: flex; align-items: flex-start;">
+            <div class="project-text">
+              <p>
+                With this information in mind, I started sourcing for appropriate LEDs on Digikey. Some of the considerations
+                I had to make included whether the LEDs were automotive grade, their luminosity, current-draw, and the 
+                feasibility of the necessary corresponding resistor values.  
+              </p>
+              Based on these criteria, I narrowed down my LED options to four Digikey products. To select the LEDs used on 
+              the actual brake light, I designed an LED test board in Altium Designer.
+              <div style="display: flex; align-items: flex-start; gap: 20px;">
+                <figure>
+                <img src="Formula Media/BrakeLight_LEDSelection.png" alt="LED Selection" class="project-image__img" 
+                style="width: 500px; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+                <figcaption>LED Selection</figcaption>
+              </figure>
+
+              <figure>
+                <img src="Formula Media/BrakeLight_TestBoard.png" alt="LED Test Board" class="project-image__img" 
+                style="width: 200px; height: auto;" />
+                <figcaption>LED Test Board</figcaption>
+              </figure>
+              </div>
+              
+            </div>
+          </section>
+            
+          <!-- </section>
+            <div class="project-text">
+              <p>
+                To select the LEDs used on the actual brake light, I started by designing an LED test board in Altium
+                Designer.
+              </p>
+            </div>
+          <div style="display: flex; align-items: flex-start; gap: 20px;">
+            <figure>
+              <img src="Formula Media/BrakeLight_TestBoard.png" alt="LED Test Board" class="project-image__img" 
+              style="width: 200px; height: auto;" />
+              <figcaption>LED Test Board</figcaption>
+            </figure>
+          </div> -->
+          
+          <section class="project-container">
+            <div class="project-text">
+              <p>Once I selected my LEDs, I worked on the actual brake light PCB. Some of the considerations I had to make
+                included heat dissipation. 
+              </p>
+              <p>
+                As well, to ensure clean routing, instead of adding routes from the ground input signal, I made a ground
+                plane that the LEDs could connect to with vias.
+              </p>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 20px;">
+              <figure>
+                <img src="Formula Media/BrakeLight_Schematic.png" alt="Brake Light Schematic" class="project-image__img" 
+                style="width: 480px; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+                <figcaption>Brake Light Schematic</figcaption>
+              </figure>
+              <figure>
+                <img src="Formula Media/BrakeLight_PCBAltium.png" alt="Brake Light PCB Layout" class="project-image__img"
+                 style="width: 280px; height: auto;" />
+                <figcaption>Brake Light PCB Layout</figcaption>
+              </figure>
+              <figure>
+                <img src="Formula Media/BrakeLight_Board.png" alt="Brake Light Rules" class="project-image__img" 
+              style="width: 260px; height: auto; border: 2px solid #e0e0e0; 
+              box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+                <figcaption>Brake Light Working</figcaption>
+              </figure>
+            </div>
+          </section>
+          <section class="project-container">
+            <div class="project-text">
+              In addition to manufacturing the brake light PCB, I was also responsible for protecting
+              it from environmental factors and mounting it on the car. I designed a 3D-printable resin enclosure in 
+              Solidworks that could be mounted onto the rear differentials of the car and would also act as a diffuser 
+              for the LEDs. Before I secured the PCB in its water and airtight enclosure, for additional water resistance, 
+              I applied a layer of conformal coating onto the PCB itself.
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 20px;">
+              <figure>
+                <img src="Formula Media/BrakeLight_Lights.jpg" alt="Brake Light Rules" class="project-image__img" 
+              style="width: 260px; height: auto; border: 2px solid #e0e0e0; 
+              box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+                <figcaption>Brake Light Working</figcaption>
+              </figure>
+              <figure>
+                <img src="Formula Media/BrakeLight_Enclosure.png" alt="PCB Layout" 
+                class="project-image__img" style="width: 200px; height: auto;" />
+                <figcaption>
+                  Brake Light Enclosure (SolidWorks)
+                </figcaption>
+              </figure>
+              
+            </div>
+            
+          </section>
+
+          <div class="project__stack__peripheral">
+            <span class="project__stack-item">Altium Designer</span>
+            <span class="project__stack-item">PCB Manufacturing</span>
+            <span class="project__stack-item">Solidworks</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2024 My Portfolio</p>
+    </footer>
+
+    <div class="scroll-container">
+      <div class="scroll-top">
+        <a aria-label="Scroll up" href="#top">
+          <i aria-hidden="true" class="fas fa-arrow-up"></i>
+        </a>
+      </div>
+    </div>
+
+    <script src="../script.js"></script>
+  </body>
+</html>
