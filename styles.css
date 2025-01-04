@@ -398,7 +398,7 @@ ul.custom-list {
   list-style-type: none;
   font-family: 'Poppins', sans-serif;
   padding-left: 0;
-  margin: 1rem 0;
+  bottom: 1.5rem 0;
 }
 
 
