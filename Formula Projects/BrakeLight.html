@@ -69,11 +69,7 @@
                 racecar. For example, like the other electrical modules on the car, the brake light also had to be IP-67 
                 rated, and actuated by a preset 12V brake signal. 
               </p>
-              <p>
-                With this information in mind, I started sourcing for appropriate LEDs on Digikey. Some of the considerations
-                I had to make included whether the LEDs were automotive grade, their luminosity, current-draw, and the 
-                feasibility of the necessary corresponding resistor values.  
-              </p>
+              
             </div>
             <figure>
               <img src="Formula Media/BrakeLight_Rules.png" alt="Brake Light Rules" class="project-image__img" 
@@ -83,7 +79,12 @@
           </section>
           <section class="project-container" style="display: flex; align-items: flex-start;">
             <div class="project-text">
-              Based on these criteria, I narrowed down my LED options to four Digikey projects. To select the LEDs used on 
+              <p>
+                With this information in mind, I started sourcing for appropriate LEDs on Digikey. Some of the considerations
+                I had to make included whether the LEDs were automotive grade, their luminosity, current-draw, and the 
+                feasibility of the necessary corresponding resistor values.  
+              </p>
+              Based on these criteria, I narrowed down my LED options to four Digikey products. To select the LEDs used on 
               the actual brake light, I designed an LED test board in Altium Designer.
               <div style="display: flex; align-items: flex-start; gap: 20px;">
                 <figure>
@@ -120,7 +121,11 @@
           <section class="project-container">
             <div class="project-text">
               <p>Once I selected my LEDs, I worked on the actual brake light PCB. Some of the considerations I had to make
-                included heat dissipation.
+                included heat dissipation. 
+              </p>
+              <p>
+                As well, to ensure clean routing, instead of adding routes from the ground input signal, I made a ground
+                plane that the LEDs could connect to with vias.
               </p>
             </div>
             <div style="display: flex; align-items: flex-start; gap: 20px;">
@@ -135,7 +140,7 @@
                 <figcaption>Brake Light PCB Layout</figcaption>
               </figure>
               <figure>
-                <img src="Formula Media/BrakeLight_Lights.jpg" alt="Brake Light Rules" class="project-image__img" 
+                <img src="Formula Media/BrakeLight_Board.png" alt="Brake Light Rules" class="project-image__img" 
               style="width: 260px; height: auto; border: 2px solid #e0e0e0; 
               box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
                 <figcaption>Brake Light Working</figcaption>
@@ -151,6 +156,12 @@
               I applied a layer of conformal coating onto the PCB itself.
             </div>
             <div style="display: flex; align-items: flex-start; gap: 20px;">
+              <figure>
+                <img src="Formula Media/BrakeLight_Lights.jpg" alt="Brake Light Rules" class="project-image__img" 
+              style="width: 260px; height: auto; border: 2px solid #e0e0e0; 
+              box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+                <figcaption>Brake Light Working</figcaption>
+              </figure>
               <figure>
                 <img src="Formula Media/BrakeLight_Enclosure.png" alt="PCB Layout" 
                 class="project-image__img" style="width: 200px; height: auto;" />
