@@ -54,33 +54,50 @@
         <div class="project__peripheral">
           <p class="project__subheading">September 2023 - April 2024</p>
 
-          <section class="project-container" style="display: flex;">
+          <section class="project-container" style="display: flex; align-items: flex-start;">
             <div class="project-text">
               <p>
-                In our race car, we have a wiring harness that provides power to and enables communication between 
-                all the electrical modules. The harness is essential to the operating of the car. 
+                The wiring harness in our race car consists of three main harnesses; the main trunk harness, engine harness, 
+                and the sensor harness. <br>
+                The main trunk and engine harness work together to provide power to and enable communication between 
+                all the electrical modules on the car. The main trunk harness connects the main electrical modules at
+                the front of the car, and connects to the engine harness at the back of the car via an engine bulkhead
+                connector. Like its name suggests, the engine harness connects to the car engine and delivers signals to
+                various modules at the back of the car, including for shifting and actuating the brake light. 
+                The harnesses are essential for the operating of the car. <br>
+                The sensor harness primarily aids data collection on various parts of the car while its running, which 
+                other subteams use to improve their designs. The signals from the sensors (i.e. brake pressure, wheel speeds,
+                shock position, etc.) all travel to our AIM EVO5 Datalogger, where we collect the data from, via a USB
+                or wifi. 
               </p>
             </div>
           </section>
 
           <section class="project-container" style="display: flex; align-items: flex-start;">
             <div class="project-text">
-              <p>I started by reviewing my project goals. The FSAE rules (to the right) contained guidelines for the LED
-                colour and sizing, so I had an approximate idea of the necessary size for the brake light PCB and how
-                many LEDs I would need. As well, I had to facilitate the brake light's integration with the rest of the 
-                racecar. For example, like the other electrical modules on the car, the brake light also had to be IP-67 
-                rated, and actuated by a preset 12V brake signal. 
+              <p>
+                In the 2023-2024 school year, I was responsible for remaking the main trunk and sensor harnesses. Because the 
+                sensor harness is not essential for the car to run, we prioritized designing and manufacturing the main trunk
+                harness.
               </p>
+              
               
             </div>
             <figure>
-              <img src="Formula Media/BrakeLight_Rules.png" alt="Brake Light Rules" class="project-image__img" 
-              style="width: 500px; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
-              <figcaption>Relevant FSAE Rules for a Brake Light</figcaption>
+              <img src="Formula Media/MainHarness_Old.jpg" alt="Old Main Trunk Harness" 
+              class="project-image__img" style="width: 500px; height: auto; border: 2px solid #e0e0e0; 
+              box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+              <figcaption>Previous (2022/23) Main Trunk Harness</figcaption>
             </figure>
           </section>
           <section class="project-container" style="display: flex; align-items: flex-start;">
             <div class="project-text">
+              <h3>
+              Harness Design
+              </h3>
+              <p>
+                I started by mapping out the necessary signals between. 
+              </p>
               <p>
                 With this information in mind, I started sourcing for appropriate LEDs on Digikey. Some of the considerations
                 I had to make included whether the LEDs were automotive grade, their luminosity, current-draw, and the 
