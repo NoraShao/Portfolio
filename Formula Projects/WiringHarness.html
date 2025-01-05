@@ -129,21 +129,53 @@
                 incorporate changes for the new year such as new electrical modules and different signals that subteams
                 needed.  
               </p>
+              <p>
+                For organization and safety, we followed these guidelines for selecting wires: <br>
+                </p>
+                <p>
+                  <ul class="custom-list">
+                    <li>
+                      IP-65 rating or higher for all connectors: The harness needs to safely operate on the car in any
+                      reasonable weather condition, so the junctions between the wires and electrical modules should be highly
+                      dust and water resistant.
+                    </li>
+                    <li>
+                      22 AWG wires for power wires not expected to carry excessive current and all signal wires
+                      <ul class="custom-list">
+                        <li>5V (sensor) power: red</li>
+                        <li>General signals: blue</li>
+                        <li>Sensor GND: purple</li>
+                        <li>CAN HI, CAN LO (for CAN bus communication between modules): yellow, green</li>
+                      </ul>
+                    </li>
+                    <li>
+                      18 AWG wires for power lines expected to carry more current. The higher wire gauge is to minimize the
+                      risk of overheating.
+                      <ul class="custom-list">
+                        <li>12V power: orange</li>
+                        <li>Power GND: black</li>
+                      </ul>
+                    </li>
+                </ul>
+                </p>
               <div style="display: flex; align-items: flex-start; gap: 20px;">
                 <figure>
-                <img src="Formula Media/MainHarness_SheetCons.png" alt="LED Selection" class="project-image__img" 
-                style="width: 500px; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+                <img src="Formula Media/MainHarness_SheetCons.png" alt="Main Trunk Harness (Sheets)" 
+                class="project-image__img" style="width: 500px; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
                 <figcaption>Some Connector Mappings for Main Trunk Harness (Google Sheets)</figcaption>
               </figure>
 
               <figure>
-                <img src="Formula Media/SensorHarness_SheetCons.png" alt="LED Test Board" class="project-image__img" 
-                style="width: 500px; height: auto;" />
+                <img src="Formula Media/SensorHarness_SheetCons.png" alt="Sensor Harness (Sheets)" 
+                class="project-image__img" style="width: 500px; height: auto;" />
                 <figcaption>Some Connector Mappings for Sensor Harness (Google Sheets)</figcaption>
               </figure>
               </div>
               
             </div>
+          </section>
+          <section class = "project-container" style="">
+
           </section>
             
           <!-- </section>
@@ -166,47 +198,25 @@
               Harness Manufacturing
             </h3>
             <div class="project-text">
+              
               <p>
-              We manufactured the main trunk harness following several specifications for safety and organization.
-              We ensured both harnesses followed these specifications: <br>
-              </p>
-              <p>
-                <ul class="custom-list">
-                  <li>
-                    IP-65 rating or higher for all connectors: The harness needs to safely operate on the car in any
-                    weather condition.
-                  </li>
-                  <li>
-                    22 AWG wires for power wires not expected to carry excessive current and signals
-                    <ul class="custom-list">
-                      <li>5V (sensor) power: red</li>
-                      <li>General signals: blue</li>
-                      <li>Sensor GND: purple</li>
-                      <li>CAN HI, CAN LO: yellow, green</li>
-                    </ul>
-                  </li>
-                  <li>
-                    18 AWG wires for power lines expected to carry more current. The higher wire gauge is to minimize the
-                    risk of overheating.
-                    <ul class="custom-list">
-                      <li>12V power: orange</li>
-                      <li>Power GND: black</li>
-                    </ul>
-                  </li>
-              </ul>
-              </p>
-              <p>
-                As well, to main the robustness of the harness, we used the following practices
+                As well, to main the robustness of both harnesses, we made sure to follow these specifications when 
+                manufacturing them:
               </p>
               <ul class="custom-list">
                 <li>
                   Used Tefzel wires
                 </li>
                 <li>
-                  Enclosed all wire bundles with Raychem DR-25 heatshrink
+                  Enclosed all wire bundles with Raychem DR-25 heatshrink: DR-25 heatshrink is laceration-resistant, which
+                  protects the wires from being cut by factors such as excessive rubbing against sharp edges. It also protects
+                  the wires from possible water shorts. 
                 </li>
                 <li>
-                  Concentric-twisted all wire bundles
+                  Concentric-twisted all wire bundles: This serves two purposes. First, twisting wires increases their 
+                  relative angles, minimizing electrical noise from the induced magnetic fields around each current-carrying
+                  wire. Second, twisting wires makes them more resist to stress from bending, because instead of wires being
+                  either fully compresses or stretched depending on their position in the bundle  
                 </li>
                 <li>
                   Created relief loops at the base of all wires protruding from connectors
