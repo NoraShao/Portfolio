@@ -53,11 +53,58 @@
           to various software applications like Linux and machine learning via labs to ultimately design an autonomous virtual
           robot to compete in a simulated competition. </p>
 
-          <p class = "project__description">
+          <h3>Line Detection from Video</h3>
+          <section class="project-container">
+            <div class="project-text" style="align-self: flex-start;">
+              <p>
+                In this lab, we were given a video of a path, and assigned the task of generating the same video, but with
+                a ball following the path. <br>
+                I processed the video frame-by-frame with OpenCV, and started by converting each frame to grayscale.
+              </p>Then I thresholded the video so the darker path was the only black in the video. To determine the correct
+              threshold that would differentiate between the intensity of path and its surroundings, I plotted the pixel 
+              intensities of a horizontal section of the frame. 
+              <br>  
+            </div>
+            <figure>
+              <video controls width="100%" style="max-width: 400px; margin: 0 auto; display: block;">
+                <source src="Other Media/black_and_white_video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <figcaption style="text-align: center; margin-top: 10px; font-size: 0.9em; color: var(--clr-fg-alt);">
+                Thresholded video.
+              </figcaption>
+            </figure>
+          </section>
+          <section class="project-container" style="display: flex; align-items: flex-start;">
 
-          </p>
+          </section>
 
-          <h3>PID line-following robot</h3>
+
+
+          <div class="project__stack__peripheral">
+            <span class="project__stack-item">OpenCV</span>
+            <span class="project__stack-item">Python</span>
+          </div>
+          <a href="#" class="link">View on GitHub</a>
+
+
+
+          <br>
+          <br>
+          <h3>License plate recognizer (Convolutional Neural Network)</h3>
+          <section class="project-container">
+            <div class="project-text">
+              <p>
+                In this lab, I trained a neural network to recognize characters off generated License
+                plate images.
+              </p>
+            </div>
+
+          </section>
+
+
+
+          <h3>GUI and Image Tracking with SIFT</h3>
           <section class="project-container">
 
           </section>
