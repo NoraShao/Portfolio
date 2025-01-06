@@ -447,6 +447,12 @@ ul.custom-list li::before {
   /* padding: 1em 0; */
 }
 
+@media (max-width: 768px) {
+  .project-container > div {
+    flex-direction: column; /* Stack sections vertically on small screens */
+  }
+}
+
 
 figure {
   margin: 20px 0; /* Add space around the figure */
