@@ -58,13 +58,14 @@
             <div class="project-text">
               <p>
                 The wiring harness in our race car consists of three main harnesses; the main trunk harness, engine harness, 
-                and the sensor harness. <br>
+                and the sensor harness. <br> <br>
                 The main trunk and engine harness work together to provide power to and enable communication between 
                 all the electrical modules on the car. The main trunk harness connects the main electrical modules at
                 the front of the car, and connects to the engine harness at the back of the car via an engine bulkhead
                 connector. Like its name suggests, the engine harness connects to the car engine and delivers signals to
                 various modules at the back of the car, including for shifting and actuating the brake light. 
                 The harnesses are essential for the operating of the car. <br>
+                <br>
                 The sensor harness primarily aids data collection on various parts of the car while its running, which 
                 other subteams use to improve their designs. The signals from the sensors (i.e. brake pressure, wheel speeds,
                 shock position, etc.) all travel to our AIM EVO5 Datalogger, where we collect the data from, via a USB
@@ -73,8 +74,8 @@
               <p> <b>Main Trunk Harness</b> <br> </p> 
 
               <ul class="custom-list">
-                <li> Provides power to and enables communication between the primary electrical modules (i.e. Power 
-                  Distribution Module, Engine Control Unit, Shifting Module, Steering Wheel, Dash) </li>
+                <li> Provides power to and enables communication between the primary electrical modules: Power 
+                  Distribution Module (PDM), Engine Control Unit (ECU), Shifting Module, Steering Wheel, Dash) </li>
                 <li> Connects signals and power frome the modules at the front of the car to modules at the rear of the car
                   (where the engine harness is located) via an engine bulkhead connector</li>
               </ul>
@@ -185,8 +186,74 @@
             
           <section class="project-container" style="display: flex;">
             To develop a more accurate visualization and record of the harness encapsulating its physical layout
-            as well, we used a harness design software, RapidHarness. RapidHarness enables us to
+            as well, we used a harness design software, RapidHarness. RapidHarness enables us to integrate information
+            about connectors with their pinouts and the physical layout and details of wiring. For example, you can group
+            wires into bundles to reflect their actual paths on the car, record whether they are twisted or not, and organize
+            splices and their location.
+            <div style="display: flex; align-items: flex-start; gap: 20px;">
+              <figure>
+              <img src="Formula Media/MainHarness_RapidHarness.png" alt="Main Trunk Harness (RapidHarness)" 
+              class="project-image__img" style="width: 500px; height: auto; 
+              border: 2px solid #e0e0e0; box-shadow: 
+              2px 2px 8px rgba(0, 0, 0, 0.1);" />
+              <figcaption>Main trunk harness layout on RapidHarness</figcaption>
+            </figure>
 
+            <figure>
+              <img src="Formula Media/SensorHarness_RapidHarness.png" alt="Sensor Harness (RapidHarness)" 
+              class="project-image__img" style="width: 510px; height: auto; 
+              border: 2px solid #e0e0e0; box-shadow: 
+              2px 2px 8px rgba(0, 0, 0, 0.1);" />
+              <figcaption>Sensor harness layout on RapidHarness</figcaption>
+            </figure>
+            </div>
+            <br>
+
+            I could also document the pinout of each connector and information about wires, such as their colour and
+            gauge.<br>
+            These are the pinouts for the two Engine Control Unit (ECU) connectors on the main trunk harness, as recorded
+            in RapidHarness,
+
+            <div style="display: flex; align-items: flex-start; gap: 20px;">
+              <figure>
+              <img src="Formula Media/MainHarness_ECUA.png" alt="Main Trunk Harness (RapidHarness)" 
+              class="project-image__img" style="width: 500px; height: auto; 
+              border: 2px solid #e0e0e0; box-shadow: 
+              2px 2px 8px rgba(0, 0, 0, 0.1);" />
+              <figcaption>ECU Connector A pinout (RapidHarness)</figcaption>
+            </figure>
+
+            <figure>
+              <img src="Formula Media/MainHarness_ECUB.png" alt="Sensor Harness (RapidHarness)" 
+              class="project-image__img" style="width: 510px; height: auto; 
+              border: 2px solid #e0e0e0; box-shadow: 
+              2px 2px 8px rgba(0, 0, 0, 0.1);" />
+              <figcaption>ECU Connector B pinout (Main Trunk RapidHarness)</figcaption>
+            </figure>
+            </div>
+            <br>
+
+            and are the pinouts to the two main connectors on the AIM Datalogger on the sensor harness:
+            <div style="display: flex; align-items: flex-start; gap: 20px;">
+              <figure>
+              <img src="Formula Media/SensorHarness_AIM22.png" alt="Main Trunk Harness (RapidHarness)" 
+              class="project-image__img" style="width: 500px; height: auto; 
+              border: 2px solid #e0e0e0; box-shadow: 
+              2px 2px 8px rgba(0, 0, 0, 0.1);" />
+              <figcaption>AIM 22-pin Connector pinout (Sensor harness RapidHarness)</figcaption>
+            </figure>
+
+            <figure>
+              <img src="Formula Media/SensorHarness_AIM37.png" alt="Sensor Harness (RapidHarness)" 
+              class="project-image__img" style="width: 510px; height: auto; 
+              border: 2px solid #e0e0e0; box-shadow: 
+              2px 2px 8px rgba(0, 0, 0, 0.1);" />
+              <figcaption>AIM 22-pin Connector pinout (Sensor harness RapidHarness)</figcaption>
+            </figure>
+            </div>
+            
+
+            
             <br>
             <br>
           </section>
@@ -251,7 +318,7 @@
                   <div style="display: flex; align-items: flex-start; gap: 20px;">
                     <figure>
                       <img src="Formula Media/MainHarness_ShawnManuVice.jpg" alt="Concentric Twisting" class="project-image__img" 
-                      style="width: 420px; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+                      style="width: 400px; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
                       <figcaption>Concentric twisting layers of a bundle of wires</figcaption>
                     </figure>
                   </div>
