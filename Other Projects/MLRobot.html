@@ -57,32 +57,43 @@
 
           <h3>Line Detection from Video</h3>
           <section class="project-container">
-            <div class="project-text" style="align-self: flex-start;">
+            <div class="project-text" style="align-self: flex-start;" style="display: flex; align-items: flex-start;">
               <p>
                 In this lab, we were given a video of a path, and assigned the task of generating the same video, but with
                 a ball following the path. <br>
                 I processed the video frame-by-frame with OpenCV, and started by converting each frame to grayscale.
               </p>Then I thresholded the video so the darker path was the only black in the video. To determine the correct
-              threshold that would differentiate between the intensity of path and its surroundings, I plotted the pixel 
-              intensities of a horizontal section of the frame. 
+              threshold that would differentiate between the intensity of path and its surroundings, I took a ten pixel-high
+              horizontal section near the bottom of the frame and plotted the mean pixel intensities across it. 
               <br>  
             </div>
             <figure>
+              <img src="Other Media/ENPH353_Lab2_PixelIntensity.png" alt="Pixel Intensities" 
+              class="project-image__img" style="width: 400px; height: auto; border: 2px solid #e0e0e0; 
+              box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
+              <figcaption>Average pixel intensity across frame from row 220-230</figcaption>
+            </figure>
+          </section>
+
+            <div style="display: flex; align-items: flex-start; gap: 20px;">
+              <figure>
               <!-- <video controls="controls" width="100%" style="max-width: 400px; margin: 0 auto; display: block;">
                 <source src="https://NoraShao.github.io/Portfolio/Other Projects/Other Media/out_with_ball.mp4" type="video/mp4">
               </video> -->
-              <iframe
-                src="https://drive.google.com/file/d/1xl7Pnjv121lf8JLc6t3PqntfMurXFqho/preview"
-                width="100%"
-                height="300"
-                style="max-width: 400px; margin: 0 auto; display: block; border: none;"
-                allow="autoplay"
-              ></iframe>
-              <figcaption style="text-align: center; margin-top: 10px; font-size: 0.9em; color: var(--clr-fg-alt);">
-                Thresholded video.
-              </figcaption>
-            </figure>
-          </section>
+                <iframe
+                  src="https://drive.google.com/file/d/1xl7Pnjv121lf8JLc6t3PqntfMurXFqho/preview"
+                  width="100%"
+                  height="300"
+                  style="max-width: 400px; margin: 0 auto; display: block; border: none;"
+                  allow="autoplay"
+                ></iframe>
+                <figcaption style="text-align: center; margin-top: 10px; font-size: 0.9em; color: var(--clr-fg-alt);">
+                  Thresholded black-and-white video.
+                </figcaption>
+              </figure>
+            </div>
+            
+          
           <section class="project-container" style="display: flex; align-items: flex-start;">
             For simplicity, I decided to center the ball around a constant horizontal slice of pixels near the bottom of the
             frame. With the frames from the thresholded video as a reference for where to overlay a ball on the path in the original
