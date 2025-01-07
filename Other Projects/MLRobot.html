@@ -56,16 +56,18 @@
           <br>
 
           <h3>Line Detection from Video</h3>
-          <section class="project-container">
-            <div class="project-text" style="align-self: flex-start;" style="display: flex; align-items: flex-start;">
+          <section class="project-container" style="display: flex; align-items: flex-start;">
+            <div class="project-text" style="align-self: flex-start;">
               <p>
                 In this lab, we were given a video of a path, and assigned the task of generating the same video, but with
                 a ball following the path. <br>
                 I processed the video frame-by-frame with OpenCV, and started by converting each frame to grayscale.
-              </p>Then I thresholded the video so the darker path was the only black in the video. To determine the correct
-              threshold that would differentiate between the intensity of path and its surroundings, I took a ten pixel-high
-              horizontal section near the bottom of the frame and plotted the mean pixel intensities across it. 
-              <br>  
+              </p>
+              <p>
+                Then I thresholded the video so the darker path was the only black in the video. To determine the correct
+                threshold that would differentiate between the intensity of path and its surroundings, I took a ten pixel-high
+                horizontal section near the bottom of the frame and plotted the mean pixel intensities across it. 
+              </p>  
             </div>
             <figure>
               <img src="Other Media/ENPH353_Lab2_PixelIntensity.png" alt="Pixel Intensities" 
