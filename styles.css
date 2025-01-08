@@ -447,6 +447,24 @@ ul.custom-list li::before {
   /* padding: 1em 0; */
 }
 
+
+.video-container {
+  max-width: 400px;
+  margin: 0 auto;
+  border: 2px solid #e0e0e0; /* Same border as images */
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); /* Same shadow as images */
+  border-radius: 4px; /* Optional: Add rounded corners */
+  overflow: hidden; /* Ensures the border-radius clips the iframe */
+}
+
+.video-container iframe {
+  width: 100%;
+  height: 300px;
+  display: block;
+  border: none; /* Remove default iframe border */
+}
+
+
 @media (max-width: 768px) {
   .project-container > div {
     flex-direction: column; /* Stack sections vertically on small screens */
