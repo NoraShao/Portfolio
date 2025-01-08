@@ -239,7 +239,7 @@
               Approximate Nearest Neighbors). Using k nearest-neighbor matching (kNN) with the two closest matches to a
               keypoint descriptor, FLANN lets me quickly identify good matches between the template image and video frame.
             </div>
-            <div style="display: flex; align-items: flex-start; gap: 20px;">
+            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 20px;">
               <figure>
                 <img src="Other Media/VirtualBox_ENPH353_Xubuntu_2023_01_10_2024_16_23_42.png" alt="SIFT GUI" 
                 class="project-image__img" style="width: 1000px; height: auto; border: 2px solid #e0e0e0; 
@@ -280,8 +280,42 @@
           <br>
           <h3>License plate recognizer (Convolutional Neural Network)</h3>
           <section class="project-container">
-
+            <p>
+              Here, I trained a convolutional neural network (CNN) on Google colab to recognize characters from 
+              generated license plate images.
+            </p>
           </section>
+          <section class="project-container" style="display: flex; align-items: flex-start;">
+            
+            <div class="project-text" style="align-self: flex-start;">
+              We were provided with a license plate generator that randomixed two numerical characters following two
+              alphabetical characters on a license plate template with fixed spacing.
+            </div>
+            <figure>
+              <img src="Other Media/plate_AY43.png" alt="License Plate AY43" 
+              class="project-image__img" style="width: 500px; height: auto; border: 2px solid #e0e0e0; 
+              box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
+              <figcaption>Example of generated license plate</figcaption>
+            </figure>
+            <br>
+            <div class="project-text" style="align-self: flex-start;">
+              <p>
+                Before I started working on character recognition with the CNN, I had to start with some image processing.
+                Taking advantage of the fixed spacing in all the license plates, I generated subsections of the license plates
+                with each individual character.
+              </p>
+            </div>
+            <figure>
+              <img src="Other Media/plate_AY43_char 3.png" alt="License Plate AY43" 
+              class="project-image__img" style="width: 500px; height: auto; border: 2px solid #e0e0e0; 
+              box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
+              <figcaption>Character 3 of license plate AY43</figcaption>
+            </figure>
+          </section>
+            
+
+
+
           <div class="project__stack__peripheral">
             <span class="project__stack-item">C/C++</span>
             <span class="project__stack-item">STMCubeIDE</span>
