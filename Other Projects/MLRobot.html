@@ -288,7 +288,7 @@
           <section class="project-container" style="display: flex; align-items: flex-start;">
             
             <div class="project-text" style="align-self: flex-start;">
-              We were provided with a license plate generator that randomixed two numerical characters following two
+              We were provided with a license plate generator that randomized two numerical characters following two
               alphabetical characters on a license plate template with fixed spacing. I generated a training set and a
               validation set of license plates.
             </div>
@@ -340,33 +340,55 @@
                 performance with the matplotlib Python library.
               </p>
             </div>
-            <div style="display: flex; align-items: flex-start; gap: 20px;">
+            
+          </section>
+          <div style="display: flex; align-items: flex-start; gap: 20px;">
               <figure>
                 <img src="Other Media/ENPH353_Lab6_ModelAccuracy.png" alt="LP CNN Accuracy" 
-                class="project-image__img" style="width: 100px; height: auto; border: 2px solid #e0e0e0; 
+                class="project-image__img" style="width: 500px; height: auto; border: 2px solid #e0e0e0; 
                 box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
                 <figcaption>CNN model accuracy</figcaption>
               </figure>
               <figure>
                 <img src="Other Media/ENPH353_Lab6_ModelLoss.png" alt="LP CNN Accuracy" 
-                class="project-image__img" style="width: 100px; height: auto; border: 2px solid #e0e0e0; 
+                class="project-image__img" style="width: 500px; height: auto; border: 2px solid #e0e0e0; 
                 box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
                 <figcaption>CNN model loss</figcaption>
               </figure>
             </div>
-          </section>
           
+          <section class="project-container" style="display: flex; align-items: flex-start;">
+            <div class="project-text">
+              I noticed a few flaws with my model. For example, it struggled differentiating between Q and Os, and Cs (to a
+              lesser extent). I likely could have improved by model by artificially increasing the number of these characters
+              in its training set, but that wasn't a priority.
+            </div>
+
+          </section>
+          <div style="display: flex; align-items: flex-start; gap: 20px;">
+            <figure>
+              <img src="Other Media/ENPH353_Lab6_ModelLoss.png" alt="LP CNN Accuracy" 
+              class="project-image__img" style="width: 700px; height: auto; border: 2px solid #e0e0e0; 
+              box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
+              <figcaption>Model confusion matrix</figcaption>
+            </figure>
+          </div>
 
 
 
           <div class="project__stack__peripheral">
-            <span class="project__stack-item">C/C++</span>
-            <span class="project__stack-item">STMCubeIDE</span>
+            <span class="project__stack-item">Convolutional Neural Networks</span>
+            <span class="project__stack-item">OpenCV</span>
           </div>
           <a href="#" class="link">View on GitHub</a>
         </div>
 
 
+        <br>
+        <br>
+        <h3>Line-following with Reinforcement Learning</h3>
+        Again moving back to the Linux environment, in this lab, we trained a robot in a simulated Gazebo world to follow a 
+        path with reinforcement learning.
 
         <div class="project__stack__peripheral">
             <span class="project__stack-item">Imitation Learning</span>
