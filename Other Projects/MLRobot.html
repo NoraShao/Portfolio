@@ -195,7 +195,7 @@
                   src="https://drive.google.com/file/d/1dpt-xLdRu8IOYYmyqsXJKSF0GIZFUYFv/preview"
                   width="100%"
                   height="300"
-                  style="max-width: 600px; margin: 0 auto; display: block; border: none;"
+                  style="max-width: 1000px; margin: 0 auto; display: block; border: none;"
                   allow="autoplay"
                 ></iframe>
               </div>
@@ -213,18 +213,46 @@
                The first thing I made was the GUI, which was done in Qt Designer. For modularity, I set up options for the template image and video to draw
                the feature matches between. 
              </p>
+             <div style="display: flex; align-items: flex-start; gap: 20px;">
               <figure>
                 <img src="Other Media/ENPH353_Lab4_GUI.png" alt="SIFT GUI" 
-                class="project-image__img" style="width: 400px; height: auto; border: 2px solid #e0e0e0; 
+                class="project-image__img" style="width: 1000px; height: auto; border: 2px solid #e0e0e0; 
                 box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
               <figcaption>SIFT App GUI building with PyQt5</figcaption>
               </figure>
-      
-             
+             </div>
+              
             </div>
           </section>
           <section class="project-container">
-
+            <div class="project-text">
+              
+              
+              SIFT, Scale-invariant feature transform, is a computer vision algorithm that detects distinctive features in an
+              image that are invariant to transformations like scaling and rotation, or viewpoint changes, making it useful
+              for object detection, which is what I'm using it for in this lab. For tracking the template image in the video,
+              I started by converting each frame of the video to grayscale. Then I used OpenCV's SIFT function to detect
+              keypoints on and compute descriptors of each frame of the video, and draw them on the frame.
+               
+              <br>
+              To draw the matches between the keypoints on the template image and video, I used FLANN (Fast Library for 
+              Approximate Nearest Neighbors). Using k nearest-neighbor matching (kNN) with the two closest matches to a
+              keypoint descriptor, FLANN lets me quickly identify good matches between the template image and video frame.
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 20px;">
+              <figure>
+                <img src="Other Media/VirtualBox_ENPH353_Xubuntu_2023_01_10_2024_16_23_42.png" alt="SIFT GUI" 
+                class="project-image__img" style="width: 1000px; height: auto; border: 2px solid #e0e0e0; 
+                box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
+              <figcaption>SIFT keypoints on the video</figcaption>
+              </figure>
+              <figure>
+                <img src="Other Media/VirtualBox_ENPH353_Xubuntu_2023_01_10_2024_19_40_26.png" alt="SIFT GUI" 
+                class="project-image__img" style="width: 1000px; height: auto; border: 2px solid #e0e0e0; 
+                box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
+              <figcaption>Keypoint matching between template image and video</figcaption>
+              </figure>
+             </div>
           </section>
 
           <a href="#" class="link">View on GitHub</a>
