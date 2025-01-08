@@ -170,22 +170,61 @@
                 In this lab, I trained a neural network to recognize characters off generated license
                 plate images.
               </p>
-            </div>
 
+              
+            </div>
+            
           </section>
           <br>
           <br>
 
 
           <h3>GUI and Image Tracking with SIFT</h3>
-          <section class="project-container">
-           <div class="project-text">
+          <section class="project-container" style="display: flex; align-items: flex-start;">
+            <div class="project-text" style="align-self: flex-start;">
             <p>
-              Moving back to the course's Linux environment, I set up a program that could recognize and track an image from
-              a video and an accompanying GUI with PyQt5.
+              Moving back to the course's Linux environment, I set up a 'SIFT App' program that could recognize and track an
+              image via SIFT from a video and an accompanying GUI with PyQt5. The program ran a SIFT algorithm on the video
+              to identify keypoints, then uses a FLANN algorithm to identify and draw matches between these points on the
+              template image and video. Finally, if enough 'good' matches are found, a blue square identifying the frame of
+              the template image is drawn over the video.
             </p>
+            <figure>
+              <div class="video-container">
+                <iframe
+                  src="https://drive.google.com/file/d/1dpt-xLdRu8IOYYmyqsXJKSF0GIZFUYFv/preview"
+                  width="100%"
+                  height="300"
+                  style="max-width: 600px; margin: 0 auto; display: block; border: none;"
+                  allow="autoplay"
+                ></iframe>
+              </div>
+                <figcaption style="text-align: center; margin-top: 10px; font-size: 0.9em; color: var(--clr-fg-alt);">
+                  Demonstration of SIFT App working in the GUI
+                </figcaption>
+            </figure>
             
            </div>
+          </section>
+
+          <section class="project-container" style="display: flex; align-items: flex-start;">
+            <div class="project-text" style="align-self: flex-start;">
+             <p>
+               The first thing I made was the GUI, which was done in Qt Designer. For modularity, I set up options for the template image and video to draw
+               the feature matches between. 
+             </p>
+              <figure>
+                <img src="Other Media/ENPH353_Lab4_GUI.png" alt="SIFT GUI" 
+                class="project-image__img" style="width: 400px; height: auto; border: 2px solid #e0e0e0; 
+                box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
+              <figcaption>SIFT App GUI building with PyQt5</figcaption>
+              </figure>
+      
+             
+            </div>
+          </section>
+          <section class="project-container">
+
           </section>
 
           <a href="#" class="link">View on GitHub</a>
