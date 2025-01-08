@@ -246,6 +246,7 @@
                 box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
               <figcaption>SIFT keypoints on the video</figcaption>
               </figure>
+              <br>
               <figure>
                 <img src="Other Media/VirtualBox_ENPH353_Xubuntu_2023_01_10_2024_19_40_26.png" alt="SIFT GUI" 
                 class="project-image__img" style="width: 1000px; height: auto; border: 2px solid #e0e0e0; 
@@ -254,8 +255,27 @@
               </figure>
              </div>
           </section>
+          <section class="project-container">
+            <div class="project-text">
+              To track the distorted frame of the image in the video, I used a homography, which is a mathematical 
+              transform that relates the position of points between images taken from different perspectives. If more than ten
+              'good' keypoints are found, then a homography mask is drawn over the video. To get rid of bad outlier matches, I used
+              RANSAC (Random Sample Consensus), which estimates a homography using a random subset of matches and checks how
+              many of the other matches fit in with the homography. The process is repeated several times. See the 
+            </div>
+          </section>
 
-          <a href="#" class="link">View on GitHub</a>
+          <div class="project__stack__peripheral">
+            <span class="project__stack-item">SIFT</span>
+            <span class="project__stack-item">FLANN</span>
+            <span class="project__stack-item">RANSAC</span>
+            <span class="project__stack-item">OpenCV</span>
+            <span class="project__stack-item">PyQt5</span>
+
+          </div>
+          <a href="https://github.com/NoraShao/ENPH353_Lab4.git" class="link">View on GitHub</a>
+          
+          
           <br>
           <br>
           <h3>License plate recognizer (Convolutional Neural Network)</h3>
