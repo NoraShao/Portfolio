@@ -289,15 +289,19 @@
             
             <div class="project-text" style="align-self: flex-start;">
               We were provided with a license plate generator that randomixed two numerical characters following two
-              alphabetical characters on a license plate template with fixed spacing.
+              alphabetical characters on a license plate template with fixed spacing. I generated a training set and a
+              validation set of license plates.
             </div>
             <figure>
               <img src="Other Media/plate_AY43.png" alt="License Plate AY43" 
-              class="project-image__img" style="width: 500px; height: auto; border: 2px solid #e0e0e0; 
+              class="project-image__img" style="width: 400px; height: auto; border: 2px solid #e0e0e0; 
               box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
               <figcaption>Example of generated license plate</figcaption>
             </figure>
             <br>
+          </section>
+
+          <section class="project-container" style="display: flex; align-items: flex-start;">
             <div class="project-text" style="align-self: flex-start;">
               <p>
                 Before I started working on character recognition with the CNN, I had to start with some image processing.
@@ -306,13 +310,52 @@
               </p>
             </div>
             <figure>
-              <img src="Other Media/plate_AY43_char 3.png" alt="License Plate AY43" 
-              class="project-image__img" style="width: 500px; height: auto; border: 2px solid #e0e0e0; 
+              <img src="Other Media/plate_AY43_char3.png" alt="License Plate AY43" 
+              class="project-image__img" style="width: 100px; height: auto; border: 2px solid #e0e0e0; 
               box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
               <figcaption>Character 3 of license plate AY43</figcaption>
             </figure>
+
           </section>
-            
+          <section class="project-container" style="display: flex; align-items: flex-start;">
+            <div class="project-text">
+              <p>
+                To train the CNN to recognize characters, I had to first set up a measure of accuracy in recognizing
+                characters. To do so, I used one-hot encoding with the ASCII values of each alphanumeric character to create
+                one-hot vectors of length 36 (26 alphabetic + 10 numeric characters) that enables the CNN to measure some
+                degree of 'distance' between different characters. <br>
+              </p>
+              <p>
+                Then I worked on the CNN architecture. It had three convolutional layers, and a fully connected layer. The final output layer used
+                softmax activation because of the multi-class classification needed. I also employed a dropout rate of 0.5
+                to prevent overfitting. 
+              </p>
+            </div>
+          </section>
+          
+          <section class="project-container" style="display: flex; align-items: flex-start;">
+            <div class="project-text">
+              <p>
+                I trained the CNN on the test image set for 15 epochs with a batch size of 32 images, and plotted its
+                performance with the matplotlib Python library.
+              </p>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 20px;">
+              <figure>
+                <img src="Other Media/ENPH353_Lab6_ModelAccuracy.png" alt="LP CNN Accuracy" 
+                class="project-image__img" style="width: 100px; height: auto; border: 2px solid #e0e0e0; 
+                box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
+                <figcaption>CNN model accuracy</figcaption>
+              </figure>
+              <figure>
+                <img src="Other Media/ENPH353_Lab6_ModelLoss.png" alt="LP CNN Accuracy" 
+                class="project-image__img" style="width: 100px; height: auto; border: 2px solid #e0e0e0; 
+                box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
+                <figcaption>CNN model loss</figcaption>
+              </figure>
+            </div>
+          </section>
+          
 
 
 
