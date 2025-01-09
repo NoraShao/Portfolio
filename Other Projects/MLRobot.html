@@ -250,7 +250,7 @@
               <figure>
                 <img src="Other Media/VirtualBox_ENPH353_Xubuntu_2023_01_10_2024_19_40_26.png" alt="SIFT GUI" 
                 class="project-image__img" style="width: 1000px; height: auto; border: 2px solid #e0e0e0; 
-                box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -40px;" />
+                box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -50px;" />
               <figcaption>Keypoint matching between template image and video</figcaption>
               </figure>
              </div>
@@ -387,8 +387,28 @@
         <br>
         <br>
         <h3>Line-following with Reinforcement Learning</h3>
-        Again moving back to the Linux environment, in this lab, we trained a robot in a simulated Gazebo world to follow a 
-        path with reinforcement learning.
+        <section class="project-container">
+          <div class="project-text">
+            Again moving back to the Linux environment, in this lab, I trained a robot in a simulated Gazebo world to follow a 
+            path with reinforcement learning. Specifically, we used Q-learning and I developed a reward system for the robot
+            depending on its actions that encouraged it to stay on the path.
+          </div>
+        </section>
+        <section class="project-container" style="display: flex; align-items: flex-start;">
+          <div class="project-text">
+            I trained the robot agent in a gym-gazebo environment my instructor set up, which uses ROS and Gazebo files to
+            describe the robot and world. The environment for each reinforcement learning task is defined in the envs folder,
+            and the __init__.py file stores the training parameters for the environment. It also registers new environments
+            with the gym-gazebo framework.
+          </div>
+          <figure>
+            <img src="Other Media/ENPH353_Lab7_FileDir.png" alt="Lab 7 File Dir" 
+            class="project-image__img" style="width: 500px; height: auto; border: 2px solid #e0e0e0; 
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
+            <figcaption>Director structure of agent training environment</figcaption>
+          </figure>
+        </section>
+        
 
         <div class="project__stack__peripheral">
             <span class="project__stack-item">Imitation Learning</span>
