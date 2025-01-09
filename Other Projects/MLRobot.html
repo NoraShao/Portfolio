@@ -417,10 +417,41 @@
           </div>
           <figure>
             <img src="Other Media/ENPH353_Lab7_Bins.png" alt="Lab 7 Bins" 
-            class="project-image__img" style="width: 500px; height: auto; border: 2px solid #e0e0e0; 
+            class="project-image__img" style="width: 350px; height: auto; border: 2px solid #e0e0e0; 
             box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
             <figcaption>Sectioning of camera output (instructor example)</figcaption>
           </figure>
+        </section>
+        <section class="project-container" style="display: flex; align-items: flex-start;">
+          <div class="project-text">
+            We used Q-learning as the type of reinforcement learning to train the robot. Q-learning is a form of reinforcement
+            learning that teaches the agent to assign 'rewards' to each action it could take when it's in some state. In my
+            case, the agent is the robot, its state is its position, and the Q-value of its state is the metric used to 
+            represent how appropriate the robot's action (direction of movement) was for its position. Each movement the
+            robot takes, the Q-values are updated via the Bellman function, which represents the long-term best action for a
+            certain state. 
+            <br> I started setting up Q-learning by implementing a function to save Q-values to and load them from pickle
+            files.  
+          </div>
+          <!-- <figure>
+            <img src="Other Media/ENPH353_Lab7_Bins.png" alt="Lab 7 Bins" 
+            class="project-image__img" style="width: 350px; height: auto; border: 2px solid #e0e0e0; 
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
+            <figcaption>Sectioning of camera output (instructor example)</figcaption>
+          </figure> -->
+        </section>
+        
+        <section class="project-container" style="display: flex; align-items: flex-start;">
+          <div class="project-text">
+            Then I implemented the function for how the robot chooses its movements, <code>chooseAction()</code>, which
+            incorporated <b>exploration</b> and <b>exploitation</b>. The problem with the robot always choosing the action
+            that corresponds to the highest Q-value and thus reward (exploitation) is that it might get stuck in a local 
+            maximum where the robot can steadily gain rewards but isn't really gaining the long-term awards. This is 
+            especially likely to occur at the start of the robot training. Thus, we introduce an exploration factor, 
+            where the robot chooses a random action instead of the 'best' action at a certain rate, which we defined as the
+            variable <code>epsilon</code>. Then as the training of the robot progressed, I decreased <code>epsilon</code>
+            because the robot would learn more about the best actions long-term and the Q-values would reflect that.  
+          </div>
         </section>
         
 
