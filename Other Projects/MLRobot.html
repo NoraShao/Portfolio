@@ -433,12 +433,12 @@
             <br> I started setting up Q-learning by implementing a function to save Q-values to and load them from pickle
             files.  
           </div>
-          <!-- <figure>
-            <img src="Other Media/ENPH353_Lab7_Bins.png" alt="Lab 7 Bins" 
+          <figure>
+            <img src="Other Media/ENPH353_Lab7_Q-learn.png" alt="Lab 7 Q-learn" 
             class="project-image__img" style="width: 350px; height: auto; border: 2px solid #e0e0e0; 
             box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
-            <figcaption>Sectioning of camera output (instructor example)</figcaption>
-          </figure> -->
+            <figcaption>Representation of Q-learning (instructor slides)</figcaption>
+          </figure>
         </section>
         
         <section class="project-container" style="display: flex; align-items: flex-start;">
@@ -452,8 +452,29 @@
             variable <code>epsilon</code>. Then as the training of the robot progressed, I decreased <code>epsilon</code>
             because the robot would learn more about the best actions long-term and the Q-values would reflect that.  
           </div>
+          <figure>
+            <img src="Other Media/ENPH353_Lab7_ExplorExploi.png" alt="Lab 7 Explore vs Exploit" 
+            class="project-image__img" style="width: 350px; height: auto; border: 2px solid #e0e0e0; 
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
+            <figcaption>Exploration vs Exploitation (instructor slides)</figcaption>
+          </figure>
         </section>
         
+        <section class="project-container" style="display: flex; align-items: flex-start;">
+          <div class="project-text">
+            <p>
+              I updated the Q-values with the Bellman equation. &alpha; is the learning rate, and &gamma; is the 'discount 
+              factor', or measure of how much long-term rewards matter compared to immediate rewards. When I called the <code>QLearn</code> function, I found
+              that an &alpha; value of 0.2, &gamma; of 0.8, and initial epsilon value of 0.85 worked best.
+            </p>
+          </div>
+        </section>
+        <figure>
+          <img src="Other Media/ENPH353_Lab7_BellmanEqn.png" alt="Lab 7 Explore vs Exploit" 
+          class="project-image__img" style="width: 550px; height: auto; border: 2px solid #e0e0e0; 
+          box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
+          <figcaption>Bellman Equation for new Q-values (instructor slides)</figcaption>
+        </figure>
 
         <div class="project__stack__peripheral">
             <span class="project__stack-item">Q-learning</span>

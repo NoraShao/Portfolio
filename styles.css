@@ -465,6 +465,16 @@ ul.custom-list li::before {
 }
 
 
+code {
+  font-family: monospace;
+  background-color: #f0f0f0; /* Light gray background */
+  padding: 2px 6px; /* Add some padding */
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 4px; /* Rounded corners */
+  color: #68e559; /* Optional: Change text color */
+}
+
+
 @media (max-width: 768px) {
   .project-container > div {
     flex-direction: column; /* Stack sections vertically on small screens */
