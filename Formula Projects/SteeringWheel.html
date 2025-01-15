@@ -56,18 +56,70 @@
 
           <section class="project-container" style="display: flex;">
             <div class="project-text">
-              <p>In my first project on the Formula UBC design team, I was responsible for designing and manufacturing
-                a brake light for the race car.</p>
+              <p>As an integral interface between drivers and the race car, the steering wheel should be up to date on newest
+                car modules and driver wishes. This year, I redesigned the GUI and reworked the firmware for the FSAE steering
+                wheel of Formula UBC's race car, integrating new advanced features to improve functionality and 
+                driver experience.</p>
+            </div>
+            
+            <figure>
+              <img src="Formula Media/SW_Full.png" alt="Steering Wheel" class="project-image__img" 
+              style="width: 500px; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+              margin-top: -15px;" />
+              <figcaption>Steering Wheel</figcaption>
+            </figure>
+          </section>
+
+          <section class="project-container" style="display: flex; align-items: flex-start;">
+            <div class="project-text">
+              <p>In addition to steering the car, the steering wheel has a screen that communicates important information to
+                drivers such as the gear position and RPM of the car, coolant temperature, oil pressure, and more via live
+                updates from the Haltech Elite 5000. As well, it acts as an interface between the drivers and car, enabling
+                drivers to turn on the ECU and start the car when they want to, or turn on the water pump and fan.
+                <br>
+                It communicates with the car via analog signal wires on a 12-pin quick-disconnect connector or CAN bus.
+              </p>
+            </div>
+
+            <div style="display: flex; align-items: flex-start; gap: 20px;">
+              <figure>
+                <img src="Formula Media/SW_OldGUI.png" alt="Steering Wheel" class="project-image__img" 
+                style="width: 600px; height: auto; border: 2px solid #e0e0e0; 
+                box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -15px;" />
+                <figcaption>Previous Steering Wheel Screen GUI</figcaption>
+              </figure>
             </div>
           </section>
 
           <section class="project-container" style="display: flex; align-items: flex-start;">
             <div class="project-text">
-              <p>I started by reviewing my project goals. The FSAE rules (to the right) contained guidelines for the LED
-                colour and sizing, so I had an approximate idea of the necessary size for the brake light PCB and how
-                many LEDs I would need. As well, I had to facilitate the brake light's integration with the rest of the 
-                racecar. For example, like the other electrical modules on the car, the brake light also had to be IP-67 
-                rated, and actuated by a preset 12V brake signal. 
+              <p> My first step was to identify the constraints of my project. Because it was primarily a firmware rework, any
+                hardware changes had to be minimal. I also had to ensure that the new firmware was compatible with the
+                existing hardware, which included the connections on the PCB to the microcontroller and the pinout of the connector to the car wiring
+                harness. <br>
+                The steering wheel uses an STM32F405RGT microcontroller, which I can program in C++ using the STM32CubeIDE.
+              </p>
+            </div>
+          </section>
+          <div style="display: flex; align-items: flex-start; gap: 20px;">
+            <figure>
+              <img src="Formula Media/SW_PCBAltium.png" alt="Steering Wheel PCB" class="project-image__img" 
+              style="width: 400px; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+              <figcaption>Steering Wheel PCB</figcaption>
+            </figure>
+            <figure>
+              <img src="Formula Media/SW_IOC.png" alt="Steering Wheel PCB" class="project-image__img" 
+              style="width: 483px; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+              <figcaption>Steering Wheel STM Pinout</figcaption>
+            </figure>
+          </div>
+
+          <section class="project-container" style="display: flex; align-items: flex-start;">
+            <div class="project-text">
+              <p>Then, I consulted the relevant stakeholders on the team, which mostly consisted of the drivers. 
+                I asked them about their experiences with the current steering wheel and what complaints they had and features
+                they wanted to see in the new one. Based on their feedback, I created a list of GUI features and functionality
+                that the new steering wheel should have.
               </p>
               
             </div>
@@ -77,107 +129,113 @@
               <figcaption>Relevant FSAE Rules for a Brake Light</figcaption>
             </figure>
           </section>
+
+
+          <h3>Functionality</h3>
           <section class="project-container" style="display: flex; align-items: flex-start;">
             <div class="project-text">
               <p>
-                With this information in mind, I started sourcing for appropriate LEDs on Digikey. Some of the considerations
-                I had to make included whether the LEDs were automotive grade, their luminosity, current-draw, and the 
-                feasibility of the necessary corresponding resistor values.  
+                <b>Last-state retention:</b> The key electrical modules the car cannot run without should only be the ECU and 
+                PDM, but the current configuration of the steering wheel controls the car by sending live updates, so an 
+                electrical steering wheel failure stops the operation of the car. To prevent this, I implemented a last-state
+                retention feature that allows the car to continue running without new steering wheel updates, so drivers can
+                still steer a running car.
+              </p>
+            </div>
+          </section>
+          <section class="project-container" style="display: flex; align-items: flex-start;">
+            <div class="project-text">
+              <b>Shifting lock-out:</b> The first new feature I implemented on the steering wheel was a shifting lockout
+              depending on the state of the car. For example, drivers requested that I block downshifting signals when the
+              car is in gear 1 and moving at a speed above 10 km/h. <br>
+              I wrote a function that checks the car state and the driver's input and only sends the signal to the car if the
+              conditions are met.
+            </div>
+          </section>
+
+          <section class="project-container" style="display: flex; align-items: flex-start;">
+            <div class="project-text">
+              <b>Shift lights:</b> Shift lights are helpful for indicating to a driver when they should shift to the next gear,
+              based on the car RPM. Previously, the number of LEDs on the LED strip above the steering wheel screen that were 
+              lit up would increase proportionally from left to right with the RPM of the car, but driver's reported that it
+              was not the most helpful feature because of the lack of visible difference between LEDs lighting up 
+              successively, especially when the car is being driven in bright conditions. So I adjusted the LED behaviour for
+              them to all light up together at the designated shift points. <br>
+              
+            </div>
+          </section>
+          <section class="project-container" style="display: flex; align-items: flex-start;">
+            <div class="project-text">
+              <b>Status Indicators*:</b> See section in GUI Changes  <br>
+              
+            </div>
+          </section>
+
+          <br>
+          <br>
+          <h3>GUI Changes</h3>
+          <section class="project-container" style="display: flex; align-items: flex-start;">
+            <div class="project-text">
+              <p>
+                With the initial feedback from drivers, I roughly designed and presented a few GUI options to them. After the
+                second round of feedback on which design they preferred and any modifications they wanted to see, I had an
+                idea for a finalized GUI design.   
+                <br>
+                Some of my changes included
+                <ul class="custom-list">
+                  <li><b>Removing unnecessary values:</b> Drivers informed me that while driving outdoors, reading small values from the
+                    screen could be difficult, and some of the values were useless for them, so I removed some of the less 
+                    important values from the screen.</li>
+                  </li>
+                  <li><b>Adding status indicators:</b> Depending on the state of the car, which drivers read from screen values like
+                    'WAT T' (coolant temp) or 'OIL T' (oil temp), drivers need to make the decision to turn on the fans or 
+                    water pump to cool the car down. But in case of some electrical/mechanical failure, I added status 
+                    indicators to the screen that inform drivers whether the command to the module went through. <br>
+                    The steering wheel turns on modules by sending a CAN message to the PDM, which then provides power to the
+                    module. So, to implement checking the status of the modules, I modified the PDM firmware. The PDM has current
+                    sensing functionality on the PCB that I enabled in the firmware. I empirically measured the current draw
+                    of the fans and water pump to determine a threshold value that would indicate to the PDM whether the 
+                    module had successively been turned on. Via this criteria, the PDM checks the state of the modules every
+                    10 ms, then if a change is detected, sends a message back to the steering wheel, which adjusts the status
+                    indicators on the screen accordingly. </li>
+                    <div style="display: flex; align-items: flex-start;">
+                      <figure>
+                        <img src="Formula Media/PDM_CurrentSense.png" alt="PDM Current Sensing Channels" class="project-image__img" 
+                        style="width: 500px; height: auto; border: 2px solid #e0e0e0; 
+                        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-left: 25px;" />
+                        <figcaption>PDM current sensing channels</figcaption>
+                      </figure>
+                    </div>
+                  
+                  </li>
+
+                  <li><b>Adding warning indicators:</b> As warning flags for the drivers, I added a check engine light and
+                  ECU severity levels to the screen.</li>
+                </ul>
+                Since many of the additions to the screen were related to new functionality on the steering wheel, I also had 
+                to consider the feasibility of certain requests, such as a flashing error message. 
               </p>
               Based on these criteria, I narrowed down my LED options to four Digikey products. To select the LEDs used on 
               the actual brake light, I designed an LED test board in Altium Designer.
               <div style="display: flex; align-items: flex-start; gap: 20px;">
                 <figure>
-                <img src="Formula Media/BrakeLight_LEDSelection.png" alt="LED Selection" class="project-image__img" 
-                style="width: 500px; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
-                <figcaption>LED Selection</figcaption>
-              </figure>
-
-              <figure>
-                <img src="Formula Media/BrakeLight_TestBoard.png" alt="LED Test Board" class="project-image__img" 
-                style="width: 200px; height: auto;" />
-                <figcaption>LED Test Board</figcaption>
-              </figure>
+                <img src="Formula Media/SW_NewGUI.png" alt="LED Selection" class="project-image__img" 
+                style="width: 600px; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+                <figcaption>New Steering Wheel GUI</figcaption>
+                </figure>
               </div>
               
             </div>
           </section>
             
-          <!-- </section>
-            <div class="project-text">
-              <p>
-                To select the LEDs used on the actual brake light, I started by designing an LED test board in Altium
-                Designer.
-              </p>
-            </div>
-          <div style="display: flex; align-items: flex-start; gap: 20px;">
-            <figure>
-              <img src="Formula Media/BrakeLight_TestBoard.png" alt="LED Test Board" class="project-image__img" 
-              style="width: 200px; height: auto;" />
-              <figcaption>LED Test Board</figcaption>
-            </figure>
-          </div> -->
-          
-          <section class="project-container">
-            <div class="project-text">
-              <p>Once I selected my LEDs, I worked on the actual brake light PCB. Some of the considerations I had to make
-                included heat dissipation. 
-              </p>
-              <p>
-                As well, to ensure clean routing, instead of adding routes from the ground input signal, I made a ground
-                plane that the LEDs could connect to with vias.
-              </p>
-            </div>
-            <div style="display: flex; align-items: flex-start; gap: 20px;">
-              <figure>
-                <img src="Formula Media/BrakeLight_Schematic.png" alt="Brake Light Schematic" class="project-image__img" 
-                style="width: 480px; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
-                <figcaption>Brake Light Schematic</figcaption>
-              </figure>
-              <figure>
-                <img src="Formula Media/BrakeLight_PCBAltium.png" alt="Brake Light PCB Layout" class="project-image__img"
-                 style="width: 280px; height: auto;" />
-                <figcaption>Brake Light PCB Layout</figcaption>
-              </figure>
-              <figure>
-                <img src="Formula Media/BrakeLight_Board.png" alt="Brake Light Rules" class="project-image__img" 
-              style="width: 260px; height: auto; border: 2px solid #e0e0e0; 
-              box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
-                <figcaption>Brake Light Working</figcaption>
-              </figure>
-            </div>
-          </section>
-          <section class="project-container">
-            <div class="project-text">
-              In addition to manufacturing the brake light PCB, I was also responsible for protecting
-              it from environmental factors and mounting it on the car. I designed a 3D-printable resin enclosure in 
-              Solidworks that could be mounted onto the rear differentials of the car and would also act as a diffuser 
-              for the LEDs. Before I secured the PCB in its water and airtight enclosure, for additional water resistance, 
-              I applied a layer of conformal coating onto the PCB itself.
-            </div>
-            <div style="display: flex; align-items: flex-start; gap: 20px;">
-              <figure>
-                <img src="Formula Media/BrakeLight_Lights.jpg" alt="Brake Light Rules" class="project-image__img" 
-              style="width: 260px; height: auto; border: 2px solid #e0e0e0; 
-              box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
-                <figcaption>Brake Light Working</figcaption>
-              </figure>
-              <figure>
-                <img src="Formula Media/BrakeLight_Enclosure.png" alt="PCB Layout" 
-                class="project-image__img" style="width: 200px; height: auto;" />
-                <figcaption>
-                  Brake Light Enclosure (SolidWorks)
-                </figcaption>
-              </figure>
-              
-            </div>
-            
-          </section>
+      
+  
 
           <div class="project__stack__peripheral">
-            <span class="project__stack-item">Altium Designer</span>
-            <span class="project__stack-item">PCB Manufacturing</span>
-            <span class="project__stack-item">Solidworks</span>
+            <span class="project__stack-item">C++</span>
+            <span class="project__stack-item">I2C</span>
+            <span class="project__stack-item">CAN bus</span>
+            <span class="project__stack-item"></span>
           </div>
         </div>
       </section>

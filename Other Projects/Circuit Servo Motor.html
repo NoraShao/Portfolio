@@ -53,7 +53,7 @@
             <section class="project-container">
               <b>Description:</b> In this course, we built up knowledge of various 
               electrical components, and breadboard circuit-building and debugging skills over several labs to eventually 
-              implement a circuit that used Proportional-Integral error correction to control a servo motor.</p>
+              implement a circuit that used Proportional-Integral (PI) error correction to control a servo motor.</p>
               
             </section> 
             <section class="project-container"style="display: flex; align-items: flex-start;">
@@ -63,8 +63,8 @@
               </div>
               <div style="display: flex; align-items: flex-start; gap: 20px;">
                 <figure>
-                  <img src="Portfolio/Other Projects/Other Media/ENPH259_AD2-SS.png" alt="AD2" 
-                  class="project-image__img" style="width: 300px; height: auto; border: 2px solid #e0e0e0; 
+                  <img src="Other Media/ENPH259_AD2.jpg" alt="SIFT GUI" 
+                  class="project-image__img" style="width: 400px; height: auto; border: 2px solid #e0e0e0; 
                   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
                 <figcaption>Analog Discovery 2 breakout board</figcaption>
                 </figure>
@@ -79,12 +79,16 @@
                 In our introductory lab, we built and tested several voltage dividers with resistors.
               </div>
               <a href="Other Media/ENPH259_Lab1A.pdf" target="_blank" class="link">Open Lab 1 Report</a>
-              
             </section>
+            <div class="project__stack__peripheral">
+              <span class="project__stack-item">Voltage dividers</span>
+              <span class="project__stack-item">Oscilloscope</span>
+            </div>
+
 
             <br>
             <br>
-            <h3>Lab 2</h3>
+            <h3>Lab 2: RC circuits</h3>
             <section class="project-container"style="display: flex; align-items: flex-start;">
               <div class="project-text">
                 In our introductory lab, we built and tested several voltage dividers with resistors.
@@ -92,34 +96,49 @@
               <br>
               <a href="Other Media/ENPH259_L2A_Final.pdf" target="_blank" class="link">Open Lab 2 Report</a>
             </section>
+            <div class="project__stack__peripheral">
+              <span class="project__stack-item">RC circuits</span>
+              <span class="project__stack-item">Oscilloscope</span>
+            </div>
 
             <br>
             <br>
-            <h3>Lab 3</h3>
-            <section class="project-container"style="display: flex; align-items: flex-start;">
+            <h3>Lab 3: Diodes and Transistors (BJTs and MOSFETs)</h3>
+            <section class="project-container" style="display: flex; align-items: flex-start;">
               <div class="project-text">
-                In this lab, we prepared for a DC-DC boost circuit by examining the behaviour of diodes and MOSFETs.
+                In this lab, we prepared for a DC-DC boost circuit by examining the behaviour of diodes and transistors, with
+                and without loads (i.e. LEDs). 
               </div>
               <br>
               <a href="Other Media/ENPH259_L3A.pdf" target="_blank" class="link">Open Lab 3 Report</a>
             </section>
+            <div class="project__stack__peripheral">
+              <span class="project__stack-item">Diodes</span>
+              <span class="project__stack-item">MOSFETs</span>
+              <span class="project__stack-item">BJTs</span>
+            </div>
 
 
             <br>
             <br>
-            <h3>Lab 4</h3>
+            <h3>Lab 4: DC-DC Boost Circuit</h3>
             <section class="project-container" style="display: flex; align-items: flex-start;">
               <div class="project-text">
                 Here, we constructed and analyzed the behaviour of a DC-DC boost circuit.
               </div>
               <br>
               <a href="Other Media/ENPH259_L4A.pdf" target="_blank" class="link">Open Lab 4 Report</a>
-            
             </section>
+            <div class="project__stack__peripheral">
+              
+              <span class="project__stack-item">Boost circuits</span>
+              <span class="project__stack-item">Inductance & Capacitance</span>
+              <span class="project__stack-item">Oscilloscope</span>
+            </div>
 
             <br>
             <br>
-            <h3>Lab 5</h3>
+            <h3>Lab 5: Digital Basics</h3>
             <section class="project-container"style="display: flex; align-items: flex-start;">
               <div class="project-text">
                 As preparation for the final servo motor project, we learned digital logic by building and testing a
@@ -129,10 +148,17 @@
               <br>
               <a href="Other Media/ENPH259_L5A.pdf" target="_blank" class="link">Open Lab 5 Report</a>
             </section>
+            <div class="project__stack__peripheral">
+              <span class="project__stack-item">Counters</span>
+              <span class="project__stack-item">Logic gates</span>
+              <span class="project__stack-item">DACs</span>
+              <span class="project__stack-item">Oscilloscope</span>
+              <span class="project__stack-item">Logic Analyzer</span>
+            </div>
 
             <br>
             <br>
-            <h3>Lab 6</h3>
+            <h3>Lab 6: Op-amp Basics</h3>
             <section class="project-container"style="display: flex; align-items: flex-start;">
               <div class="project-text">
                 We set up and tested op-amps in different configurations for different purposes, such as gain, summing,
@@ -141,6 +167,10 @@
               <br>
             <a href="Other Media/ENPH259_L6A.pdf" target="_blank" class="link">Open Lab 6 Report</a>  
             </section>
+            <div class="project__stack__peripheral">
+              <span class="project__stack-item">Op-amps</span>
+              <span class="project__stack-item">Oscilloscope</span>
+            </div>
             
             
             <br>
@@ -149,17 +179,27 @@
             <section class="project-container"style="display: flex; align-items: flex-start;">
               <div class="project-text">
                 For the last several weeks, we used the knowledge and circuit-building and debugging skills we gained in the
-                previous labs to build a circuit that could control a servo motor.
+                previous labs to build a circuit that could control a servo motor. The circuit uses a phototransistor to track
+                the servo motor turns, which increments an 8-bit counter. A 5Hz input workds with several 
+                Schmitt-trigger inverters and RC-circuits to generate a RESET and delayed LATCH pulse. The RESET frequency
+                controls the frequency of the counter's resets and thus turns the number of motor turns to a measurement of
+                its speed, and the LATCH pulse tells the D-latch store the motor's speed, where a resistor ladder DAC 
+                converts the digital signal to an analog voltage. The analog voltage is used in the op-amp circuit's error
+                amplifier against the value of a potentiometer (which adjusts the motor speed), which is then fed into the
+                servo motor as a form of PI control. The clock reset frequency is determined 
               </div>
               <br>
               <a href="Other Media/The Final Project_ Servo Motor.pdf" target="_blank" class="link">Open Final Project Report</a>
             </section>
-
             <div class="project__stack__peripheral">
-              <span class="project__stack-item">Altium Designer</span>
-              <span class="project__stack-item">PCB Manufacturing</span>
-              <span class="project__stack-item">Solidworks</span>
+              <span class="project__stack-item">Servo motors</span>
+              <span class="project__stack-item">PI control</span>
+              <span class="project__stack-item">Phototransistors</span>
+              <span class="project__stack-item">Oscilloscope</span>
+              <span class="project__stack-item">Logic Analyzer</span>
             </div>
+
+            
           </div>
         </div>
       </section>
