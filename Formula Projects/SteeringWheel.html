@@ -138,9 +138,11 @@
               <p>
                 <b>Last-state retention:</b> The key electrical modules the car cannot run without should only be the ECU and 
                 PDM, but the current configuration of the steering wheel controls the car by sending live updates, so an 
-                electrical steering wheel failure stops the operation of the car. To prevent this, I implemented a last-state
+                electrical steering wheel failure stops the operation of the car. To prevent this, I am currently working on 
+                implementing a last-state
                 retention feature that allows the car to continue running without new steering wheel updates, so drivers can
-                still steer a running car.
+                still steer a running car. Thus, the steering wheel updates the car based on detections of change-of-states, 
+                not the current state itself.
               </p>
             </div>
           </section>
@@ -217,7 +219,7 @@
                 to consider the feasibility of certain requests, such as a flashing error message. 
               </p>
               I designed the GUI on Nextion Editor, which lets me change pictures or values on the screen based on events
-              or just periodic updates sent by the steering wheel.
+              or just periodic updates sent by the steering wheel via USART.
               <div style="display: flex; align-items: flex-start; gap: 20px;">
                 <figure>
                 <img src="Formula Media/SW_RevisedNewGUI.png" alt="LED Selection" class="project-image__img" 
