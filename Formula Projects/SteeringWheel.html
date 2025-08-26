@@ -49,7 +49,7 @@
 
     <main>
       <section class="section__peripheral">
-        <h2 class="section__title">FSAE Steering Wheel</h2>
+        <h2 class="section__title">FSAE Steering Wheel (and Power Distribution Module)</h2>
 
         <div class="project__peripheral">
           <p class="project__subheading">October 2024 - present</p>
@@ -59,7 +59,8 @@
               <p>As an integral interface between drivers and the race car, the steering wheel should be up to date on newest
                 car modules and driver wishes. This year, I redesigned the GUI and reworked the firmware for the FSAE steering
                 wheel of Formula UBC's race car, integrating new advanced features to improve functionality and 
-                driver experience.</p>
+                driver experience. To achieve certain functions, the firmware on the in-house designed and manufactured
+                Power Distribution Module was also updated.</p>
             </div>
             
             <figure>
@@ -97,7 +98,7 @@
                 hardware changes had to be minimal. I also had to ensure that the new firmware was compatible with the
                 existing hardware, which included the connections on the PCB to the microcontroller and the pinout of the connector to the car wiring
                 harness. <br>
-                The steering wheel uses an STM32F405RGT microcontroller, which I can program in C++ using the STM32CubeIDE.
+                The steering wheel uses an STM32F405RGT microcontroller, which I can program in C using the STM32CubeIDE.
               </p>
             </div>
           </section>
@@ -137,19 +138,21 @@
             <div class="project-text">
               <p>
                 <b>Last-state retention:</b> The key electrical modules the car cannot run without should only be the ECU and 
-                PDM, but the current configuration of the steering wheel controls the car by sending live updates, so an 
-                electrical steering wheel failure stops the operation of the car. To prevent this, I am currently working on 
+                PDM, but the current configuration of the steering wheel controls the car by sending live updates periodically
+                to modules, so an 
+                electrical failure (steering wheel or damage to the CAN lines on the wiring harness) stops the operation of the car. To prevent this, I am currently working on 
                 implementing a last-state
                 retention feature that allows the car to continue running without new steering wheel updates, so drivers can
                 still steer a running car. Thus, the steering wheel updates the car based on detections of change-of-states, 
-                not the current state itself.
+                not the current state itself. <br>
+               
               </p>
             </div>
           </section>
           <section class="project-container" style="display: flex; align-items: flex-start;">
             <div class="project-text">
               <b>Shifting lock-out:</b> The first new feature I implemented on the steering wheel was a shifting lockout
-              depending on the state of the car. For example, drivers requested that I block downshifting signals when the
+              depending on the state of the car that prevented shifting signals at inappropriate speeds. For example, drivers requested that I block downshifting signals when the
               car is in gear 1 and moving at a speed above 10 km/h. <br>
               I wrote a function that checks the car state and the driver's input and only sends the signal to the car if the
               conditions are met.
@@ -198,7 +201,7 @@
                     module. So, to implement checking the status of the modules, I modified the PDM firmware. The PDM has current
                     sensing functionality on the PCB that I enabled in the firmware. I empirically measured the current draw
                     of the fans and water pump to determine a threshold value that would indicate to the PDM whether the 
-                    module had successively been turned on. Via this criteria, the PDM checks the state of the modules every
+                    module had successfully been turned on. Via this criteria, the PDM checks the state of the modules every
                     10 ms, then if a change is detected, sends a message back to the steering wheel, which adjusts the status
                     indicators on the screen accordingly. </li>
                     <div style="display: flex; align-items: flex-start;">
@@ -219,7 +222,7 @@
                 to consider the feasibility of certain requests, such as a flashing error message. 
               </p>
               I designed the GUI on Nextion Editor, which lets me change pictures or values on the screen based on events
-              or just periodic updates sent by the steering wheel via USART.
+              or just periodic updates sent by the steering wheel via UART.
               <div style="display: flex; align-items: flex-start; gap: 20px;">
                 <figure>
                 <img src="Formula Media/SW_RevisedNewGUI.png" alt="LED Selection" class="project-image__img" 
