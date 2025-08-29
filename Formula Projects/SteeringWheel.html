@@ -60,7 +60,7 @@
                 car modules and driver wishes. This year, I redesigned the GUI and reworked the firmware for the FSAE steering
                 wheel of Formula UBC's race car, integrating new advanced features to improve functionality and 
                 driver experience. To achieve certain functions, the firmware on the in-house designed and manufactured
-                Power Distribution Module was also updated.</p>
+                Power Distribution Module (PDM) was also updated.</p>
             </div>
             
             <figure>
@@ -139,11 +139,12 @@
               <p>
                 <b>Last-state retention:</b> The key electrical modules the car cannot run without should only be the ECU and 
                 PDM, but the current configuration of the steering wheel controls the car by sending live updates periodically
-                to modules, so an 
+                over CAN to the ECU, which then tells the PDM via direct wires to turn on/off power to modules, so an 
                 electrical failure (steering wheel or damage to the CAN lines on the wiring harness) stops the operation of the car. To prevent this, I am currently working on 
                 implementing a last-state
-                retention feature that allows the car to continue running without new steering wheel updates, so drivers can
-                still steer a running car. Thus, the steering wheel updates the car based on detections of change-of-states, 
+                retention feature that allows the car to continue running without new steering wheel updates by bypassing the PDM's reliance on
+                the ECU so it only turns off modules when it receives a direct 'off' signal from the steering wheel over CAN. This way drivers can
+                still steer a running car even if the connection between the steering wheel and ECU/PDM is damaged. Thus, the steering wheel updates the car based on detections of change-of-states, 
                 not the current state itself. <br>
                
               </p>
