@@ -112,7 +112,7 @@
             <figure>
               <img src="Formula Media/SW_IOC.png" alt="Steering Wheel PCB" class="project-image__img" 
               style="width: 483px; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
-              <figcaption>Steering Wheel STM Pinout</figcaption>
+              <figcaption>Steering Wheel MCU Pinout</figcaption>
             </figure>
           </div>
 
@@ -140,7 +140,7 @@
               <p>
                 <b>Last-state retention:</b> The key electrical modules the car cannot run without should only be the ECU and 
                 PDM, but the current configuration of the steering wheel controls the car by sending live updates periodically
-                over CAN to the ECU, which then tells the PDM via direct wires to turn on/off power to modules, so an 
+                over CAN to the PDM, which turns on/off power to modules, and sending a direct HIGH signal to the ECU, so an 
                 electrical failure (steering wheel or damage to the CAN lines on the wiring harness) stops the operation of the car. To prevent this, I am currently working on 
                 implementing a last-state
                 retention feature that allows the car to continue running without new steering wheel updates by bypassing the PDM's reliance on
