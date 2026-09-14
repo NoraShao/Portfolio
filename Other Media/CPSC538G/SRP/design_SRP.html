@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SRP Design Notes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+        svg: { fontCache: 'global' }
+      };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <style>
+      :root {
+        --bg: #f8f9fb;
+        --paper: #ffffff;
+        --text: #23252f;
+        --muted: #676d7c;
+        --line: #dfe3ec;
+        --accent: #297373;
+        --accent-soft: #e8f4f3;
+        --code-bg: #f3f5f8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.65;
+      }
+
+      .doc-shell {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 32px 0 56px;
+      }
+
+      .doc-header {
+        margin-bottom: 24px;
+      }
+
+      .back-link,
+      .source-link {
+        color: var(--accent);
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .back-link:hover,
+      .source-link:hover,
+      .toc a:hover {
+        text-decoration: underline;
+      }
+
+      .doc-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 260px;
+        gap: 28px;
+        align-items: start;
+      }
+
+      article {
+        min-width: 0;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: clamp(20px, 4vw, 42px);
+        box-shadow: 0 12px 32px rgba(28, 33, 45, 0.08);
+      }
+
+      .toc {
+        position: sticky;
+        top: 20px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 18px;
+      }
+
+      .toc-title {
+        margin: 0 0 10px;
+        font-size: 0.85rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .toc a {
+        display: block;
+        color: var(--text);
+        font-size: 0.9rem;
+        line-height: 1.35;
+        margin: 8px 0;
+        text-decoration: none;
+      }
+
+      .toc-level-3 {
+        padding-left: 14px;
+        color: var(--muted) !important;
+        font-size: 0.82rem !important;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        line-height: 1.2;
+        margin: 1.6em 0 0.55em;
+      }
+
+      h1 {
+        margin-top: 0;
+        font-size: clamp(2rem, 5vw, 3.2rem);
+      }
+
+      h2 {
+        border-top: 1px solid var(--line);
+        padding-top: 1em;
+        font-size: clamp(1.4rem, 3vw, 2rem);
+      }
+
+      h3 {
+        font-size: 1.15rem;
+      }
+
+      p {
+        margin: 0.8em 0;
+      }
+
+      ul,
+      ol {
+        padding-left: 1.4rem;
+      }
+
+      li {
+        margin: 0.45rem 0;
+      }
+
+      code {
+        background: var(--code-bg);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 0.1rem 0.35rem;
+        font-family: Consolas, 'Courier New', monospace;
+        font-size: 0.92em;
+      }
+
+      pre {
+        overflow-x: auto;
+        background: #18202a;
+        color: #eef4f8;
+        border-radius: 8px;
+        padding: 18px;
+      }
+
+      pre code {
+        background: transparent;
+        border: 0;
+        color: inherit;
+        padding: 0;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        margin: 1rem 0 1.4rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--paper);
+      }
+
+      th,
+      td {
+        border: 1px solid var(--line);
+        padding: 0.65rem 0.8rem;
+        vertical-align: top;
+      }
+
+      th {
+        background: var(--accent-soft);
+      }
+
+      .doc-figure {
+        margin: 1.6rem 0;
+      }
+
+      .doc-figure img {
+        display: block;
+        width: 100%;
+        max-height: 760px;
+        object-fit: contain;
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        box-shadow: 0 8px 24px rgba(28, 33, 45, 0.12);
+      }
+
+      figcaption {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-top: 0.55rem;
+        text-align: center;
+      }
+
+      .math-block {
+        overflow-x: auto;
+        background: var(--accent-soft);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 0.8rem 1rem;
+        margin: 1rem 0;
+      }
+
+      @media (max-width: 900px) {
+        .doc-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .toc {
+          position: static;
+          order: -1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="doc-shell">
+      <header class="doc-header">
+        <a class="back-link" href="../../../Other%20Projects/RTOS%20Scheduling%20Algorithms.html">&larr; Back to RTOS Scheduling Algorithms</a>
+      </header>
+      <div class="doc-layout">
+        <article>
+          <h1 id="srp-design">SRP Design</h1>
+<p>I kept EDF as the base scheduler, then added  SRP on top of it in a few specific places:</p>
+<ul>
+<li>task metadata</li>
+<li>admission control</li>
+<li>scheduler task selection</li>
+<li>semaphore/resource handling</li>
+<li>optional stack sharing</li>
+</ul>
+<h2 id="main-design-choices">Main design choices</h2>
+<h3 id="1-integrating-srp-w-edf">1. Integrating SRP w/ EDF</h3>
+<p>The tasks still carry EDF timing fields like deadline and period, the ready list is still ordered by absolute deadline, and task creation still goes through the EDF creation path</p>
+<p>Then SRP changes who is <em>eligible</em> to run when the scheduler looks at that EDF list.</p>
+<p>So the flow is more like:</p>
+<ul>
+<li>EDF says who is earliest</li>
+<li>SRP says whether that task is actually allowed to start right now</li>
+</ul>
+<h3 id="2-use-deadline-derived-preemption-levels-instead-of-inventing-a-separate-numbering-scheme">2. Use deadline-derived preemption levels instead of inventing a separate numbering scheme</h3>
+<p>For SRP, every task needs a preemption level and every resource needs a ceiling. I decided to derive those from the EDF relative deadlines instead of making the user manually assign a bunch of levels.</p>
+<p>That is what <code>xSRPComputePreemptionLevel()</code> does:</p>
+<p>In practice, it just maps smaller relative deadlines to larger SRP levels by subtracting the deadline from <code>portMAX_DELAY</code>.</p>
+<p>So shorter relative deadline means higher SRP preemption level.</p>
+<p>This just makes it easier to translate between EDF and SRP; more urgent EDF tasks naturally end up with stronger SRP preemption levels, and resource ceilings can be registered using the same deadline-style values the rest of the demo already uses</p>
+<h3 id="3-put-srp-resource-state-in-one-small-kernel-side-table">3. Put SRP resource state in one small kernel-side table</h3>
+<p>Instead of hiding SRP state inside the queue/semaphore internals, I kept a separate table of SRP resources:</p>
+<ul>
+<li>semaphore handle</li>
+<li>ceiling</li>
+<li>owner</li>
+<li>locked state</li>
+<li>blocking time</li>
+</ul>
+<p>That made the SRP logic easier to read and easier to debug. When something goes wrong, it is pretty obvious where the live SRP state is:</p>
+<ul>
+<li><code>srpResources[]</code></li>
+<li><code>systemCeiling</code></li>
+<li><code>ceilingStack[]</code></li>
+</ul>
+<p>It also meant I could add SRP through wrapper APIs like <code>vSRPRegisterSemaphore()</code>, <code>xSemaphoreTake_SRP()</code>, and <code>xSemaphoreGive_SRP()</code> without needing to rewrite the normal semaphore internal functionality.</p>
+<h3 id="4-use-wrapper-semaphores-instead-of-changing-every-normal-semaphore-path">4. Use wrapper semaphores instead of changing every normal semaphore path</h3>
+<p>I kept SRP resource access explicit:</p>
+<ul>
+<li>register the resource with <code>vSRPRegisterSemaphore()</code></li>
+<li>take it with <code>xSemaphoreTake_SRP()</code></li>
+<li>release it with <code>xSemaphoreGive_SRP()</code></li>
+</ul>
+<p>So normal semaphores still behave like ordinary semaphores, and only resources that are meant to participate in SRP go through the ceiling logic</p>
+<p>This felt safer and more straightfoward than trying to make <em>every</em> semaphore in the kernel magically behave like an SRP resource.</p>
+<h3 id="5-use-one-global-live-ceiling-plus-a-ceiling-stack">5. Use one global live ceiling plus a ceiling stack</h3>
+<p>At runtime, SRP really cares about one thing: what is the current system ceiling?</p>
+<p>So I kept:</p>
+<ul>
+<li>one <code>systemCeiling</code></li>
+<li>one <code>ceilingStack[]</code></li>
+</ul>
+<p>The live ceiling changes on <code>xSemaphoreTake_SRP()</code>, and then on <code>xSemaphoreGive_SRP()</code> it gets popped back to whatever was there before.</p>
+<p>That stack is important because it keeps nested resource usage sane. Without it, the code would not know what ceiling to return to after a nested critical section ends.</p>
+<h3 id="6-make-admission-control-use-srp-blocking-not-just-normal-edf-demand">6. Make admission control use SRP blocking, not just normal EDF demand</h3>
+<p>The admission test now includes SRP blocking as well as the normal EDF utilization bound.</p>
+<p>The task-creation path computes a blocking term for each task, and the feasibility check adds one blocking hit into each PDA window.</p>
+<h3 id="7-stack-sharing">7. Stack sharing</h3>
+<p>Stack sharing is behind <code>configUSE_STACK_SHARING</code>, so there are two SRP modes:</p>
+<ul>
+<li>SRP without shared stacks</li>
+<li>SRP with shared stacks</li>
+</ul>
+<p>This made debugging much easier. If basic SRP scheduling was wrong, I could turn stack sharing off and not be unsure whether I was figuring out a context-copy bug instead of a scheduling bug.</p>
+<p>For stack-sharing, tasks at the same SRP preemption level share one live execution stack, but each task still has its own saved stack-image buffer. On a context switch:</p>
+<ul>
+<li>outgoing task saves the current shared stack image</li>
+<li>incoming task restores its saved image back into that shared stack</li>
+</ul>
+<p>This isn't the most memory-optimal way to do stack sharing, but it is a lot simpler and safer than trying to do a more granular implementation.</p>
+<h3 id="how-the-stack-sharing-gains-are-measured">How the stack-sharing gains are measured</h3>
+<p>The stack report output to the serial monitor measures a few different things at once:</p>
+<ul>
+<li><code>Private actual total</code> means "what if every task had its own live execution stack"</li>
+<li><code>SRP model shared total</code> means "if tasks at the same preemption level shared one live stack, what would the idealized live-stack total be"</li>
+<li><code>Actual unique range total</code> means "how many unique live stack ranges are actually present in this implementation"</li>
+<li><code>Context buffer total</code> is all the private saved stack-image buffers added together</li>
+</ul>
+<p>The summary lines are just differences between those totals:</p>
+<ul>
+<li><code>Theoretical SRP savings = Private actual total - SRP model shared total</code></li>
+<li><code>Actual implemented savings = Private actual total - Actual unique range total</code></li>
+<li><code>Net memory savings = Private actual total - Actual unique range total - Context buffer total</code></li>
+</ul>
+<p>So in a nutshell. report separates savings in <strong>live execution-stack ranges</strong> vs savings in <strong>overall RAM</strong></p>
+<p>That is why the shared-stack version can show really good "actual implemented savings", but still show weak or zero "net memory savings". The live stacks are shared, but each task still keeps its own saved stack-image buffer that uses up the net memory.</p>
+<p>You'll see examples of the actual stack report in <code>testing_SRP.md</code></p>
+<h3 id="how-kernel-decides-stack-size-for-shared-tasks">How kernel decides stack size for shared tasks</h3>
+<p>For the stack report, the kernel doesn't just assume the stack is <code>uxStackDepth * sizeof(StackType_t)</code> and call it a day. It looks at the task's recorded stack addresses:</p>
+<ul>
+<li><code>pxStack</code></li>
+<li><code>pxEndOfStack</code>,</li>
+</ul>
+<p>then normalizes those into a low address and a high address, and measures the range as:</p>
+<p><code>(stackEnd - stackStart) + sizeof(StackType_t)</code>.</p>
+<p>So the report is using the actual aligned stack range the task ended up with.</p>
+<p>This is also why the numbers can look a little funny (i.e. a task that was created with a nominal <code>256 * 4 = 1024</code> byte stack can still show up as <code>1020</code> bytes in the report, because the live stack range is being measured from the aligned addresses, not just from the original request size.)</p>
+<h3 id="how-same-level-tasks-are-counted">How same-level tasks are counted</h3>
+<p>For the <strong>theoretical</strong> shared model, the kernel groups tasks by SRP preemption level. Then for each preemption level, it only counts one live stack, and it uses the <strong>largest</strong> stack size seen among the tasks at that level, so all the tasks that might use it at some point can fit.</p>
+<p>For the <strong>actual</strong> implementation totals, the kernel looks for unique live stack ranges instead. So if two tasks are really pointing at the same shared execution stack, that range only gets counted once in <code>Actual unique range total</code>.</p>
+<h3 id="a-small-implementation-sidenote">A small implementation sidenote</h3>
+<p>The saved context buffers are counted differently from the live execution-stack ranges. The live stack range is measured from the actual aligned addresses, but the saved context buffer size is stored separately as the full requested copy-buffer size.</p>
+<p>So it's normal for the report to show something like, with neither being wrong, just different:</p>
+<ul>
+<li>live shared stack range: <code>1020 bytes</code></li>
+<li>per-task saved context buffer: <code>1024 bytes</code></li>
+</ul>
+<h2 id="feasibility-tests-used">Feasibility tests used</h2>
+<h3 id="what-the-kernel-actually-uses">What the kernel actually uses</h3>
+<p>For SRP-enabled builds, the real feasibility test is basically processor demand analysis plus the SRP blocking term</p>
+<p>There are two SRP-specific parts in the PDA code.</p>
+<p>First, the search horizon includes the maximum blocking term in the task set;  without SRP, <code>tmax</code> is based on execution demand, but with SRP, <code>tmax</code> is expanded by the maximum blocking term in the task set.</p>
+<p>Then each demand window adds one blocking hit:</p>
+<ul>
+<li>without SRP, the code just checks whether processor demand by itself exceeds <code>t</code></li>
+<li>with SRP, it adds one worst-case blocking hit for that window before making the pass/fail check</li>
+</ul>
+<p>That "one blocking hit" choice is intentional. Under SRP, the model is that a job can be blocked at most once before it starts, so the kernel uses the maximum blocking term, not a sum of a bunch of resource holds.</p>
+<h3 id="where-the-blocking-term-comes-from">Where the blocking term comes from</h3>
+<p>The per-task blocking term is computed from the registered SRP resources:</p>
+<ul>
+<li>scan the registered SRP resources</li>
+<li>keep only the ones whose ceiling is high enough to block the task</li>
+<li>use the maximum blocking time among those resources as that task's blocking term</li>
+</ul>
+<p>So the resource registration step is not just bookkeeping for runtime locking. It also make the feasibility test work.</p>
+          <p><a class="source-link" href="design_SRP.md">Open original markdown</a></p>
+        </article>
+        <nav class="toc" aria-label="Table of contents">
+          <p class="toc-title">On This Page</p>
+          <a class="toc-level-1" href="#srp-design">SRP Design</a>
+<a class="toc-level-2" href="#main-design-choices">Main design choices</a>
+<a class="toc-level-3" href="#1-integrating-srp-w-edf">1. Integrating SRP w/ EDF</a>
+<a class="toc-level-3" href="#2-use-deadline-derived-preemption-levels-instead-of-inventing-a-separate-numbering-scheme">2. Use deadline-derived preemption levels instead of inventing a separate numbering scheme</a>
+<a class="toc-level-3" href="#3-put-srp-resource-state-in-one-small-kernel-side-table">3. Put SRP resource state in one small kernel-side table</a>
+<a class="toc-level-3" href="#4-use-wrapper-semaphores-instead-of-changing-every-normal-semaphore-path">4. Use wrapper semaphores instead of changing every normal semaphore path</a>
+<a class="toc-level-3" href="#5-use-one-global-live-ceiling-plus-a-ceiling-stack">5. Use one global live ceiling plus a ceiling stack</a>
+<a class="toc-level-3" href="#6-make-admission-control-use-srp-blocking-not-just-normal-edf-demand">6. Make admission control use SRP blocking, not just normal EDF demand</a>
+<a class="toc-level-3" href="#7-stack-sharing">7. Stack sharing</a>
+<a class="toc-level-3" href="#how-the-stack-sharing-gains-are-measured">How the stack-sharing gains are measured</a>
+<a class="toc-level-3" href="#how-kernel-decides-stack-size-for-shared-tasks">How kernel decides stack size for shared tasks</a>
+<a class="toc-level-3" href="#how-same-level-tasks-are-counted">How same-level tasks are counted</a>
+<a class="toc-level-3" href="#a-small-implementation-sidenote">A small implementation sidenote</a>
+<a class="toc-level-2" href="#feasibility-tests-used">Feasibility tests used</a>
+<a class="toc-level-3" href="#what-the-kernel-actually-uses">What the kernel actually uses</a>
+<a class="toc-level-3" href="#where-the-blocking-term-comes-from">Where the blocking term comes from</a>
+        </nav>
+      </div>
+    </main>
+  </body>
+</html>

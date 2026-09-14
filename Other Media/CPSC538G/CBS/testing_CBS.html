@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CBS Testing Notes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+        svg: { fontCache: 'global' }
+      };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <style>
+      :root {
+        --bg: #f8f9fb;
+        --paper: #ffffff;
+        --text: #23252f;
+        --muted: #676d7c;
+        --line: #dfe3ec;
+        --accent: #297373;
+        --accent-soft: #e8f4f3;
+        --code-bg: #f3f5f8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.65;
+      }
+
+      .doc-shell {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 32px 0 56px;
+      }
+
+      .doc-header {
+        margin-bottom: 24px;
+      }
+
+      .back-link,
+      .source-link {
+        color: var(--accent);
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .back-link:hover,
+      .source-link:hover,
+      .toc a:hover {
+        text-decoration: underline;
+      }
+
+      .doc-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 260px;
+        gap: 28px;
+        align-items: start;
+      }
+
+      article {
+        min-width: 0;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: clamp(20px, 4vw, 42px);
+        box-shadow: 0 12px 32px rgba(28, 33, 45, 0.08);
+      }
+
+      .toc {
+        position: sticky;
+        top: 20px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 18px;
+      }
+
+      .toc-title {
+        margin: 0 0 10px;
+        font-size: 0.85rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .toc a {
+        display: block;
+        color: var(--text);
+        font-size: 0.9rem;
+        line-height: 1.35;
+        margin: 8px 0;
+        text-decoration: none;
+      }
+
+      .toc-level-3 {
+        padding-left: 14px;
+        color: var(--muted) !important;
+        font-size: 0.82rem !important;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        line-height: 1.2;
+        margin: 1.6em 0 0.55em;
+      }
+
+      h1 {
+        margin-top: 0;
+        font-size: clamp(2rem, 5vw, 3.2rem);
+      }
+
+      h2 {
+        border-top: 1px solid var(--line);
+        padding-top: 1em;
+        font-size: clamp(1.4rem, 3vw, 2rem);
+      }
+
+      h3 {
+        font-size: 1.15rem;
+      }
+
+      p {
+        margin: 0.8em 0;
+      }
+
+      ul,
+      ol {
+        padding-left: 1.4rem;
+      }
+
+      li {
+        margin: 0.45rem 0;
+      }
+
+      code {
+        background: var(--code-bg);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 0.1rem 0.35rem;
+        font-family: Consolas, 'Courier New', monospace;
+        font-size: 0.92em;
+      }
+
+      pre {
+        overflow-x: auto;
+        background: #18202a;
+        color: #eef4f8;
+        border-radius: 8px;
+        padding: 18px;
+      }
+
+      pre code {
+        background: transparent;
+        border: 0;
+        color: inherit;
+        padding: 0;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        margin: 1rem 0 1.4rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--paper);
+      }
+
+      th,
+      td {
+        border: 1px solid var(--line);
+        padding: 0.65rem 0.8rem;
+        vertical-align: top;
+      }
+
+      th {
+        background: var(--accent-soft);
+      }
+
+      .doc-figure {
+        margin: 1.6rem 0;
+      }
+
+      .doc-figure img {
+        display: block;
+        width: 100%;
+        max-height: 760px;
+        object-fit: contain;
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        box-shadow: 0 8px 24px rgba(28, 33, 45, 0.12);
+      }
+
+      figcaption {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-top: 0.55rem;
+        text-align: center;
+      }
+
+      .math-block {
+        overflow-x: auto;
+        background: var(--accent-soft);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 0.8rem 1rem;
+        margin: 1rem 0;
+      }
+
+      @media (max-width: 900px) {
+        .doc-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .toc {
+          position: static;
+          order: -1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="doc-shell">
+      <header class="doc-header">
+        <a class="back-link" href="../../../Other%20Projects/RTOS%20Scheduling%20Algorithms.html">&larr; Back to RTOS Scheduling Algorithms</a>
+      </header>
+      <div class="doc-layout">
+        <article>
+          <h1 id="cbs-testing">CBS Testing</h1>
+<h2 id="testing-overview">Testing Overview</h2>
+<p>All tests were conducted in \Demo\ThirdParty\Community-Supported-Demos\CORTEX_M0_RP2040\Standard\main.c, in \Standard there is a file called <code>cbs_demo.c</code> which is called by main and controls which test case is run by setting a variable called <code>TESTCASE</code> (also defined in <code>cbs_demo.c</code>).</p>
+<p>It covers the following test cases:</p>
+<ol>
+<li>Basic CBS Functionality</li>
+<li>CBS admission control (before scheduler starts)</li>
+<li>CBS with small budget</li>
+<li>Runtime admission control (after scheduler starts)</li>
+</ol>
+<p>The testing was conducted using the logic analyzer of an Analog Discovery 2 and also by printing messages to the serial monitor. I had gpio pins tracking the periodic tasks, CBS servers, when CBS servers were delayed, and also flags for expected rejections of tasks or unexpected admissions (for admission control)</p>
+<p>Also for almost all the CBS tests I was comparing schedules for, I would have to catch the gpio pulses right as the scheduler started to match them, since there are aperiodic elements.</p>
+<p>Disclaimer: I would use cursors along the time base of the logic analyzer to measure timing (they're not perfectly accurate since you drag them by hand, but they still give a good view of the timing)</p>
+<h2 id="tests">Tests</h2>
+<p>All the timing numbers are in ms, unless stated otherwise.</p>
+<h3 id="test-case-1-2-period-tasks-with-2-backlogged-cbs-servers">Test Case 1: 2 Period tasks with 2 backlogged CBS servers</h3>
+<p>Test 1 just tests the behaviour of two periodic EDF tasks working with two CBS servers. It will demonstrate how CBS servers only run when they have budget, and that priority tiebreaks break in favour of the CBS servers.</p>
+<p><strong>Periodic Task Configuration</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Task</th><th style="text-align: center;">C</th><th style="text-align: center;">T</th><th style="text-align: center;">D</th><th style="text-align: center;">offset</th></tr></thead><tbody><tr><td style="text-align: center;">τA</td><td style="text-align: center;">80</td><td style="text-align: center;">80</td><td style="text-align: center;">15</td><td style="text-align: center;">0</td></tr><tr><td style="text-align: center;">τB</td><td style="text-align: center;">120</td><td style="text-align: center;">120</td><td style="text-align: center;">20</td><td style="text-align: center;">20</td></tr></tbody></table></div>
+<p><strong>CBS Configuration</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Server</th><th style="text-align: center;">Q</th><th style="text-align: center;">T</th><th style="text-align: center;">D</th></tr></thead><tbody><tr><td style="text-align: center;">CBS1</td><td style="text-align: center;">12</td><td style="text-align: center;">60</td><td style="text-align: center;">3</td></tr><tr><td style="text-align: center;">CBS2</td><td style="text-align: center;">8</td><td style="text-align: center;">80</td><td style="text-align: center;">2</td></tr></tbody></table></div>
+<p>C is remaining budget.</p>
+<p><strong>Expected Scheduling</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Time (ms)</th><th style="text-align: center;">What happens</th><th style="text-align: center;">why</th></tr></thead><tbody><tr><td style="text-align: center;">0 - 12</td><td style="text-align: center;">CBS1 runs</td><td style="text-align: center;">First deadlines are CBS1 = 60, A = 80, CBS2 = 80, B = 140, so CBS1 is first. It burns through the entirety of Q = 12 budget</td></tr><tr><td style="text-align: center;">12</td><td style="text-align: center;">CBS1 is postponed</td><td style="text-align: center;">Since CBS1's budget just hit 0, it's refreshed and its deadline is pushed from 60 to 120. The postpone pin pulses here.</td></tr><tr><td style="text-align: center;">12 - 20</td><td style="text-align: center;">CBS2 runs</td><td style="text-align: center;">Task A and CBS2 are tied at deadline 80, but <strong> the kernel breaks that tie in favour of the CBS server </strong>, so CBS2 goes next. It uses its whole Q = 8 budget.</td></tr><tr><td style="text-align: center;">20</td><td style="text-align: center;">CBS2 is postponed</td><td style="text-align: center;">Its budget is empty, so its deadline moves from 80 to 160. Postpone pin pulses</td></tr><tr><td style="text-align: center;">20 - 35</td><td style="text-align: center;">Task A runs</td><td style="text-align: center;">Task A now has earliest deadline left in the system, so it gets its full 15 ticks.</td></tr><tr><td style="text-align: center;">35 - 47</td><td style="text-align: center;">CBS1 runs again</td><td style="text-align: center;">After Task A blocks until its next period, CBS1 is back to being the earliest thing ready with deadline 120. It spends its refreshed 12 ticks</td></tr><tr><td style="text-align: center;">around 47</td><td style="text-align: center;">Task B DOESN'T run</td><td style="text-align: center;">B is supposed to be next because its deadline 140 is now earliest, but then it applies its 20 tick startup offset so it can't run</td></tr><tr><td style="text-align: center;">47 - 55</td><td style="text-align: center;">CBS2 runs again</td><td style="text-align: center;">Since B is blocked, CBS2 has deadline 160 and beats CBS1, which has already been pushed back again</td></tr><tr><td style="text-align: center;">55 - 67</td><td style="text-align: center;">CBS1 runs again</td><td style="text-align: center;">Again, once CBS2 spends its budget, CBS1 becomes the earlier server</td></tr><tr><td style="text-align: center;">67 - 87</td><td style="text-align: center;">Periodic B runs for real</td><td style="text-align: center;">Task B's offset delay has expired by now, so this is its first actual 20 tick job.</td></tr><tr><td style="text-align: center;">87 - 102</td><td style="text-align: center;">Periodic A runs again</td><td style="text-align: center;">Task A's second job is ready and has the earliest deadline, so it preempts the backlogged servers</td></tr><tr><td style="text-align: center;">after that</td><td style="text-align: center;">Same pattern repeats</td><td style="text-align: center;">Task A and B still win when their deadlines come due, and the two CBS servers fill the gaps by burning budget, getting postponed, and coming back later.</td></tr></tbody></table></div>
+<p>A little sidenote on the GPIOs: the CBS server pulses are split into smaller pieces; the demo's <code>chunk</code> behaviour. CBS1 does 3 ticks at a time and yields (goes to <code>taskYIELD()</code>), and CBS2 does 2 ticks at a time and yields, so sometimes on the logic analyzer, this budget shows up as a few short high pulses packed right beside each other.</p>
+<p><strong>Actual Timing Diagram</strong></p>
+<figure class="doc-figure"><a href="pictures/CPSC538_CBS_Test1.png" target="_blank"><img src="pictures/CPSC538_CBS_Test1.png" alt="Alt text" /></a><figcaption>Alt text</figcaption></figure>
+<p><br></p>
+<p>As you can see, all the way until the 7th cursor measuring the end of Task B running, the timing behaviour matches the theoretical table.</p>
+<h3 id="test-case-2-reject-the-second-cbs-server-at-admission-time">Test Case 2: reject the second CBS server at admission time</h3>
+<p>This test demonstrates that CBS admission control is actually checking the admisssibility of the CBS sets, not just accepting every server I ask for. Task A, Task B, and CBS1 should all be admitted. <code>CBS2</code> is the one that should fail before the scheduler starts because its addition pushes the schedule past the utilization bound.</p>
+<p>The reason is just the total reserved load:</p>
+<ul>
+<li>Task A uses <code>20 / 80 = 0.25</code></li>
+<li>Task B uses <code>20 / 100 = 0.20</code></li>
+<li>CBS1 uses <code>20 / 80 = 0.25</code></li>
+<li>total so far = <code>0.70</code></li>
+</ul>
+<p>Adding CBS2 would add another <code>20 / 60 = 0.333...</code>, which pushes the total over <code>1.0</code>, so the scheduler should reject it.</p>
+<p><strong>Periodic Task Configuration</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Task</th><th style="text-align: center;">C</th><th style="text-align: center;">T</th><th style="text-align: center;">D</th><th style="text-align: center;">offset</th></tr></thead><tbody><tr><td style="text-align: center;">Task A</td><td style="text-align: center;">20</td><td style="text-align: center;">80</td><td style="text-align: center;">80</td><td style="text-align: center;">0</td></tr><tr><td style="text-align: center;">Task B</td><td style="text-align: center;">20</td><td style="text-align: center;">100</td><td style="text-align: center;">100</td><td style="text-align: center;">20</td></tr></tbody></table></div>
+<p><strong>CBS Configuration</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Server</th><th style="text-align: center;">Q</th><th style="text-align: center;">T</th><th style="text-align: center;">chunk</th></tr></thead><tbody><tr><td style="text-align: center;">CBS1</td><td style="text-align: center;">20</td><td style="text-align: center;">80</td><td style="text-align: center;">5</td></tr><tr><td style="text-align: center;">CBS2</td><td style="text-align: center;">20</td><td style="text-align: center;">60</td><td style="text-align: center;">5</td></tr></tbody></table></div>
+<p><strong>What we should see</strong></p>
+<ul>
+<li>CBS2 should be rejected at task creation time</li>
+<li><code>GPIO13</code> should go high and stay high, since that is the expected-reject pin</li>
+<li><code>GPIO14</code> should stay low, because nothing unexpected happened</li>
+</ul>
+<p>You should also see <code>Expected reject: CBS2</code> on the serial monitor before the scheduler starts.</p>
+<p><strong>Expected Scheduling</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Time (ms)</th><th style="text-align: center;">What happens</th><th style="text-align: center;">Why</th></tr></thead><tbody><tr><td style="text-align: center;">before scheduler starts</td><td style="text-align: center;">CBS2 is rejected</td><td style="text-align: center;">Admission control catches it during creation, so <code>GPIO13</code> goes high before any runtime scheduling happens, and CBS2 never runs</td></tr><tr><td style="text-align: center;">0 - 20</td><td style="text-align: center;">CBS1 runs</td><td style="text-align: center;">CBS1 and Task A both start with deadline 80, and the kernel breaks that tie in favour of the CBS server.</td></tr><tr><td style="text-align: center;">20</td><td style="text-align: center;">CBS1 is postponed</td><td style="text-align: center;">It just spent all 20 ticks of budget, so its deadline is pushed back from 80 to 160.</td></tr><tr><td style="text-align: center;">20 - 40</td><td style="text-align: center;">Task A runs</td><td style="text-align: center;">Task A now has the earliest deadline left in the system.</td></tr><tr><td style="text-align: center;">around 40</td><td style="text-align: center;">Task B DOESN'T run</td><td style="text-align: center;">Task B gets picked next, but it immediately applies its 20 tick startup offset, so it can't actually run yet</td></tr><tr><td style="text-align: center;">40 - 60</td><td style="text-align: center;">CBS1 runs again</td><td style="text-align: center;">With Task B blocked and Task A waiting for its next period, CBS1 is the only one that can run</td></tr><tr><td style="text-align: center;">60</td><td style="text-align: center;">CBS1 is postponed again</td><td style="text-align: center;">Another full budget run, so another postpone pulse.</td></tr><tr><td style="text-align: center;">60 - 80</td><td style="text-align: center;">Task B runs for real</td><td style="text-align: center;">Task B's startup offset has expired by this point, so this is its first actual job.</td></tr><tr><td style="text-align: center;">80 - 100</td><td style="text-align: center;">Task A runs again</td><td style="text-align: center;">Task A's second job is released and has the earlier deadline.</td></tr><tr><td style="text-align: center;">100 - 120</td><td style="text-align: center;">CBS1 runs again</td><td style="text-align: center;">Again, when the periodic tasks are sleeping, the server fills the gap</td></tr><tr><td style="text-align: center;">120 - 160</td><td style="text-align: center;">Idle</td><td style="text-align: center;">Both periodic tasks are blocked until their next releases, and CBS1 has already burned through its current budget</td></tr></tbody></table></div>
+<p>After that, the same three admitted tasks keep cycling</p>
+<p><strong>Actual Timing Diagram</strong></p>
+<figure class="doc-figure"><a href="pictures/CPSC538_CBS_Test2.png" target="_blank"><img src="pictures/CPSC538_CBS_Test2.png" alt="Alt text" /></a><figcaption>Alt text</figcaption></figure>
+<p><br></p>
+<p><br></p>
+<h3 id="test-case-3-make-deadline-postponements-easy-to-see">Test Case 3: make deadline postponements easy to see</h3>
+<p>This one shows the CBS behaviour on the GPIOs. There is only one periodic task and one CBS server, and the server has a tiny budget with <code>chunk = 1</code>, so it burns through its reservation all the time.</p>
+<p>That makes the postpone pin really easy to spot.</p>
+<p><strong>Periodic Task Configuration</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Task</th><th style="text-align: center;">C</th><th style="text-align: center;">T</th><th style="text-align: center;">D</th><th style="text-align: center;">offset</th></tr></thead><tbody><tr><td style="text-align: center;">Task A</td><td style="text-align: center;">12</td><td style="text-align: center;">60</td><td style="text-align: center;">60</td><td style="text-align: center;">0</td></tr></tbody></table></div>
+<p><strong>CBS Configuration</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Server</th><th style="text-align: center;">Q</th><th style="text-align: center;">T</th><th style="text-align: center;">chunk</th></tr></thead><tbody><tr><td style="text-align: center;">CBS1</td><td style="text-align: center;">4</td><td style="text-align: center;">40</td><td style="text-align: center;">1</td></tr></tbody></table></div>
+<p><strong>What this test is checking</strong></p>
+<ul>
+<li>CBS1 should keep exhausting its budget very quickly</li>
+<li>every time that happens, its deadline should be postponed and the postpone pin should pulse</li>
+<li>the server task pin should look chopped into lots of tiny pieces, because <code>chunk = 1</code> means it yields every single tick</li>
+<li>Task A should still run whenever its release comes around</li>
+</ul>
+<p><strong>Expected Scheduling</strong> CBS1 should keep repeating in 4-tick bursts in-between the periods of Task A (48s between the end of a Task A job and the start of the next one) as it runs out of budget and the budget is refreshed again and again.</p>
+<p><strong>Actual Timing Diagram</strong></p>
+<figure class="doc-figure"><a href="pictures/CPSC538_CBS_Test3.png" target="_blank"><img src="pictures/CPSC538_CBS_Test3.png" alt="Alt text" /></a><figcaption>Alt text</figcaption></figure>
+<p><br></p>
+<p><strong>Zoomed-in Version to show 4ms Ticks</strong></p>
+<figure class="doc-figure"><a href="pictures/CPSC538_CBS_Test3_ticksZoom.png" target="_blank"><img src="pictures/CPSC538_CBS_Test3_ticksZoom.png" alt="Alt text" /></a><figcaption>Alt text</figcaption></figure>
+<p><br></p>
+<p>In the timing diagram, we indeed see these 4ms ticks while CBS1 is running for the 48s between the jobs of Task A. That being said, they don't always show up. I believe this is just a result of the logic analyzer not being quick enough to catch those pulses sometimes.</p>
+<h3 id="test-case-4-create-cbs-servers-after-the-scheduler-has-already-started">Test Case 4: create CBS servers after the scheduler has already started</h3>
+<p>This one is checking admission control while the scheduler is running instead of startup admission control. At the beginning, only the two periodic EDF tasks are created. Then a small launcher task waits a bit and tries to create CBS1 while the system is already running. Later, it does the same thing for CBS2.</p>
+<p>With admission control enabled, CBS1 should be accepted and CBS2 should be rejected. With admission control no enabled, both CBS1 and CB2 will be accepted.</p>
+<p>The math is the same as  in testcase 2, just moved to runtime instead of startup:</p>
+<ul>
+<li>Task A uses <code>20 / 80 = 0.25</code></li>
+<li>Task B uses <code>20 / 100 = 0.20</code></li>
+<li>startup load is <code>0.45</code></li>
+<li>CBS1 adds <code>20 / 80 = 0.25</code>, bringing the total to <code>0.70</code>, so it should be accepted</li>
+<li>CBS2 adds <code>20 / 60 = 0.333...</code>, which pushes the total over <code>1.0</code>, so it should be rejected</li>
+</ul>
+<p><strong>Periodic Task Configuration</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Task</th><th style="text-align: center;">C</th><th style="text-align: center;">T</th><th style="text-align: center;">D</th><th style="text-align: center;">offset</th></tr></thead><tbody><tr><td style="text-align: center;">Task A</td><td style="text-align: center;">20</td><td style="text-align: center;">80</td><td style="text-align: center;">80</td><td style="text-align: center;">0</td></tr><tr><td style="text-align: center;">Task B</td><td style="text-align: center;">20</td><td style="text-align: center;">100</td><td style="text-align: center;">100</td><td style="text-align: center;">20</td></tr></tbody></table></div>
+<p><strong>CBS Configuration</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Server</th><th style="text-align: center;">Q</th><th style="text-align: center;">T</th><th style="text-align: center;">chunk</th></tr></thead><tbody><tr><td style="text-align: center;">CBS1</td><td style="text-align: center;">20</td><td style="text-align: center;">80</td><td style="text-align: center;">5</td></tr><tr><td style="text-align: center;">CBS2</td><td style="text-align: center;">20</td><td style="text-align: center;">60</td><td style="text-align: center;">5</td></tr></tbody></table></div>
+<p><strong>Runtime Create Timing</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Event</th><th style="text-align: center;">Delay</th></tr></thead><tbody><tr><td style="text-align: center;">Try to create CBS1</td><td style="text-align: center;">150 ms after scheduler start</td></tr><tr><td style="text-align: center;">Try to create CBS2</td><td style="text-align: center;">120 ms after the CBS1 attempt</td></tr></tbody></table></div>
+<p><strong>What this test is checking</strong></p>
+<ul>
+<li>before any runtime create happens, only Task A and Task B wil run</li>
+<li>around <code>150 ms</code>, the serial monitor should print <code>Runtime create attempt: CBS1</code></li>
+<li>after that, CBS1 should start showing up on its task pin if it was accepted</li>
+<li>around <code>270 ms</code>, the serial monitor should print <code>Runtime create attempt: CBS2</code></li>
+<li>with admission control enabled, CBS2 should be rejected at that point and <code>GPIO13</code> should go high. With it disabled, CBS2 will start showing up, and <code>GPIO13</code> won't go high.</li>
+<li><code>GPIO14</code> should stay low, because nothing unexpected happened</li>
+</ul>
+<p><strong>Actual Timing Diagram (no admission control)</strong></p>
+<figure class="doc-figure"><a href="pictures/CPSC538_CBS_Test4_NoAC.png" target="_blank"><img src="pictures/CPSC538_CBS_Test4_NoAC.png" alt="Alt text" /></a><figcaption>Alt text</figcaption></figure>
+<p><br></p>
+<p>In this diagram without admission control, you can see that when CBS1 is released at t = 150ms, there's a drop in Task B running, but because the CBS servers are backlogged, Task B resumes running. Then, 10ms later, CBS1 actually starts running. Likewise, at t = 270 ms, there's a drop in Task A when CBS2 is released, but CBS2 has to wait 10ms for Task B to finish before it can actually start running.</p>
+<p><strong>Actual Timing Diagram (with admission control)</strong></p>
+<figure class="doc-figure"><a href="pictures/CPSC538_CBS_Test4_AC.png" target="_blank"><img src="pictures/CPSC538_CBS_Test4_AC.png" alt="Alt text" /></a><figcaption>Alt text</figcaption></figure>
+<p><br> In this diagram without admission control, you can see that when CBS1 is released at t = 150ms, there's the same drop in Task B running, but because the CBS servers are backlogged, Task B resumes running. Then, 10ms later, CBS1 actually starts running. At t = 270ms, there's a drop in Task A when CBS2 is released, but admission control deems that it's unschedulable, so it never actually runs. At the same time, GPIO13 (CBS Expected Reject) goes high, marking the rejection of CBS2.</p>
+<p>Everything is working as expected.</p>
+<p><strong>Serial Monitor Message</strong></p>
+<pre><code class="language-">---- Opened the serial port COM7 ----
+CBS TESTCASE 4: Runtime Admission Control
+Pins: A=12 B=11 CBS1=10 CBS2=9 CBS1Postpone=8 CBS2Postpone=7 Idle=6 ExpectedReject=13 UnexpectedAdmission=14
+Failed Tasks:
+Runtime create attempt: CBS1
+Runtime create attempt: CBS2</code></pre>
+          <p><a class="source-link" href="testing_CBS.md">Open original markdown</a></p>
+        </article>
+        <nav class="toc" aria-label="Table of contents">
+          <p class="toc-title">On This Page</p>
+          <a class="toc-level-1" href="#cbs-testing">CBS Testing</a>
+<a class="toc-level-2" href="#testing-overview">Testing Overview</a>
+<a class="toc-level-2" href="#tests">Tests</a>
+<a class="toc-level-3" href="#test-case-1-2-period-tasks-with-2-backlogged-cbs-servers">Test Case 1: 2 Period tasks with 2 backlogged CBS servers</a>
+<a class="toc-level-3" href="#test-case-2-reject-the-second-cbs-server-at-admission-time">Test Case 2: reject the second CBS server at admission time</a>
+<a class="toc-level-3" href="#test-case-3-make-deadline-postponements-easy-to-see">Test Case 3: make deadline postponements easy to see</a>
+<a class="toc-level-3" href="#test-case-4-create-cbs-servers-after-the-scheduler-has-already-started">Test Case 4: create CBS servers after the scheduler has already started</a>
+        </nav>
+      </div>
+    </main>
+  </body>
+</html>

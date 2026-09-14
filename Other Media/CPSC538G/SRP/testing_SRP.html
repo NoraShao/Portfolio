@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SRP Testing Notes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+        svg: { fontCache: 'global' }
+      };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <style>
+      :root {
+        --bg: #f8f9fb;
+        --paper: #ffffff;
+        --text: #23252f;
+        --muted: #676d7c;
+        --line: #dfe3ec;
+        --accent: #297373;
+        --accent-soft: #e8f4f3;
+        --code-bg: #f3f5f8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.65;
+      }
+
+      .doc-shell {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 32px 0 56px;
+      }
+
+      .doc-header {
+        margin-bottom: 24px;
+      }
+
+      .back-link,
+      .source-link {
+        color: var(--accent);
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .back-link:hover,
+      .source-link:hover,
+      .toc a:hover {
+        text-decoration: underline;
+      }
+
+      .doc-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 260px;
+        gap: 28px;
+        align-items: start;
+      }
+
+      article {
+        min-width: 0;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: clamp(20px, 4vw, 42px);
+        box-shadow: 0 12px 32px rgba(28, 33, 45, 0.08);
+      }
+
+      .toc {
+        position: sticky;
+        top: 20px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 18px;
+      }
+
+      .toc-title {
+        margin: 0 0 10px;
+        font-size: 0.85rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .toc a {
+        display: block;
+        color: var(--text);
+        font-size: 0.9rem;
+        line-height: 1.35;
+        margin: 8px 0;
+        text-decoration: none;
+      }
+
+      .toc-level-3 {
+        padding-left: 14px;
+        color: var(--muted) !important;
+        font-size: 0.82rem !important;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        line-height: 1.2;
+        margin: 1.6em 0 0.55em;
+      }
+
+      h1 {
+        margin-top: 0;
+        font-size: clamp(2rem, 5vw, 3.2rem);
+      }
+
+      h2 {
+        border-top: 1px solid var(--line);
+        padding-top: 1em;
+        font-size: clamp(1.4rem, 3vw, 2rem);
+      }
+
+      h3 {
+        font-size: 1.15rem;
+      }
+
+      p {
+        margin: 0.8em 0;
+      }
+
+      ul,
+      ol {
+        padding-left: 1.4rem;
+      }
+
+      li {
+        margin: 0.45rem 0;
+      }
+
+      code {
+        background: var(--code-bg);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 0.1rem 0.35rem;
+        font-family: Consolas, 'Courier New', monospace;
+        font-size: 0.92em;
+      }
+
+      pre {
+        overflow-x: auto;
+        background: #18202a;
+        color: #eef4f8;
+        border-radius: 8px;
+        padding: 18px;
+      }
+
+      pre code {
+        background: transparent;
+        border: 0;
+        color: inherit;
+        padding: 0;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        margin: 1rem 0 1.4rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--paper);
+      }
+
+      th,
+      td {
+        border: 1px solid var(--line);
+        padding: 0.65rem 0.8rem;
+        vertical-align: top;
+      }
+
+      th {
+        background: var(--accent-soft);
+      }
+
+      .doc-figure {
+        margin: 1.6rem 0;
+      }
+
+      .doc-figure img {
+        display: block;
+        width: 100%;
+        max-height: 760px;
+        object-fit: contain;
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        box-shadow: 0 8px 24px rgba(28, 33, 45, 0.12);
+      }
+
+      figcaption {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-top: 0.55rem;
+        text-align: center;
+      }
+
+      .math-block {
+        overflow-x: auto;
+        background: var(--accent-soft);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 0.8rem 1rem;
+        margin: 1rem 0;
+      }
+
+      @media (max-width: 900px) {
+        .doc-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .toc {
+          position: static;
+          order: -1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="doc-shell">
+      <header class="doc-header">
+        <a class="back-link" href="../../../Other%20Projects/RTOS%20Scheduling%20Algorithms.html">&larr; Back to RTOS Scheduling Algorithms</a>
+      </header>
+      <div class="doc-layout">
+        <article>
+          <h1 id="srp-testing">SRP Testing</h1>
+<h2 id="testing-procedure">Testing Procedure</h2>
+<p>All tests were conducted in \Demo\ThirdParty\Community-Supported-Demos\CORTEX_M0_RP2040\Standard\main.c, in \Standard there is a file called srp_demo.c which is called by main and controls which test case is run by setting a variable called TESTCASE (also defined in srp_demo.c).</p>
+<p>It covers the following test cases which will also be shown here:</p>
+<ol>
+<li>Basic Implicit Deadline w/ 1 Shared Resource</li>
+<li>Admission Control w/ SRP blocking time</li>
+<li>2 Shared Resources</li>
+<li>Stack-sharing</li>
+<li>Constrained Deadline Admission Control</li>
+<li>100 Task testcase (stack-sharing gains)</li>
+</ol>
+<p>The testing was conducted using the logic analyzer of an Analog Discovery 2 and also by printing messages to the serial monitor. I would use the logic analyzer to keep track of gpio pins for tasks running, as well as resource usage.</p>
+<p>For example, I used three GPIO pins to make a binary bus that could track the system ceiling up to 7 resources being used (but admittedly, I never went past 2 resources because I did not want to schedule that by hand)</p>
+<p>Disclaimer: I would use cursors along the time base of the logic analyzer to measure timing (they're not perfectly accurate since you drag them by hand, but they still give a good view of the timing)</p>
+<h2 id="testing">Testing</h2>
+<p>Also the tasks are designed so the critical section for each job is always placed at the end (so the jobs always first run their non-critical section, then use the shared resource for the last bit) All the timing numbers are in ms, unless stated otherwise.</p>
+<h3 id="test-case-1-implicit-deadline-w-1-shared-resource">Test Case 1: Implicit Deadline w/ 1 Shared Resource</h3>
+<p><strong>Task Configuration</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Task</th><th style="text-align: center;">C</th><th style="text-align: center;">T</th><th style="text-align: center;">D</th></tr></thead><tbody><tr><td style="text-align: center;">τA</td><td style="text-align: center;">20</td><td style="text-align: center;">100</td><td style="text-align: center;">100</td></tr><tr><td style="text-align: center;">τB</td><td style="text-align: center;">30</td><td style="text-align: center;">200</td><td style="text-align: center;">200</td></tr><tr><td style="text-align: center;">τC</td><td style="text-align: center;">50</td><td style="text-align: center;">400</td><td style="text-align: center;">400</td></tr></tbody></table></div>
+<p>This test just checks if the SRP implementation is properly applying the locking function and ceiling level to prevent another "higher-priority" task from preempting a lower-priority task while it is using a shared resource.</p>
+<p><br></p>
+<p><strong>Theoretical Timing Diagram (up to 240 ms)</strong></p>
+<figure class="doc-figure"><a href="pictures/CPSC_SRP_Test1_diagram.png" target="_blank"><img src="pictures/CPSC_SRP_Test1_diagram.png" alt="Alt text" /></a><figcaption>Alt text</figcaption></figure>
+<p><br></p>
+<p><strong>Expected Scheduling</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Time (ms)</th><th style="text-align: center;">What happens</th><th style="text-align: center;">Why</th></tr></thead><tbody><tr><td style="text-align: center;">0 - 10</td><td style="text-align: center;">Task C runs</td><td style="text-align: center;">C is the only task released at time 0. A and B are still waiting on their startup offsets.</td></tr><tr><td style="text-align: center;">10 - 28</td><td style="text-align: center;">Task B runs</td><td style="text-align: center;">B is released at 10 ms and has an earlier deadline than C, so EDF switches to B.</td></tr><tr><td style="text-align: center;">28 - 40</td><td style="text-align: center;">Task B holds resource 1</td><td style="text-align: center;">B has reached its critical section. The system ceiling rises here, so when A is released at 30 ms it still cannot start</td></tr><tr><td style="text-align: center;">40 - 60</td><td style="text-align: center;">Task A runs</td><td style="text-align: center;">Once B finishes and drops the resource, A has the earliest deadline in the ready set.</td></tr><tr><td style="text-align: center;">60 - 100</td><td style="text-align: center;">Task C finishes its first job</td><td style="text-align: center;">A is done, so C comes back. It finishes the rest of its non-critical work and then spends its last 20 ms in resource 1.</td></tr><tr><td style="text-align: center;">100 - 130</td><td style="text-align: center;">Idle</td><td style="text-align: center;">The first round of jobs is done and nothing else has been released yet.</td></tr><tr><td style="text-align: center;">130 - 150</td><td style="text-align: center;">Task A runs again</td><td style="text-align: center;">A's next period arrives before B or C release another job.</td></tr><tr><td style="text-align: center;">150 - 210</td><td style="text-align: center;">Idle</td><td style="text-align: center;">After A finishes, the system waits for B's next release.</td></tr><tr><td style="text-align: center;">210 - 240</td><td style="text-align: center;">Task B runs again</td><td style="text-align: center;">B's second job starts at 210 ms. A is released at 230 ms, but B is already in its shared section by then, so A has to wait.</td></tr><tr><td style="text-align: center;">240 - 260</td><td style="text-align: center;">Task A runs</td><td style="text-align: center;">As soon as B lets go of resource 1, A becomes the earliest ready task again.</td></tr><tr><td style="text-align: center;">after that</td><td style="text-align: center;">Same pattern repeats</td><td style="text-align: center;">A keeps getting the earlier deadline, but SRP still stops it from cutting into B or C while they are inside resource 1.</td></tr></tbody></table></div>
+<p><strong>Actual Timing Diagram</strong></p>
+<figure class="doc-figure"><a href="pictures/CPSC538_SRP_Test1.png" target="_blank"><img src="pictures/CPSC538_SRP_Test1.png" alt="Alt text" /></a><figcaption>Alt text</figcaption></figure>
+<p>Matches the theoretical diagram and the expected schedule! The resource is also being used when expected <br></p>
+<h3 id="test-case-2-admission-control">Test Case 2: Admission Control</h3>
+<p>Set <code>config_USE_ADMISSION_CONTROL = 1</code></p>
+<p><strong>Task Configuration</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Task</th><th style="text-align: center;">C</th><th style="text-align: center;">T</th><th style="text-align: center;">D</th><th style="text-align: center;">U</th></tr></thead><tbody><tr><td style="text-align: center;">τA</td><td style="text-align: center;">10</td><td style="text-align: center;">100</td><td style="text-align: center;">100</td><td style="text-align: center;">10/100 = 0.10</td></tr><tr><td style="text-align: center;">τB</td><td style="text-align: center;">70</td><td style="text-align: center;">200</td><td style="text-align: center;">200</td><td style="text-align: center;">70/200 = 0.35</td></tr><tr><td style="text-align: center;">τC</td><td style="text-align: center;">40</td><td style="text-align: center;">400</td><td style="text-align: center;">400</td><td style="text-align: center;">40/400 = 0.10</td></tr><tr><td style="text-align: center;">τD</td><td style="text-align: center;">50</td><td style="text-align: center;">200</td><td style="text-align: center;">200</td><td style="text-align: center;">50/200 = 0.25</td></tr></tbody></table></div>
+<p>(Di=Ti for all i)</p>
+<p>Total Utilization Bound: <span class="math-inline">\( U = 0.80 \leq 1, \)</span> so under EDF the task set should be schedulable. But when including the SRP blocking term, <code>RESOURCE_1_BLOCKING = 80ms</code>, we have to add 80s. At t = 200ms, we need to admit two jobs of task A, one job of task B, and one job of task D:</p>
+<div class="math-block">\[\frac{2 \times 10 + 70 + 50 + 80}{200} = \frac{220}{200} &gt; 1.\]</div>
+<p>So admission fails and task D cannot run.</p>
+<p>I expect to see that Task D fails to be scheduled.</p>
+<p><strong>Actual Timing Diagram</strong></p>
+<figure class="doc-figure"><a href="pictures/CPSC538_SRP_Test2.png" target="_blank"><img src="pictures/CPSC538_SRP_Test2.png" alt="Alt text" /></a><figcaption>Alt text</figcaption></figure>
+<p><br></p>
+<p><strong>Serial Monitor Log</strong></p>
+<figure class="doc-figure"><a href="pictures/CPSC538_SRP_Test2_SM.png" target="_blank"><img src="pictures/CPSC538_SRP_Test2_SM.png" alt="Alt text" /></a><figcaption>Alt text</figcaption></figure>
+<p><br> Observations: Task D is indeed not running and confirmed to be rejected.</p>
+<h3 id="test-case-3-2-shared-resources">Test Case 3: 2 Shared Resources</h3>
+<p>This test checks that SRP locking and the system ceiling works properly when there is more than one shared resource.</p>
+<p><strong>Task Configuration</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Task</th><th style="text-align: center;">C</th><th style="text-align: center;">T</th><th style="text-align: center;">D</th></tr></thead><tbody><tr><td style="text-align: center;">τA</td><td style="text-align: center;">25</td><td style="text-align: center;">150</td><td style="text-align: center;">150</td></tr><tr><td style="text-align: center;">τB</td><td style="text-align: center;">40</td><td style="text-align: center;">250</td><td style="text-align: center;">250</td></tr><tr><td style="text-align: center;">τC</td><td style="text-align: center;">45</td><td style="text-align: center;">300</td><td style="text-align: center;">300</td></tr><tr><td style="text-align: center;">τD</td><td style="text-align: center;">60</td><td style="text-align: center;">600</td><td style="text-align: center;">600</td></tr></tbody></table></div>
+<p>There are two registered resources in this test:</p>
+<ul>
+<li><code>RESOURCE_1_CEILING = 150ms</code>, <code>RESOURCE_1_BLOCKING = 10ms</code> with ceiling 1</li>
+<li><code>RESOURCE_2_CEILING = 250ms</code>, <code>RESOURCE_2_BLOCKING = 12ms</code> with ceiling 2</li>
+</ul>
+<p>Task A uses resource 1, task B uses resource 2, and task C uses both resources in the same job.</p>
+<p>I expect to see:</p>
+<ul>
+<li>pin 4 go high whenever resource 1 is being held</li>
+<li>pin 3 go high whenever resource 2 is being held</li>
+<li>the ceiling bus value should go up to 2, since there are now 2 resources</li>
+<li>the ceiling level return to the correct value after a resource is released instead of getting stuck</li>
+</ul>
+<p>Task D does not use any shared resource, so it is mainly there as a normal EDF task in the background.</p>
+<p><strong>Expected Scheduling</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Time (ms)</th><th style="text-align: center;">What happens</th><th style="text-align: center;">Why</th></tr></thead><tbody><tr><td style="text-align: center;">0 - 28</td><td style="text-align: center;">Task B runs</td><td style="text-align: center;">B and D are ready at time 0, and B has the earlier deadline. A and C are still in their startup offsets.</td></tr><tr><td style="text-align: center;">28 - 40</td><td style="text-align: center;">Task B holds resource 2</td><td style="text-align: center;">B reaches its shared section, so resource 2 goes high and the ceiling pins should show 010.</td></tr><tr><td style="text-align: center;">40 - 65</td><td style="text-align: center;">Task A runs</td><td style="text-align: center;">A is released at 40 ms and now has the earliest deadline. Its last 8 ms are in resource 1, so the ceiling should switch to 001 there.</td></tr><tr><td style="text-align: center;">65 - 102</td><td style="text-align: center;">Task C runs, then takes resource 1</td><td style="text-align: center;">C is next in line. It does its non-critical work first, then resource 1 goes high for the first shared section.</td></tr><tr><td style="text-align: center;">102 - 110</td><td style="text-align: center;">Task C takes resource 2</td><td style="text-align: center;">C has finished with resource 1 and moves straight into its second shared section, so the ceiling changes from 001 to 010.</td></tr><tr><td style="text-align: center;">110 - 170</td><td style="text-align: center;">Task D runs</td><td style="text-align: center;">D does not use any shared resource, so it fills the gap once the first jobs of A, B, and C are done.</td></tr><tr><td style="text-align: center;">170 - 190</td><td style="text-align: center;">Idle</td><td style="text-align: center;">Nothing is ready again until A's second release.</td></tr><tr><td style="text-align: center;">190 - 215</td><td style="text-align: center;">Task A runs again</td><td style="text-align: center;">A's next job arrives before B or C release their second jobs.</td></tr><tr><td style="text-align: center;">250 - 290</td><td style="text-align: center;">Task B runs again</td><td style="text-align: center;">B's second job should show the same resource-2 pattern as the first one.</td></tr><tr><td style="text-align: center;">320 - 340</td><td style="text-align: center;">Task C starts, then gets preempted by A</td><td style="text-align: center;">C begins its second job, but A is released at 340 ms with the earlier deadline, so C is cut off before it reaches a resource.</td></tr><tr><td style="text-align: center;">340 - 365</td><td style="text-align: center;">Task A runs</td><td style="text-align: center;">A takes over because its deadline is now earlier than C's</td></tr><tr><td style="text-align: center;">365 - 390</td><td style="text-align: center;">Task C finishes both shared sections</td><td style="text-align: center;">After A finishes, C comes back, uses resource 1 and then resource 2, and the ceiling pins should step through 001 and 010 again.</td></tr><tr><td style="text-align: center;">after that</td><td style="text-align: center;">Same idea keeps repeating</td><td style="text-align: center;"></td></tr></tbody></table></div>
+<p><strong>Actual Timing Diagram</strong></p>
+<figure class="doc-figure"><a href="pictures/CPSC538_SRP_Test3.png" target="_blank"><img src="pictures/CPSC538_SRP_Test3.png" alt="Alt text" /></a><figcaption>Alt text</figcaption></figure>
+<p><br> The actual measured schedule matches my hypothetical one! <br></p>
+<h3 id="test-case-4-stack-sharing">Test Case 4: Stack-sharing</h3>
+<p><strong>Task Configuration</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Task</th><th style="text-align: center;">C</th><th style="text-align: center;">T</th><th style="text-align: center;">D</th></tr></thead><tbody><tr><td style="text-align: center;">τA</td><td style="text-align: center;">20</td><td style="text-align: center;">200</td><td style="text-align: center;">200</td></tr><tr><td style="text-align: center;">τB</td><td style="text-align: center;">20</td><td style="text-align: center;">200</td><td style="text-align: center;">200</td></tr><tr><td style="text-align: center;">τC</td><td style="text-align: center;">30</td><td style="text-align: center;">400</td><td style="text-align: center;">400</td></tr><tr><td style="text-align: center;">τD</td><td style="text-align: center;">30</td><td style="text-align: center;">400</td><td style="text-align: center;">400</td></tr><tr><td style="text-align: center;">τE</td><td style="text-align: center;">40</td><td style="text-align: center;">800</td><td style="text-align: center;">800</td></tr><tr><td style="text-align: center;">τF</td><td style="text-align: center;">40</td><td style="text-align: center;">800</td><td style="text-align: center;">800</td></tr></tbody></table></div>
+<p>This test is set up so that there are three pairs of tasks with the same deadline:</p>
+<ul>
+<li>τA and τB</li>
+<li>τC and τD</li>
+<li>τE and τF</li>
+</ul>
+<p>Since SRP computes preemption level from the relative deadline, each of those pairs ends up with the same preemption level. That is what makes this the stack-sharing testcase.</p>
+<p>The main test output to see is the printed stack report, not just the GPIO pins. The report should show that there are fewer unique preemption levels than total tasks.</p>
+<p>If <code>configUSE_STACK_SHARING = 1</code>, I expect the report to show:</p>
+<ul>
+<li>the same preemption level for each pair listed above</li>
+<li>shared-stack usage for those tasks</li>
+<li>fewer actual unique stack ranges than total tasks</li>
+</ul>
+<p>If <code>configUSE_STACK_SHARING = 0</code>, then this testcase still gives the right stack-sharing task set, but the report will only show the theoretical grouping by preemption level and not actual shared stack ranges.</p>
+<p>At runtime, the GPIO pins should still just look like normal SRP execution with one shared resource. So this testcase is more about the stack report than about a special scheduling pattern on the logic analyzer.</p>
+<p><strong>Actual Timing Diagram</strong></p>
+<figure class="doc-figure"><a href="pictures/CPSC538_SRP_Test4.png" target="_blank"><img src="pictures/CPSC538_SRP_Test4.png" alt="Alt text" /></a><figcaption>Alt text</figcaption></figure>
+<p><br> This is the same whether or not stack sharing is enabled. <br></p>
+<p><strong>Serial monitor stack report for no stack sharing</strong></p>
+<figure class="doc-figure"><a href="pictures/CPSC538_SRP_Test4_noSS.png" target="_blank"><img src="pictures/CPSC538_SRP_Test4_noSS.png" alt="Alt text" /></a><figcaption>Alt text</figcaption></figure>
+<p><br></p>
+<p><strong>Serial monitor stack report with stack sharing enabled</strong></p>
+<figure class="doc-figure"><a href="pictures/CPSC538_SRP_Test4_SS.png" target="_blank"><img src="pictures/CPSC538_SRP_Test4_SS.png" alt="Alt text" /></a><figcaption>Alt text</figcaption></figure>
+<p><br></p>
+<p><strong>Quick guide to the stack report</strong></p>
+<ul>
+<li><code>PL</code> is the SRP preemption level. Tasks with the same deadline should end up with the same <code>PL</code></li>
+<li><code>Stack range</code> is the live execution-stack address range that task is using</li>
+<li><code>Bytes</code> is just the size of that stack range</li>
+<li><code>FreeHW</code> is the stack high-water free space, so how much of the stack still looks unused</li>
+<li><code>UsedHW</code> is the opposite: how much of that stack has actually been touched</li>
+<li><code>Shared</code> tells you whether that task is using the shared-stack path or not</li>
+<li><code>CtxB</code> is the size of that task's saved stack-image buffer. This is why stack sharing in my implementation doesn't automatically mean net RAM savings</li>
+<li><code>Model</code> means "this task introduces a new theoretical preemption-level bucket"</li>
+<li><code>Actual</code> means "this task introduces a new actual live stack range"</li>
+</ul>
+<p>The summary numbers at the bottom are the IMPORTANT ones:</p>
+<ul>
+<li><code>Private actual total</code> = what all the stacks would cost if every task had its own execution stack</li>
+<li><code>SRP model shared total</code> = the idealized total if you only count one live stack per preemption level</li>
+<li><code>Actual unique range total</code> = how much live execution-stack space is really being used in this implementation</li>
+<li><code>Context buffer total</code> = all the private saved stack-image buffers added together</li>
+<li><code>Theoretical SRP savings</code> = the nice on-paper stack-sharing win</li>
+<li><code>Actual implemented savings</code> = the reduction in <strong>live execution-stack</strong> ranges</li>
+<li><code>Net memory savings</code> = what is left after counting the context buffers too</li>
+</ul>
+<p>So between the stack reports for when stack sharing is not enabled vs when it is enabled, you can clearly see how the <code>Actual implemented savings</code> is half the previous live-execution space. This makes sense since half the tasks are sharing preemption level and can share stack with the other half. Thus stack sharing is successfully reducing the sapce the live execution stack uses.</p>
+<h3 id="test-case-5-failing-a-task-because-its-constrainted-deadline-exceeds-pda-bound">Test Case 5: Failing a task because its constrainted deadline exceeds PDA bound</h3>
+<p>Set <code>config_USE_ADMISSION_CONTROL = 1</code></p>
+<p><strong>Task Configuration</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Task</th><th style="text-align: center;">C</th><th style="text-align: center;">T</th><th style="text-align: center;">D</th><th style="text-align: center;">U</th></tr></thead><tbody><tr><td style="text-align: center;">τA</td><td style="text-align: center;">10</td><td style="text-align: center;">100</td><td style="text-align: center;">60</td><td style="text-align: center;">10/100 = 0.10</td></tr><tr><td style="text-align: center;">τB</td><td style="text-align: center;">70</td><td style="text-align: center;">200</td><td style="text-align: center;">200</td><td style="text-align: center;">70/200 = 0.35</td></tr><tr><td style="text-align: center;">τC</td><td style="text-align: center;">40</td><td style="text-align: center;">400</td><td style="text-align: center;">400</td><td style="text-align: center;">40/400 = 0.10</td></tr></tbody></table></div>
+<p>This testcase differs from Test Case 2 in that task A now has a constrained, not implicit, deadline:</p>
+<div class="math-block">\[D_A = 60 &lt; T_A = 100.\]</div>
+<p>The shared resource is registered with <code>RESOURCE_1_BLOCKING = 55ms</code>, so for task A the first PDA check already fails:</p>
+<div class="math-block">\[C_A + B = 10 + 55 = 65 &gt; 60 = D_A.\]</div>
+<p>So task A should be rejected immediately by admission control, even before worrying about the rest of the task set.</p>
+<p>I expect to see that</p>
+<ul>
+<li>during the 2 second latch window, task A's GPIO should stay low</li>
+<li>task B and task C should still go high</li>
+<li>the serial monitor should show task A under failed tasks</li>
+</ul>
+<p>This testcase shows the SRP blocking term directly affecting a constrained-deadline task instead of just pushing a larger implicit-deadline task SET over the edge.</p>
+<p><br> <strong> Actual Timing Diagram </strong></p>
+<figure class="doc-figure"><a href="pictures/CPSC538_SRP_Test5.png" target="_blank"><img src="pictures/CPSC538_SRP_Test5.png" alt="Alt text" /></a><figcaption>Alt text</figcaption></figure>
+<p><br> As can be seen, Task A's gpio pin never goes high; Task A never runs because it's not scheduleable.</p>
+<h3 id="test-case-6-100-task-testcase">Test Case 6: 100 Task testcase</h3>
+<p>Set <code>TESTCASE = 6</code></p>
+<p>This testcase is a stress test for SRP, with <code>srp_demo.c</code> creating <code>configMAX_TASKS = 100</code> identical tasks in a loop.</p>
+<ul>
+<li><code>T000</code>, <code>T001</code>, ..., <code>T099</code></li>
+</ul>
+<p>All 100 tasks have the same timing parameters:</p>
+<ul>
+<li>period = <code>1000ms</code></li>
+<li>deadline = <code>1000ms</code></li>
+<li>execution time = <code>5ms</code></li>
+<li>first critical section = <code>1ms</code></li>
+<li>shared resource = <code>RESOURCE_1</code></li>
+</ul>
+<p><strong>Task Configuration</strong></p>
+<div class="table-wrap"><table><thead><tr><th style="text-align: center;">Task</th><th style="text-align: center;">C</th><th style="text-align: center;">T</th><th style="text-align: center;">D</th></tr></thead><tbody><tr><td style="text-align: center;">τi</td><td style="text-align: center;">5</td><td style="text-align: center;">1000</td><td style="text-align: center;">1000</td></tr></tbody></table></div>
+<p>where i ranges from 1 to 100, for each of the 100 test cases.</p>
+<p>The shared resource is also registered with:</p>
+<ul>
+<li><code>RESOURCE_1_CEILING = 1000ms</code></li>
+<li><code>RESOURCE_1_BLOCKING = 1ms</code></li>
+</ul>
+<p>So each task only spends a very short amount of its execution inside the shared resource, but SRP's semaphore path is still being used.</p>
+<p>Since each task contributes</p>
+<div class="math-block">\[U_i = \frac{5}{1000} = 0.005,\]</div>
+<p>the full 100-task set has total utilization</p>
+<div class="math-block">\[U = 100 \times 0.005 = 0.50.\]</div>
+<p>Even if we include the SRP blocking term of <code>1ms</code>, the demand is still comfortably below the deadline window, so I expect all 100 tasks to be admitted.</p>
+<p>This testcase checks</p>
+<ol>
+<li>that the kernel can create and admit 100 SRP tasks without breaking</li>
+<li>that SRP locking still works when a lot of tasks all share the same resource</li>
+</ol>
+<p>The serial monitor should print:</p>
+<ul>
+<li><code>Task creation time = ... us</code></li>
+<li><code>Created 100/100 tasks</code></li>
+<li><code>All stress tasks admitted.</code></li>
+<li>an <code>SRP STACK REPORT</code> showing the stack totals and savings for the full 100-task set</li>
+</ul>
+<p>The task GPIOs are not used in this testcase, but pin 4 (<code>RESOURCE_1</code>), still works.</p>
+<p>The useful GPIOs in this testcase are:</p>
+<ul>
+<li>pin 4, which should still pulse when <code>RESOURCE_1</code> is held</li>
+<li>the ceiling pins, which should still show the resource-1 ceiling when the critical section is active</li>
+</ul>
+<p>The stack report in the serial monitor shows the stack-sharing gains. Since all 100 tasks have the same deadline, they also all have the same preemption level, so:</p>
+<ul>
+<li>the theoretical SRP model should collapse the whole set down to one shared stack level</li>
+<li>if <code>configUSE_STACK_SHARING = 1</code>, the actual unique stack range total should also become significantly smaller</li>
+<li>if <code>configUSE_STACK_SHARING = 0</code>, the report will still show the theoretical savings, but the actual implemented savings will still be 0</li>
+</ul>
+<p><br></p>
+<p><strong>Serial Monitor Message for no stack sharing</strong></p>
+<pre><code class="language-">SRP TESTCASE 6
+Failed Tasks:
+Task creation time = 88968 us
+Created 100/100 tasks
+
+SRP STACK REPORT
+Task count: 100
+Task  PL          Stack range             Bytes  FreeHW  UsedHW   Shared  CtxB  Model  Actual
+T000  4294966295  0x200035f8-0x200039f0   1020     984      36  no        0  yes    yes
+T001  4294966295  0x20003aa0-0x20003e98   1020     984      36  no        0  no     yes
+T002  4294966295  0x20003f48-0x20004340   1020     984      36  no        0  no     yes
+T003  4294966295  0x200043f0-0x200047e8   1020     984      36  no        0  no     yes
+T004  4294966295  0x20004898-0x20004c90   1020     984      36  no        0  no     yes
+T005  4294966295  0x20004d40-0x20005138   1020     984      36  no        0  no     yes
+T006  4294966295  0x200051e8-0x200055e0   1020     984      36  no        0  no     yes
+T007  4294966295  0x20005690-0x20005a88   1020     984      36  no        0  no     yes
+T008  4294966295  0x20005b38-0x20005f30   1020     984      36  no        0  no     yes
+T009  4294966295  0x20005fe0-0x200063d8   1020     984      36  no        0  no     yes
+T010  4294966295  0x20006488-0x20006880   1020     984      36  no        0  no     yes
+T011  4294966295  0x20006930-0x20006d28   1020     984      36  no        0  no     yes
+T012  4294966295  0x20006dd8-0x200071d0   1020     984      36  no        0  no     yes
+T013  4294966295  0x20007280-0x20007678   1020     984      36  no        0  no     yes
+T014  4294966295  0x20007728-0x20007b20   1020     984      36  no        0  no     yes
+T015  4294966295  0x20007bd0-0x20007fc8   1020     984      36  no        0  no     yes
+T016  4294966295  0x20008078-0x20008470   1020     984      36  no        0  no     yes
+T017  4294966295  0x20008520-0x20008918   1020     984      36  no        0  no     yes
+T018  4294966295  0x200089c8-0x20008dc0   1020     984      36  no        0  no     yes
+T019  4294966295  0x20008e70-0x20009268   1020     984      36  no        0  no     yes
+T020  4294966295  0x20009318-0x20009710   1020     984      36  no        0  no     yes
+T021  4294966295  0x200097c0-0x20009bb8   1020     984      36  no        0  no     yes
+T022  4294966295  0x20009c68-0x2000a060   1020     984      36  no        0  no     yes
+T023  4294966295  0x2000a110-0x2000a508   1020     984      36  no        0  no     yes
+T024  4294966295  0x2000a5b8-0x2000a9b0   1020     984      36  no        0  no     yes
+T025  4294966295  0x2000aa60-0x2000ae58   1020     984      36  no        0  no     yes
+T026  4294966295  0x2000af08-0x2000b300   1020     984      36  no        0  no     yes
+T027  4294966295  0x2000b3b0-0x2000b7a8   1020     984      36  no        0  no     yes
+T028  4294966295  0x2000b858-0x2000bc50   1020     984      36  no        0  no     yes
+T029  4294966295  0x2000bd00-0x2000c0f8   1020     984      36  no        0  no     yes
+T030  4294966295  0x2000c1a8-0x2000c5a0   1020     984      36  no        0  no     yes
+T031  4294966295  0x2000c650-0x2000ca48   1020     984      36  no        0  no     yes
+T032  4294966295  0x2000caf8-0x2000cef0   1020     984      36  no        0  no     yes
+T033  4294966295  0x2000cfa0-0x2000d398   1020     984      36  no        0  no     yes
+T034  4294966295  0x2000d448-0x2000d840   1020     984      36  no        0  no     yes
+T035  4294966295  0x2000d8f0-0x2000dce8   1020     984      36  no        0  no     yes
+T036  4294966295  0x2000dd98-0x2000e190   1020     984      36  no        0  no     yes
+T037  4294966295  0x2000e240-0x2000e638   1020     984      36  no        0  no     yes
+T038  4294966295  0x2000e6e8-0x2000eae0   1020     984      36  no        0  no     yes
+T039  4294966295  0x2000eb90-0x2000ef88   1020     984      36  no        0  no     yes
+T040  4294966295  0x2000f038-0x2000f430   1020     984      36  no        0  no     yes
+T041  4294966295  0x2000f4e0-0x2000f8d8   1020     984      36  no        0  no     yes
+T042  4294966295  0x2000f988-0x2000fd80   1020     984      36  no        0  no     yes
+T043  4294966295  0x2000fe30-0x20010228   1020     984      36  no        0  no     yes
+T044  4294966295  0x200102d8-0x200106d0   1020     984      36  no        0  no     yes
+T045  4294966295  0x20010780-0x20010b78   1020     984      36  no        0  no     yes
+T046  4294966295  0x20010c28-0x20011020   1020     984      36  no        0  no     yes
+T047  4294966295  0x200110d0-0x200114c8   1020     984      36  no        0  no     yes
+T048  4294966295  0x20011578-0x20011970   1020     984      36  no        0  no     yes
+T049  4294966295  0x20011a20-0x20011e18   1020     984      36  no        0  no     yes
+T050  4294966295  0x20011ec8-0x200122c0   1020     984      36  no        0  no     yes
+T051  4294966295  0x20012370-0x20012768   1020     984      36  no        0  no     yes
+T052  4294966295  0x20012818-0x20012c10   1020     984      36  no        0  no     yes
+T053  4294966295  0x20012cc0-0x200130b8   1020     984      36  no        0  no     yes
+T054  4294966295  0x20013168-0x20013560   1020     984      36  no        0  no     yes
+T055  4294966295  0x20013610-0x20013a08   1020     984      36  no        0  no     yes
+T056  4294966295  0x20013ab8-0x20013eb0   1020     984      36  no        0  no     yes
+T057  4294966295  0x20013f60-0x20014358   1020     984      36  no        0  no     yes
+T058  4294966295  0x20014408-0x20014800   1020     984      36  no        0  no     yes
+T059  4294966295  0x200148b0-0x20014ca8   1020     984      36  no        0  no     yes
+T060  4294966295  0x20014d58-0x20015150   1020     984      36  no        0  no     yes
+T061  4294966295  0x20015200-0x200155f8   1020     984      36  no        0  no     yes
+T062  4294966295  0x200156a8-0x20015aa0   1020     984      36  no        0  no     yes
+T063  4294966295  0x20015b50-0x20015f48   1020     984      36  no        0  no     yes
+T064  4294966295  0x20015ff8-0x200163f0   1020     984      36  no        0  no     yes
+T065  4294966295  0x200164a0-0x20016898   1020     984      36  no        0  no     yes
+T066  4294966295  0x20016948-0x20016d40   1020     984      36  no        0  no     yes
+T067  4294966295  0x20016df0-0x200171e8   1020     984      36  no        0  no     yes
+T068  4294966295  0x20017298-0x20017690   1020     984      36  no        0  no     yes
+T069  4294966295  0x20017740-0x20017b38   1020     984      36  no        0  no     yes
+T070  4294966295  0x20017be8-0x20017fe0   1020     984      36  no        0  no     yes
+T071  4294966295  0x20018090-0x20018488   1020     984      36  no        0  no     yes
+T072  4294966295  0x20018538-0x20018930   1020     984      36  no        0  no     yes
+T073  4294966295  0x200189e0-0x20018dd8   1020     984      36  no        0  no     yes
+T074  4294966295  0x20018e88-0x20019280   1020     984      36  no        0  no     yes
+T075  4294966295  0x20019330-0x20019728   1020     984      36  no        0  no     yes
+T076  4294966295  0x200197d8-0x20019bd0   1020     984      36  no        0  no     yes
+T077  4294966295  0x20019c80-0x2001a078   1020     984      36  no        0  no     yes
+T078  4294966295  0x2001a128-0x2001a520   1020     984      36  no        0  no     yes
+T079  4294966295  0x2001a5d0-0x2001a9c8   1020     984      36  no        0  no     yes
+T080  4294966295  0x2001aa78-0x2001ae70   1020     984      36  no        0  no     yes
+T081  4294966295  0x2001af20-0x2001b318   1020     984      36  no        0  no     yes
+T082  4294966295  0x2001b3c8-0x2001b7c0   1020     984      36  no        0  no     yes
+T083  4294966295  0x2001b870-0x2001bc68   1020     984      36  no        0  no     yes
+T084  4294966295  0x2001bd18-0x2001c110   1020     984      36  no        0  no     yes
+T085  4294966295  0x2001c1c0-0x2001c5b8   1020     984      36  no        0  no     yes
+T086  4294966295  0x2001c668-0x2001ca60   1020     984      36  no        0  no     yes
+T087  4294966295  0x2001cb10-0x2001cf08   1020     984      36  no        0  no     yes
+T088  4294966295  0x2001cfb8-0x2001d3b0   1020     984      36  no        0  no     yes
+T089  4294966295  0x2001d460-0x2001d858   1020     984      36  no        0  no     yes
+T090  4294966295  0x2001d908-0x2001dd00   1020     984      36  no        0  no     yes
+T091  4294966295  0x2001ddb0-0x2001e1a8   1020     984      36  no        0  no     yes
+T092  4294966295  0x2001e258-0x2001e650   1020     984      36  no        0  no     yes
+T093  4294966295  0x2001e700-0x2001eaf8   1020     984      36  no        0  no     yes
+T094  4294966295  0x2001eba8-0x2001efa0   1020     984      36  no        0  no     yes
+T095  4294966295  0x2001f050-0x2001f448   1020     984      36  no        0  no     yes
+T096  4294966295  0x2001f4f8-0x2001f8f0   1020     984      36  no        0  no     yes
+T097  4294966295  0x2001f9a0-0x2001fd98   1020     984      36  no        0  no     yes
+T098  4294966295  0x2001fe48-0x20020240   1020     984      36  no        0  no     yes
+T099  4294966295  0x200202f0-0x200206e8   1020     984      36  no        0  no     yes
+Private actual total:      102000 bytes
+SRP model shared total:    1020 bytes (1 levels)
+Actual unique range total: 102000 bytes (100 ranges)
+Context buffer total:      0 bytes
+Theoretical SRP savings:   100980 bytes (99%)
+Actual implemented savings:0 bytes (0%)
+Net memory savings:        0 bytes
+
+All stress tasks admitted.</code></pre>
+<p><strong>Serial Monitor Message w/ Stack Sharing </strong></p>
+<pre><code class="language-">SRP TESTCASE 6
+Failed Tasks:
+Task creation time = 89761 us
+Created 100/100 tasks
+
+SRP STACK REPORT
+Task count: 100
+Task  PL          Stack range             Bytes  FreeHW  UsedHW  Shared  CtxB  Model  Actual
+T000  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  yes    yes
+T001  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T002  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T003  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T004  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T005  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T006  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T007  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T008  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T009  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T010  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T011  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T012  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T013  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T014  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T015  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T016  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T017  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T018  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T019  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T020  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T021  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T022  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T023  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T024  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T025  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T026  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T027  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T028  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T029  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T030  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T031  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T032  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T033  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T034  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T035  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T036  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T037  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T038  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T039  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T040  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T041  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T042  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T043  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T044  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T045  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T046  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T047  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T048  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T049  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T050  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T051  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T052  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T053  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T054  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T055  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T056  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T057  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T058  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T059  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T060  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T061  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T062  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T063  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T064  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T065  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T066  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T067  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T068  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T069  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T070  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T071  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T072  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T073  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T074  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T075  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T076  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T077  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T078  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T079  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T080  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T081  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T082  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T083  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T084  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T085  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T086  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T087  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T088  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T089  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T090  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T091  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T092  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T093  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T094  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T095  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T096  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T097  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T098  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+T099  4294966295  0x200037f8-0x20003bf0   1020     984      36  yes    1024  no     no 
+Private actual total:      102000 bytes
+SRP model shared total:    1020 bytes (1 levels)
+Actual unique range total: 1020 bytes (1 ranges)
+Context buffer total:      102400 bytes
+Theoretical SRP savings:   100980 bytes (99%)
+Actual implemented savings:100980 bytes (99%)
+Net memory savings:        0 bytes
+
+All stress tasks admitted.</code></pre>
+<p>Since the 100 tasks can share the stack space of one task, it makes sense that the <code>Actual implemented savings</code> are 99%.</p>
+          <p><a class="source-link" href="testing_SRP.md">Open original markdown</a></p>
+        </article>
+        <nav class="toc" aria-label="Table of contents">
+          <p class="toc-title">On This Page</p>
+          <a class="toc-level-1" href="#srp-testing">SRP Testing</a>
+<a class="toc-level-2" href="#testing-procedure">Testing Procedure</a>
+<a class="toc-level-2" href="#testing">Testing</a>
+<a class="toc-level-3" href="#test-case-1-implicit-deadline-w-1-shared-resource">Test Case 1: Implicit Deadline w/ 1 Shared Resource</a>
+<a class="toc-level-3" href="#test-case-2-admission-control">Test Case 2: Admission Control</a>
+<a class="toc-level-3" href="#test-case-3-2-shared-resources">Test Case 3: 2 Shared Resources</a>
+<a class="toc-level-3" href="#test-case-4-stack-sharing">Test Case 4: Stack-sharing</a>
+<a class="toc-level-3" href="#test-case-5-failing-a-task-because-its-constrainted-deadline-exceeds-pda-bound">Test Case 5: Failing a task because its constrainted deadline exceeds PDA bound</a>
+<a class="toc-level-3" href="#test-case-6-100-task-testcase">Test Case 6: 100 Task testcase</a>
+        </nav>
+      </div>
+    </main>
+  </body>
+</html>

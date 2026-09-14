@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CBS Design Notes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+        svg: { fontCache: 'global' }
+      };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <style>
+      :root {
+        --bg: #f8f9fb;
+        --paper: #ffffff;
+        --text: #23252f;
+        --muted: #676d7c;
+        --line: #dfe3ec;
+        --accent: #297373;
+        --accent-soft: #e8f4f3;
+        --code-bg: #f3f5f8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.65;
+      }
+
+      .doc-shell {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 32px 0 56px;
+      }
+
+      .doc-header {
+        margin-bottom: 24px;
+      }
+
+      .back-link,
+      .source-link {
+        color: var(--accent);
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .back-link:hover,
+      .source-link:hover,
+      .toc a:hover {
+        text-decoration: underline;
+      }
+
+      .doc-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 260px;
+        gap: 28px;
+        align-items: start;
+      }
+
+      article {
+        min-width: 0;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: clamp(20px, 4vw, 42px);
+        box-shadow: 0 12px 32px rgba(28, 33, 45, 0.08);
+      }
+
+      .toc {
+        position: sticky;
+        top: 20px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 18px;
+      }
+
+      .toc-title {
+        margin: 0 0 10px;
+        font-size: 0.85rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .toc a {
+        display: block;
+        color: var(--text);
+        font-size: 0.9rem;
+        line-height: 1.35;
+        margin: 8px 0;
+        text-decoration: none;
+      }
+
+      .toc-level-3 {
+        padding-left: 14px;
+        color: var(--muted) !important;
+        font-size: 0.82rem !important;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        line-height: 1.2;
+        margin: 1.6em 0 0.55em;
+      }
+
+      h1 {
+        margin-top: 0;
+        font-size: clamp(2rem, 5vw, 3.2rem);
+      }
+
+      h2 {
+        border-top: 1px solid var(--line);
+        padding-top: 1em;
+        font-size: clamp(1.4rem, 3vw, 2rem);
+      }
+
+      h3 {
+        font-size: 1.15rem;
+      }
+
+      p {
+        margin: 0.8em 0;
+      }
+
+      ul,
+      ol {
+        padding-left: 1.4rem;
+      }
+
+      li {
+        margin: 0.45rem 0;
+      }
+
+      code {
+        background: var(--code-bg);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 0.1rem 0.35rem;
+        font-family: Consolas, 'Courier New', monospace;
+        font-size: 0.92em;
+      }
+
+      pre {
+        overflow-x: auto;
+        background: #18202a;
+        color: #eef4f8;
+        border-radius: 8px;
+        padding: 18px;
+      }
+
+      pre code {
+        background: transparent;
+        border: 0;
+        color: inherit;
+        padding: 0;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        margin: 1rem 0 1.4rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--paper);
+      }
+
+      th,
+      td {
+        border: 1px solid var(--line);
+        padding: 0.65rem 0.8rem;
+        vertical-align: top;
+      }
+
+      th {
+        background: var(--accent-soft);
+      }
+
+      .doc-figure {
+        margin: 1.6rem 0;
+      }
+
+      .doc-figure img {
+        display: block;
+        width: 100%;
+        max-height: 760px;
+        object-fit: contain;
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        box-shadow: 0 8px 24px rgba(28, 33, 45, 0.12);
+      }
+
+      figcaption {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-top: 0.55rem;
+        text-align: center;
+      }
+
+      .math-block {
+        overflow-x: auto;
+        background: var(--accent-soft);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 0.8rem 1rem;
+        margin: 1rem 0;
+      }
+
+      @media (max-width: 900px) {
+        .doc-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .toc {
+          position: static;
+          order: -1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="doc-shell">
+      <header class="doc-header">
+        <a class="back-link" href="../../../Other%20Projects/RTOS%20Scheduling%20Algorithms.html">&larr; Back to RTOS Scheduling Algorithms</a>
+      </header>
+      <div class="doc-layout">
+        <article>
+          <h1 id="cbs-design">CBS Design</h1>
+<h2 id="main-design-choices">Main design choices</h2>
+<h3 id="1-edf-is-still-the-real-scheduler">1. EDF is still the real scheduler</h3>
+<p>The kernel still schedules out of the EDF ready list.</p>
+<p>CBS just changes what a server's deadline and remaining budget look like over time. EDF still decides what has the earliest deadline, and CBS keeps moving a server's deadline around when its reservation says it has to</p>
+<h3 id="2-cbs-server-is-just-implementeed-as-a-normal-edf-task-with-extra-state">2. CBS server is just implementeed as a normal EDF task with extra state</h3>
+<p>Instead of making a whole separate server object, I stored the CBS information in the TCB:</p>
+<ul>
+<li><code>xCBSBudget</code></li>
+<li><code>xCBSRemainingBudget</code></li>
+<li><code>xCBSPeriod</code></li>
+<li><code>xCBSIsActive</code></li>
+</ul>
+<p>So a CBS server is basically just EDF task underneath plus reservation state on top</p>
+<p>So the kernel can still look at the same task structure it already knows how to deal with.</p>
+<p><code>xTaskCreateCBS()</code> doesn't build a task from scratch in some special CBS-only way. It first creates a normal EDF task with:</p>
+<ul>
+<li><code>C = Q</code></li>
+<li><code>T = T</code></li>
+<li><code>D = T</code></li>
+</ul>
+<p>Then it just adds the CBS reservation state on top. So the server can go through the same admission-control path as everything else.</p>
+<h2 id="the-cbs-algorithm">The CBS algorithm</h2>
+<p>Most of the implementation was just carrying out the rules of the actual CBS algorithm (from Buttazzo).</p>
+<figure class="doc-figure"><a href="pictures/Buzzatto_Algorithm.png" target="_blank"><img src="pictures/Buzzatto_Algorithm.png" alt="Alt text" /></a><figcaption>Alt text</figcaption></figure>
+<p>The version I was following is basically:</p>
+<ul>
+<li>when a job arrives to an idle server, check whether the current <code>(c, d)</code> state is still okay</li>
+<li>if it isn't, refresh the server to a new budget and a new deadline from "now"</li>
+<li>if it is, keep the old deadline and keep the current remaining budget</li>
+<li>while the server runs, burn budget</li>
+<li>when the budget hits <code>0</code>, postpone the deadline by one server period and refill the budget</li>
+</ul>
+<p>So in the notation from the CBS algorithm:</p>
+<ul>
+<li><code>Q</code> is the server budget</li>
+<li><code>T</code> is the server period</li>
+<li><code>c</code> is the current remaining budget</li>
+<li><code>d</code> is the current absolute deadline</li>
+</ul>
+<p>The main rules I actually use in the code are:</p>
+<h3 id="rule-1">Rule 1</h3>
+<p>If the server is idle and the current server state is too "dense" for how close the deadline is, refresh it:</p>
+<ul>
+<li><code>c := Q</code></li>
+<li><code>d := now + T</code></li>
+</ul>
+<p>This is the part that comes from the usual CBS arrival test:</p>
+<p><code>q / (d - t) &amp;gt; Q / T</code></p>
+<p>or in the cross-multiplied form I used in the kernel:</p>
+<p><code>qT &amp;gt; Q(d - t)</code></p>
+<h3 id="rule-2">Rule 2</h3>
+<p>If the server is idle <strong>but</strong> the current <code>(c, d)</code> pair is still okay, then don't throw that state away.</p>
+<p>So the server keeps:</p>
+<ul>
+<li>its current deadline</li>
+<li>its current remaining budget</li>
+</ul>
+<p>That part matters because CBS is not supposed to blindly reset itself every time it becomes ready again.</p>
+<h3 id="rule-3">Rule 3</h3>
+<p>When the server actually runs, its remaining budget burns down.</p>
+<p>Then once:</p>
+<ul>
+<li><code>c == 0</code></li>
+</ul>
+<p>the server gets postponed:</p>
+<ul>
+<li><code>d := d + T</code></li>
+<li><code>c := Q</code></li>
+</ul>
+<p>(This part is visible on the gpio pins in the testing docs)</p>
+<h3 id="what-i-simplified">What I simplified</h3>
+<p>My implementation doesn't keep a full aperiodic-job queue inside the kernel the way the textbook CBS presentation usually shows it.</p>
+<p>So I am not really modelling: <code>n</code>, enqueue / dequeue logic, or explicit per-server request queues</p>
+<p>Instead, I'm treating the CBS server itself as a task, and the kernel only tracks the reservation state that actually matters for scheduling (i.e. current budget, current deadline, server period, whether this task is acting as a CBS server)</p>
+<p>So the CBS implementation in the kernel is really the scheduling part of the algorithm, not the fulling queueing implementation.</p>
+<ul>
+<li>Rule 1 / Rule 2 are in <code>prvCBSShouldReplenishServer()</code> and <code>prvCBSPrepareTaskForReadyList()</code></li>
+<li>the budget burn happens in the tick path</li>
+<li>Rule 3 happens when <code>xCBSRemainingBudget</code> reaches <code>0</code></li>
+</ul>
+<p>So even though the code doesn't literally use the same variable names as the paper, that's the logic it is following.</p>
+<h2 id="stale-server-state">Stale server state</h2>
+<p>One small thing I had to be careful about was what I started calling stale server state; when the server's stored <code>(budget, deadline)</code> pair is no longer the pair that should really be used the next time EDF looks at it. (i.e. when the remaining budget already hit <code>0</code>, the stored deadline is already in the past, or the CBS test says the current reservation is too "heavy" for how close the deadline is)</p>
+<p>That test is: <code>q / (d - t) &amp;gt; Q / T</code></p>
+<p>In the code I used the cross-multiplied version so I didn't have to divide and work with floats: <code>qT &amp;gt; Q(d - t)</code></p>
+<p>If that condition is true, the server gets refreshed before it goes back into the EDF ready list:</p>
+<ul>
+<li><code>q := Q</code></li>
+<li><code>d := t + T</code></li>
+</ul>
+<p>That refresh step happens in <code>prvCBSPrepareTaskForReadyList()</code>.</p>
+<p>I put the stale-state cleanup right before EDF reinserts the task into the ready list so by the time EDF sorts the server by deadline, the deadline is already the correct current one.</p>
+<h2 id="runtime-budget-handling">Runtime budget handling</h2>
+<p>While a CBS server is actually running, its remaining budget burns down one tick at a time.</p>
+<p>When the remaining budget reaches <code>0</code>, the kernel does two things: push the deadline out by one period, and refill the budget back to <code>Q</code></p>
+<p>So that is the normal CBS "you used up your reservation, now you get postponed" behaviour.</p>
+<p>In my implementation that happens in the tick path, which means the budget accounting is tick-based rather than finer-grained runtime accounting. I point out how you can see this on the gpio pins in the CBS testing documentation.</p>
+<h2 id="equal-deadline-tie-break">Equal-deadline tie break</h2>
+<p>I also ensured the same-deadline tie break behaviour outlined in the project readme. If a CBS server and a normal EDF task have the exact same absolute deadline, the kernel picks the CBS server.</p>
+<p>If two CBS servers tie with each other, though, I left that alone and let ready-list order decide it.</p>
+<h2 id="feasibility-admission-test-used">Feasibility / admission test used</h2>
+<p>CBS doesn't have a totally separate admission-control framework in this kernel. I reused the EDF admission logic that was already there. The only change is that, with the CBS servers no, we have:</p>
+<ul>
+<li>server utilization = <code>Q / T</code></li>
+<li>total task + server utilization has to stay admissible</li>
+</ul>
+<p>So you can just add up periodic task utilizations and CBS server utilizations to determine schedulability.</p>
+          <p><a class="source-link" href="design_CBS.md">Open original markdown</a></p>
+        </article>
+        <nav class="toc" aria-label="Table of contents">
+          <p class="toc-title">On This Page</p>
+          <a class="toc-level-1" href="#cbs-design">CBS Design</a>
+<a class="toc-level-2" href="#main-design-choices">Main design choices</a>
+<a class="toc-level-3" href="#1-edf-is-still-the-real-scheduler">1. EDF is still the real scheduler</a>
+<a class="toc-level-3" href="#2-cbs-server-is-just-implementeed-as-a-normal-edf-task-with-extra-state">2. CBS server is just implementeed as a normal EDF task with extra state</a>
+<a class="toc-level-2" href="#the-cbs-algorithm">The CBS algorithm</a>
+<a class="toc-level-3" href="#rule-1">Rule 1</a>
+<a class="toc-level-3" href="#rule-2">Rule 2</a>
+<a class="toc-level-3" href="#rule-3">Rule 3</a>
+<a class="toc-level-3" href="#what-i-simplified">What I simplified</a>
+<a class="toc-level-2" href="#stale-server-state">Stale server state</a>
+<a class="toc-level-2" href="#runtime-budget-handling">Runtime budget handling</a>
+<a class="toc-level-2" href="#equal-deadline-tie-break">Equal-deadline tie break</a>
+<a class="toc-level-2" href="#feasibility-admission-test-used">Feasibility / admission test used</a>
+        </nav>
+      </div>
+    </main>
+  </body>
+</html>

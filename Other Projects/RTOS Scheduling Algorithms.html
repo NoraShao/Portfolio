@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Portfolio" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/fa62c117c7.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="../styles.css" />
+    <title>Nora Shao</title>
+  </head>
+
+  <body class="light" id="top">
+    <header class="header center">
+      <h3>
+        <a>Course Projects and More</a>
+      </h3>
+
+      <nav class="nav center">
+        <ul class="nav__list center">
+          <li class="nav__list-item">
+            <a class="link link--nav" href="../index.html">Home</a>
+          </li>
+        </ul>
+
+        <button type="button" aria-label="toggle theme" class="btn btn--icon">
+          <i aria-hidden="true" id="btn-theme" class="fas fa-moon"></i>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section__peripheral">
+        <h2 class="section__title">FreeRTOS Scheduling Extensions: SRP and CBS</h2>
+
+        <div class="project__peripheral">
+          <p class="project__subheading">
+            CPSC 538G - Real-Time System Design | January 2026 - April 2026
+          </p>
+          <p class="project__description">
+            <a href="https://arpangujarati.github.io/courses/cpsc538g/2025w2/index.html" target="_blank" class="link">CPSC 538G</a> was a real-time systems course about the importance of timing in cyber-physical systems. The FreeRTOS project option was to get inside the kernel and extend it with <b>Earliest Deadline First (EDF)</b>, <b>Stack Resource Policy (SRP)</b>, <b>Constant Bandwidth Server (CBS)</b>, and multiprocessor scheduling support.
+                        EDF is a dynamic-priority scheduling algorithm that always runs the task with the earliest absolute deadline. SRP is a resource-sharing protocol that prevents priority inversion and deadlock by enforcing a system ceiling on which tasks can run. CBS is a server-based scheduling algorithm that allows periodic tasks to be scheduled with a fixed budget and period, providing temporal isolation between tasks.
+
+          </p>
+       
+          <p class="project__description">
+            <b>The Project:</b>             My partner worked on the base EDF and multiprocessor support, and this page is about the SRP and CBS parts I built and tested.           
+ I kept EDF as the base scheduler, then added SRP and CBS on top of it in a few specific places: task metadata, admission control, scheduler task selection, semaphore/resource handling, optional stack sharing, and CBS budget/deadline state. The ready list is still ordered by absolute deadline; the extra work is in deciding whether the task at the front is actually allowed to run yet, or whether a server needs its budget/deadline state cleaned up first.
+          </p>
+
+          <section class="project-container">
+            <div class="project-text">
+              <p>
+               
+              </p>
+            </div>
+          </section>
+
+          <div class="project__stack__peripheral">
+            <span class="project__stack-item">C</span>
+            <span class="project__stack-item">FreeRTOS</span>
+            <span class="project__stack-item">EDF</span>
+            <span class="project__stack-item">SRP</span>
+            <span class="project__stack-item">CBS</span>
+            <span class="project__stack-item">RPi Pico</span>
+            <span class="project__stack-item">Analog Discovery 2</span>
+          </div>
+
+          <h3>SRP Design</h3>
+          <section class="project-container">
+            <div class="project-text">
+              <p>These are some of main design choices I made for implementing SRP:</p>
+            
+              <h5></h5>
+              <p>1. Integrating SRP with EDF: The ready list is still ordered by absolute deadline; EDF says which task is earliest and SRP then decides whether that task is eligible to start now.</p>
+              <h5></h5>
+              <p>2. Deadline-derived preemption levels: Each task's SRP preemption level is derived from its relative deadline (shorter deadline → higher SRP level) via <code>xSRPComputePreemptionLevel()</code>, simplifying translation between EDF and SRP.</p>
+              <h5></h5>
+              <p>3. Central SRP resource table: SRP state is kept in a small kernel-side table with entries for semaphore handle, ceiling, owner, locked state, and blocking time (e.g. <code>srpResources[]</code>, <code>systemCeiling</code>, <code>ceilingStack[]</code>).</p>
+              <h5></h5>
+              <p>4. Wrapper semaphores: SRP resource access is explicit through APIs: <code>vSRPRegisterSemaphore()</code>, <code>xSemaphoreTake_SRP()</code>, and <code>xSemaphoreGive_SRP()</code>. Normal semaphores are unchanged.</p>
+              <h5></h5>
+              <p>5. One global live ceiling plus a ceiling stack: Runtime SRP maintains a single <code>systemCeiling</code> and a <code>ceilingStack[]</code> so nested critical sections restore the correct ceiling on release.</p>
+              <h5></h5>
+              <p>6. Admission control includes SRP blocking: The feasibility test adds a single worst-case blocking hit per demand window (SRP model: a job can be blocked at most once before it starts), so task creation computes per-task blocking terms from registered resources and includes them in PDA checks.</p>
+              <h5></h5>
+              <p>7. Stack sharing: Stack sharing is behind <code>configUSE_STACK_SHARING</code>, so I could test SRP without shared stacks first and not be unsure whether I was figuring out a context-copy bug instead of a scheduling bug. For stack-sharing, tasks at the same SRP preemption level share one live execution stack, but each task still has its own saved stack-image buffer.
+              </p>
+              <p>
+                This is not the most memory-optimal way to do stack sharing, but it is a lot simpler and safer than trying to do a more granular implementation. The stack report separates savings in live execution-stack ranges from savings in overall RAM, which is why the shared-stack version can show good "actual implemented savings" while still showing weak or zero "net memory savings".</p>
+              <p>Notes and full details: <a href="../Other Media/CPSC538G/SRP/design_SRP.md" target="_blank" class="link">SRP design notes (markdown)</a></p>
+              </div>
+          </section>
+
+          <section class="project-container project-image-gallery">
+            <figure class="project-image-gallery__item">
+              <img src="../Other Media/CPSC538G/pictures/edf_flowchart.png" alt="EDF and SRP design flow" class="project-image__img" style="width: 100%; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+              <figcaption>EDF remained the base scheduler while SRP filtered task eligibility and added blocking-aware admission checks.</figcaption>
+            </figure>
+            <figure class="project-image-gallery__item">
+            </figure>
+          </section>
+
+          
+          
+                
+              </p>
+            </div>
+          </section>
+
+
+          <!-- <br> -->
+          <h3>CBS Design</h3>
+          <section class="project-container">
+            <div class="project-text">
+              <p>CBS was implemented following the algorithm in Buzzatto's <i>Hard Real-Time Computing Systems: Predictable Scheduling Algorithms and Applications</i>; it modifies a server's deadline and remaining budget over time while EDF continues to pick the earliest-deadline ready item.</p>
+
+              <ul>
+                <li><b>Design overview:</b> CBS state is stored in the TCB: <code>xCBSBudget</code>, <code>xCBSRemainingBudget</code>, <code>xCBSPeriod</code>, <code>xCBSIsActive</code>.</li>
+                <li><code>xTaskCreateCBS()</code> creates a normal EDF task with <code>C = Q</code>, <code>T = T</code>, <code>D = T</code> and then adds CBS reservation state on top so servers reuse the EDF infrastructure.</li>
+                <li>When a job arrives to an idle server the kernel checks whether the stored <code>(c,d)</code> pair is still valid; if not it refreshes the server to <code>c := Q</code>, <code>d := now + T</code>.</li>
+                <li>While running, the server's budget burns down; when <code>c == 0</code> the deadline is postponed by one period and the budget refilled.</li>
+              </ul>
+             
+              <p><b>Runtime and admission:</b> Budget accounting is tick-based in the implementation; when a server's budget hits zero it is postponed and refilled in the tick path. Admission checks reuse the EDF admission path: server utilization is added as <code>Q/T</code> to the total task load.</p>
+             
+              <p><b>Tie-breaks:</b> If a CBS server and a normal EDF task share the exact same absolute deadline, the kernel breaks the tie in favor of the CBS server.</p>
+              <p>Notes and full details: <a href="../Other Media/CPSC538G/CBS/design_CBS.md" target="_blank" class="link">CBS design notes (markdown)</a></p>
+            </div>
+            <div class="project-image-gallery">
+              <figure class="project-image-gallery__item">
+                <img src="../Other Media/CPSC538G/CBS/pictures/Buzzatto_Algorithm.png" alt="CBS algorithm diagram (Buzzatto)" class="project-image__img" style="width: 100%; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+                <figcaption>CBS algorithm overview (from Buzzatto's <i>Hard Real-Time Computing Systems: Predictable Scheduling Algorithms and Applications</i>).</figcaption>
+              </figure>
+            </div>
+          </section>
+          <br>
+          <h3>Validation and documentation</h3>
+          <section class="project-container">
+            <div class="project-text">
+              <p>All tests were run from the RP2040 demo (<code>Demo\ThirdParty\Community-Supported-Demos\CORTEX_M0_RP2040\Standard\main.c</code>) on a raspberry pi. SRP tests were controlled by <code>srp_demo.c</code> and CBS tests by <code>cbs_demo.c</code>, with a <code>TESTCASE</code> selector in each demo.</p>
+              <p>I used an Analog Discovery 2 logic analyzer (and the WaveForms software) and serial monitor prints to validate timing, resource use, and admission behaviour. The logic analyzer's timing cursors provided good timing verification even if they're not perfectly precise.</p>
+            </div>
+          </section>
+
+          <section class="project-container">
+            <h4>SRP validation</h4>
+            <div class="project-text">
+              <p>SRP validation focused on runtime locking, system ceiling behaviour, admission-control interaction with SRP blocking, and stack-sharing gains. I used GPIO pins to observe which tasks were running at what time, when a shared resource was held, and the live system ceiling via a small binary bus. Critical sections were placed at the end of each job so traces show non-critical work followed by the resource-use window.</p>
+              <p>Tests included: one shared resource, admission control with SRP blocking time, two shared resources, stack-sharing mode comparisons, constrained-deadline admission checks, and a 100-task stress test to measure stack-sharing gains.</p>
+              <p>Notes and full details: <a href="../Other Media/CPSC538G/SRP/testing_SRP.md" target="_blank" class="link">SRP testing notes (markdown)</a></p>
+            </div>
+            <div class="project-image-gallery">
+              <figure class="project-image-gallery__item">
+                <img src="../Other Media/CPSC538G/SRP/pictures/CPSC538_SRP_Test1.png" alt="SRP one-resource logic analyzer timing capture" class="project-image__img" style="width: 100%; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+                <figcaption>Test 1: one shared resource — logic analyzer capture.</figcaption>
+              </figure>
+              <figure class="project-image-gallery__item">
+                <img src="../Other Media/CPSC538G/SRP/pictures/CPSC538_SRP_Test3.png" alt="SRP two-resource logic analyzer timing capture" class="project-image__img" style="width: 100%; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+                <figcaption>Test 3: two shared resources — logic analyzer capture.</figcaption>
+              </figure>
+              <figure class="project-image-gallery__item">
+                <img src="../Other Media/CPSC538G/SRP/pictures/CPSC538_SRP_Test5.png" alt="SRP constrained-deadline admission-control logic analyzer timing capture" class="project-image__img" style="width: 100%; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+                <figcaption>Test 5: constrained-deadline admission control — logic analyzer capture.</figcaption>
+              </figure>
+              <figure class="project-image-gallery__item">
+                <img src="../Other Media/CPSC538G/SRP/pictures/CPSC538_SRP_Test4_SS.png" alt="SRP stack-sharing report" class="project-image__img" style="width: 100%; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+                <figcaption>Stack-sharing report showing live execution-stack ranges with shared-stack enabled.</figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <section class="project-container">
+            <h4>CBS validation</h4>
+            <div class="project-text">
+              <p>CBS validation checked server replenishment and deadline-postponement behaviour, admission-control both at startup and at runtime, and tie-break behaviour favouring CBS servers when deadlines match. GPIO pins tracked periodic tasks, CBS servers, postpone pulses, and expected/ unexpected admission flags.</p>
+              <p>Key tests included two periodic tasks with backlogged CBS servers, admission-time rejection of oversubscribed servers, small-budget deadline postponement visibility, and runtime create attempts that demonstrate accept/reject behaviour.</p>
+              <p>Notes and full details: <a href="../Other Media/CPSC538G/CBS/testing_CBS.md" target="_blank" class="link">CBS testing notes (markdown)</a></p>
+            </div>
+            <div class="project-image-gallery">
+              <figure class="project-image-gallery__item">
+                <img src="../Other Media/CPSC538G/CBS/pictures/CPSC538_CBS_Test4_AC.png" alt="CBS runtime admission-control test" class="project-image__img" style="width: 100%; height: auto; border: 2px solid #e0e0e0; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);" />
+                <figcaption>Runtime admission-control: CBS2 rejected at runtime, indicated by an expected-reject pulse.</figcaption>
+              </figure>
+            </div>
+          </section>
+          <br>
+          <div class="project__stack__peripheral">
+            <a href="https://github.com/cmacp33/FreeRTOS-Kernel-Extension.git" target="_blank" class="link">View on GitHub</a>
+          </div>
+
+          
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2026 My Portfolio</p>
+    </footer>
+
+    <div class="scroll-container">
+      <div class="scroll-top">
+        <a aria-label="Scroll up" href="#top">
+          <i aria-hidden="true" class="fas fa-arrow-up"></i>
+        </a>
+      </div>
+    </div>
+
+    <script src="../script.js"></script>
+  </body>
+</html>
